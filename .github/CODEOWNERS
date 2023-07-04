@@ -1,0 +1,4 @@
+# CODEOWNERS 파일은 pull request 생성시 자동으로 reviewer를 설정해주는 옵션 파일입니다.
+# [대상 파일] @[리뷰어] 방식으로 작성하면 됩니다.
+
+* @Broco98 @a-Tachyon @MuHyeonSon @MonteCarlolee @gyubinc @jiwonii97
