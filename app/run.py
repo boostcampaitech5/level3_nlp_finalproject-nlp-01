@@ -5,6 +5,7 @@ import os
 # streamlit tools
 import streamlit as st
 from streamlit_tags import st_tags
+BASE_PATH = "./app"
 SIDEBAR_IMAGE_PATH = os.path.join(BASE_PATH, "assets/crying_frog.png")
 APP_WORK = ["카테고리 선택 방식", "문서 분석 방식"]
 
