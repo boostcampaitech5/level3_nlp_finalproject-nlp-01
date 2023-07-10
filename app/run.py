@@ -1,3 +1,8 @@
+SIDEBAR_IMAGE_PATH = os.path.join(BASE_PATH, "assets/crying_frog.png")
+APP_WORK = ["카테고리 선택 방식", "문서 분석 방식"]
+
+st.sidebar.image(SIDEBAR_IMAGE_PATH)
+page = st.sidebar.radio("원하는 서비스를 선택하세요", APP_WORK)
 # 카테고리 선택 방식
 
 def choice_category():
