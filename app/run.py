@@ -53,3 +53,14 @@ def text_analysis():
     if st.button("SUBMIT"):
         # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
         st.write(text)
+def main():
+    # To DO : 웹페이지 UI 개선
+
+    # page 선택에 따라 함수 호출
+    if page == APP_WORK[0]:
+        st.title(f"# {APP_WORK[0]}")
+        st.write("---")
+        choice_category()
+    elif page == APP_WORK[1]:
+        st.title(f"# {APP_WORK[1]}")
+        text_analysis()
