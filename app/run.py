@@ -32,3 +32,11 @@ def choice_category():
     if st.button("SUBMIT"):
         # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
         st.write(options_0+options_1+options_2+options_3)
+# 문서 분석 방식
+
+def text_analysis():
+    # text area
+    text = st.text_area('분석을 진행하고 싶은 텍스트를 입력하세요 👉')
+    if st.button("SUBMIT"):
+        # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
+        st.write(text)
