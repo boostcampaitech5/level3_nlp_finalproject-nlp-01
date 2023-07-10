@@ -5,12 +5,15 @@ import os
 # streamlit tools
 import streamlit as st
 from streamlit_tags import st_tags
+
 BASE_PATH = "./app"
 SIDEBAR_IMAGE_PATH = os.path.join(BASE_PATH, "assets/crying_frog.png")
 APP_WORK = ["카테고리 선택 방식", "문서 분석 방식"]
 
 st.sidebar.image(SIDEBAR_IMAGE_PATH)
 page = st.sidebar.radio("원하는 서비스를 선택하세요", APP_WORK)
+
+
 # 카테고리 선택 방식
 
 def choice_category():
@@ -45,6 +48,8 @@ def choice_category():
     if st.button("SUBMIT"):
         # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
         st.write(options_0+options_1+options_2+options_3)
+
+
 # 문서 분석 방식
 
 def text_analysis():
@@ -53,6 +58,8 @@ def text_analysis():
     if st.button("SUBMIT"):
         # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
         st.write(text)
+
+
 def main():
     # To DO : 웹페이지 UI 개선
 
@@ -64,3 +71,6 @@ def main():
     elif page == APP_WORK[1]:
         st.title(f"# {APP_WORK[1]}")
         text_analysis()
+
+
+main()      # 메인 실행문
