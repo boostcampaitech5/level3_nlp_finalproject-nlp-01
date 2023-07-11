@@ -41,3 +41,18 @@ def text_analysis(title):
     st.subheader("텍스트 (Texts)")
     text = st.text_area('👉 분석을 진행하고 싶은 텍스트를 입력하세요.')
     space(lines=1)
+    # Submit button
+    _, button_cols = st.columns([14, 2])
+    with button_cols:
+        if st.button("SUBMIT"):
+            # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
+            min, sec = map(int, options_1.split(':'))
+            length = min*60 + sec
+            inputs = {
+                "length": length,
+                "etc": options_2,
+                "text": text,
+            }
+            st.write(inputs)
+            requests.post(url="http://127.0.0.1:8000/text_analysis",
+                          data=json.dumps(inputs))
