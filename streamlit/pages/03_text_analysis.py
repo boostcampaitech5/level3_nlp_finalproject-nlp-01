@@ -14,9 +14,9 @@ ETC = get_component("etc")
 # 문서 분석 방식
 
 
-def text_analysis(title):
+def text_analysis():
 
-    st.title(title)
+    st.title("문서 분석 방식")
     st.write("---")
 
     # 음악 길이 지정
@@ -56,3 +56,7 @@ def text_analysis(title):
             st.write(inputs)
             requests.post(url="http://127.0.0.1:8000/text_analysis",
                           data=json.dumps(inputs))
+
+
+
+text_analysis()

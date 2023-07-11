@@ -8,9 +8,9 @@ from streamlit_tags import st_tags
 # 카테고리 선택 방식 Page
 
 
-def choice_category(title):
+def choice_category():
 
-    st.title(title)
+    st.title("카테고리 선택 방식")
     st.write("---")
 
     # multiselect
@@ -61,3 +61,8 @@ def choice_category(title):
         }
         st.write(inputs)
         requests.post(url = "http://127.0.0.1:8000/choice_category", data = json.dumps(inputs))
+        
+
+
+
+choice_category()
