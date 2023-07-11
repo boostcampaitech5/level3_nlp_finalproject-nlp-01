@@ -54,3 +54,4 @@ def text_analysis(title):
             "text": text
         }
         st.write(inputs)
+        requests.post(url = "http://127.0.0.1:8000/text_analysis", data = json.dumps(inputs))

@@ -49,3 +49,4 @@ def choice_category(title):
             "etc": options_3
         }
         st.write(inputs)
+        requests.post(url = "http://127.0.0.1:8000/choice_category", data = json.dumps(inputs))
