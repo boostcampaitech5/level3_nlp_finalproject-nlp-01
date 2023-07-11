@@ -6,6 +6,10 @@ import streamlit as st
 from streamlit_tags import st_tags
 from streamlit_space import space
 
+# custom
+from utils import get_component
+
+ETC = get_component("etc")
 
 # 문서 분석 방식
 
