@@ -41,17 +41,28 @@ def text_analysis(title):
             suggestions=['Green', 'Yellow', 'Red', 'Blue'],
             key="etc_choice")
     
+        options_4 = st.selectbox(
+            label='생성할 음악의 시간을 정해주세요',
+            options=['0:10', '0:30', '1:00', '1:30', '2:00', '3:00'],
+            )
+
+        options_5 = st.radio('음악의 빠르기를 선택해 주세요', ['slow', 'normal', 'fast'])
+    
     # text area
     text = st.text_area('분석을 진행하고 싶은 텍스트를 입력하세요 👉')
     
     if st.button("SUBMIT"):
         # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
+        min, sec = map(int,options_4.split(':'))
+        options_4 = min*60 + sec
         inputs = {
             "genre": options_0,
             "instrument": options_1,
             "mood": options_2,
             "etc": options_3,
-            "text": text
+            "text": text,
+            "time": options_4,
+            "tempo": options_5,
         }
         st.write(inputs)
         requests.post(url = "http://127.0.0.1:8000/text_analysis", data = json.dumps(inputs))

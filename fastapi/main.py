@@ -7,6 +7,8 @@ class CategoryInput(BaseModel):
     instrument: List[str]
     mood: List[str]
     etc: List[str]
+    time: int
+    tempo: str
 
 class TextInput(BaseModel):
     genre: List[str]
@@ -14,6 +16,8 @@ class TextInput(BaseModel):
     mood: List[str]
     etc: List[str]
     text: str
+    time: int
+    tempo: str
 
 app = FastAPI()
     
