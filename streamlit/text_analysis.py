@@ -29,6 +29,13 @@ def text_analysis(title):
     )
     space(lines=2)
 
+    # 사용자 keywords 생성
+    options_2 = st_tags(
+        label='### 그 외 (ETC)',
+        text='그 외에 추가하고 싶은 곡 정보를 입력해주세요.',
+        value=[],
+        suggestions=ETC,
+        key="etc_choice")
     space(lines=2)
     # text area
     space(lines=1)
