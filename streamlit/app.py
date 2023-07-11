@@ -5,59 +5,19 @@ import os
 # streamlit tools
 import streamlit as st
 from streamlit_tags import st_tags
+from choice_category import choice_category
+from text_analysis import text_analysis
 
-BASE_PATH = "./app"
+BASE_PATH = "" # 내 로컬에서 작업할 경우 오류가 나서 일단 없앰
 SIDEBAR_IMAGE_PATH = os.path.join(BASE_PATH, "assets/crying_frog.png")
-APP_WORK = ["카테고리 선택 방식", "문서 분석 방식"]
+APP_WORK = ["카테고리 선택 방식", "문서 분석 방식", "test"]
 
 st.sidebar.image(SIDEBAR_IMAGE_PATH)
 page = st.sidebar.radio("원하는 서비스를 선택하세요", APP_WORK)
 
-
-# 카테고리 선택 방식
-
-def choice_category():
-
-    # multiselect
-    st.write('### 장르 (Genre)')
-    options_0 = st.multiselect(
-        label='🎼 배경음악의 장르를 정해주세요.',
-        options=['Green', 'Yellow', 'Red', 'Blue'],
-        default=['Red'])
-
-    st.write('### 악기 (Musical Instruments)')
-    options_1 = st.multiselect(
-        label='🥁 배경음악의 악기를 정해주세요.',
-        options=['Green', 'Yellow', 'Red', 'Blue'],
-        default=['Yellow'])
-
-    st.write('### 분위기 (Mood)')
-    options_2 = st.multiselect(
-        label='📣 배경음악의 분위기를 정해주세요.',
-        options=['Green', 'Yellow', 'Red', 'Blue'],
-        default=['Green'])
-
-    # 사용자 keywords 생성
-    options_3 = st_tags(
-        label='### 그 외 (ETC)',
-        text='그 외에 추가하고 싶은 곡 정보를 입력해주세요.',
-        value=['Blue'],
-        suggestions=['Green', 'Yellow', 'Red', 'Blue'],
-        key="etc_choice")
-
-    if st.button("SUBMIT"):
-        # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
-        st.write(options_0+options_1+options_2+options_3)
-
-
-# 문서 분석 방식
-
-def text_analysis():
-    # text area
-    text = st.text_area('분석을 진행하고 싶은 텍스트를 입력하세요 👉')
-    if st.button("SUBMIT"):
-        # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
-        st.write(text)
+def test(title):
+    st.title(title)
+    st.write("---")
 
 
 def main():
@@ -65,12 +25,11 @@ def main():
 
     # page 선택에 따라 함수 호출
     if page == APP_WORK[0]:
-        st.title(f"# {APP_WORK[0]}")
-        st.write("---")
-        choice_category()
+        choice_category(APP_WORK[0])
     elif page == APP_WORK[1]:
-        st.title(f"# {APP_WORK[1]}")
-        text_analysis()
+        text_analysis(APP_WORK[1])
+    elif page == APP_WORK[2]:
+        test(APP_WORK[2])
 
 
 main()      # 메인 실행문
