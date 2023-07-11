@@ -10,7 +10,7 @@ from text_analysis import text_analysis
 from guide import guide
 
 
-BASE_PATH = "" # 내 로컬에서 작업할 경우 오류가 나서 일단 없앰
+BASE_PATH = "streamlit"  # 내 로컬에서 작업할 경우 오류가 나서 일단 없앰
 SIDEBAR_IMAGE_PATH = os.path.join(BASE_PATH, "assets/crying_frog.png")
 APP_WORK = ["가이드", "카테고리 선택 방식", "문서 분석 방식"]
 
@@ -29,7 +29,6 @@ def main():
         choice_category(APP_WORK[1])
     elif page == APP_WORK[2]:
         text_analysis(APP_WORK[2])
-    
 
 
 main()      # 메인 실행문
