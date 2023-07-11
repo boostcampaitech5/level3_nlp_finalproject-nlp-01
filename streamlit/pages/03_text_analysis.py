@@ -14,7 +14,13 @@ ETC = get_component("etc")
 # 문서 분석 방식
 
 
-def text_analysis():
+def text_analysis(title):
+
+    title_cols1, title_cols2 = st.columns([14, 2])
+    with title_cols1:
+        st.title(title)
+    with title_cols2:
+        ta_info = st.button(label='?')
 
     st.title("문서 분석 방식")
     st.write("---")
