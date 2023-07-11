@@ -11,7 +11,7 @@ from guide import guide
 
 
 BASE_PATH = "streamlit"  # 내 로컬에서 작업할 경우 오류가 나서 일단 없앰
-SIDEBAR_IMAGE_PATH = os.path.join(BASE_PATH, "assets/crying_frog.png")
+SIDEBAR_IMAGE_PATH = os.path.join(BASE_PATH, "assets/sidebar_logo.png")
 APP_WORK = ["가이드", "카테고리 선택 방식", "문서 분석 방식"]
 
 
