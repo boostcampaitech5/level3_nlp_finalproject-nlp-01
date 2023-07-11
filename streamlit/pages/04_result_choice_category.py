@@ -17,6 +17,7 @@ def create_exam_audio():
     note_la = np.sin(frequency_la * t * 2 * np.pi)
     return note_la
 
+
 def create_exam_binary():
     binary_contents = b'example content'
     return binary_contents
@@ -36,9 +37,9 @@ def result_choice_category(title, inputs):
         options=inputs['captions'],
         default=inputs['captions'],
         disabled=True
-        )
+    )
 
-    col_1, col_2 = st.columns([4,1])
+    col_1, col_2 = st.columns([4, 1])
 
     for i, w in enumerate(inputs['wav']):
         col_1.audio(data=w)
@@ -51,7 +52,7 @@ def result_choice_category(title, inputs):
 
 # 임시 input
 inputs = {
-    'captions':['1', '2', '3'],
+    'captions': ['1', '2', '3'],
     'wav': [create_exam_binary(), create_exam_binary(), create_exam_binary(), create_exam_binary()]
-    }
+}
 result_choice_category('Result', inputs)
