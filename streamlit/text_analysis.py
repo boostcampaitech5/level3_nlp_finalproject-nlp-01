@@ -38,4 +38,6 @@ def text_analysis(title):
         key="etc_choice")
     space(lines=2)
     # text area
+    st.subheader("텍스트 (Texts)")
+    text = st.text_area('👉 분석을 진행하고 싶은 텍스트를 입력하세요.')
     space(lines=1)
