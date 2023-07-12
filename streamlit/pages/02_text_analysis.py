@@ -9,10 +9,8 @@ from streamlit_tags import st_tags
 from streamlit_space import space
 
 # custom
-from utils import get_component, add_logo, delete_another_session_state
-from constraints import PATH
-
-ETC = get_component("etc")
+from utils import add_logo, delete_another_session_state, get_music_category
+from constraints import PATH, TAG
 
 TITLE = "문서 분석 방식"
 TEST_MUSIC_PATH = os.path.join(PATH.BASE_PATH, "assets", "test_music.wav")
@@ -75,6 +73,7 @@ TITLE = "문서 분석 방식"
 
 def text_analysis():
     add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)
+    category = get_music_category()
 
     # Title
     st.title(TITLE)
@@ -94,7 +93,7 @@ def text_analysis():
         label='### ⚙ 그 외 (ETC)',
         text='그 외에 추가하고 싶은 곡 정보를 입력해주세요.',
         value=[],
-        suggestions=ETC,
+        suggestions=category[TAG.ETC],
         key="etc_choice")
     space(lines=2)
 
