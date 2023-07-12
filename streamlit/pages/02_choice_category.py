@@ -1,5 +1,6 @@
 import json
 import requests
+import numpy as np
 import streamlit as st
 from streamlit_tags import st_tags
 
@@ -60,9 +61,78 @@ def choice_category():
             "tempo": options_5,
         }
         st.write(inputs)
-        requests.post(url = "http://127.0.0.1:8000/choice_category", data = json.dumps(inputs))
+        # res = requests.post(url = "http://127.0.0.1:8000/choice_category", data = json.dumps(inputs))
+        st.session_state['state'] = 'result'
+        st.experimental_rerun()
         
 
+# 결과 페이지
+
+def create_exam_audio():
+    sample_rate = 44100  # 44100 samples per second
+    seconds = 2  # Note duration of 2 seconds
+
+    frequency_la = 440  # Our played note will be 440 Hz
+
+    # Generate array with seconds*sample_rate steps, ranging between 0 and seconds
+    t = np.linspace(0, seconds, seconds * sample_rate, False)
+
+    # Generate a 440 Hz sine wave
+    note_la = np.sin(frequency_la * t * 2 * np.pi)
+    return note_la
 
 
-choice_category()
+def create_exam_binary():
+    binary_contents = b'example content'
+    return binary_contents
+
+
+# 결과 페이지
+
+
+def result_choice_category(title, inputs):
+
+    st.title(title)
+    st.write("---")
+
+    st.write("### Caption")
+    captions = st.multiselect(
+        label='선택된 Caption',
+        options=inputs['captions'],
+        default=inputs['captions'],
+        disabled=True
+    )
+
+    col_1, col_2 = st.columns([4, 1])
+
+    for i, w in enumerate(inputs['wav']):
+        col_1.audio(data=w)
+        col_2.download_button(label=f"Download{i+1}", data=w)
+
+    if st.button("Return"):
+        # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
+        st.session_state['state'] = 'execute'
+        st.experimental_rerun()
+
+
+# main
+
+
+if __name__ == "__main__":
+
+    if 'state' not in st.session_state:
+        st.session_state['state'] = 'execute'
+
+    if st.session_state['state'] == 'execute':
+        choice_category()
+
+    else:
+        # 임시 input 생성
+        inputs = {
+            'captions': ['1', '2', '3'],
+            'wav': [create_exam_binary(), create_exam_binary(), create_exam_binary(), create_exam_binary()]
+        }
+        
+        result_choice_category('Result', inputs)
+
+    del st.session_state['state']
