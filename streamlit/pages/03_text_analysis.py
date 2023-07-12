@@ -155,7 +155,7 @@ if __name__ == "__main__":
         st.session_state['state'] = 'execute'
 
     if st.session_state['state'] == 'execute':
-        text_analysis("문서 분석방식")
+        text_analysis()
 
     else:
         result_text_analysis()
