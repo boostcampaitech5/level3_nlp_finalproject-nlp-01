@@ -6,9 +6,11 @@ from pathlib import Path
 import streamlit as st
 import validators
 
+from constraints import PATH
+
 
 def get_component(tag: str) -> List:
-    with open("./streamlit/assets/component_data.json", "r") as file:
+    with open(PATH.DATA_PATH, "r") as file:
         component = json.load(file)
 
     return component[tag]
