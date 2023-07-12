@@ -16,11 +16,8 @@ from constraints import PATH
 
 ETC = get_component("etc")
 
-downloads_path = os.path.join(Path.home(), "Downloads")
 TITLE = "문서 분석 방식"
-IMAGE_ICON_PATH = "./streamlit/assets/music_icon.png"
-MUSIC_PATH = "./streamlit/assets/test_music.wav"
-
+MUSIC_PATH = os.path.join(PATH.BASE_PATH, "assets", "test_music.wav")
 TEST_CAPTION = ["Orchestral", "With a strings", "Cinematic", "Slow bpm"]
 button_num = 0
 
@@ -44,7 +41,7 @@ class TextAnalysisContent():
         # 첫번째 라인
         self.col00, self.col01 = st.columns([1, 10])
         with self.col00:        # 아이콘 부분
-            icon = Image.open(IMAGE_ICON_PATH)
+            icon = Image.open(PATH.IMAGE_ICON_PATH)
             st.image(icon)
         with self.col01:        # 캡션 부분
             caption = ', '.join(self.caption)
