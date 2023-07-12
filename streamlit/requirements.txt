@@ -1,3 +1,4 @@
 streamlit
 streamlit-tags
 streamlit_space
+streamlit-extras
