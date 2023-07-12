@@ -127,7 +127,7 @@ def choice_category(title, options):
         # res = requests.post(url = "http://127.0.0.1:8000/choice_category", data = json.dumps(inputs))
 
         # session_state 변경 -> result 페이지로 이동
-        st.session_state['state'] = 'result'
+        st.session_state['choice_state'] = 'result'
         st.experimental_rerun()
 
 
@@ -173,7 +173,7 @@ def result_choice_category(title, inputs):
 
     if button_cols.button("Return"):
         # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
-        st.session_state['state'] = 'execute'
+        st.session_state['choice_state'] = 'execute'
         st.experimental_rerun()
 
 
@@ -181,14 +181,15 @@ def result_choice_category(title, inputs):
 
 
 if __name__ == "__main__":
+
     audio_file = open(TEST_MUSIC_PATH, 'rb').read()
 
-    if 'state' not in st.session_state:
-        st.session_state['state'] = 'execute'
+    if 'choice_state' not in st.session_state:
+        st.session_state['choice_state'] = 'execute'
 
     add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)
 
-    if st.session_state['state'] == 'execute':
+    if st.session_state['choice_state'] == 'execute':
         choice_category('카테고리 선택', None)
 
     else:
@@ -198,5 +199,3 @@ if __name__ == "__main__":
             'wav': [audio_file, audio_file, audio_file, audio_file]
         }
         result_choice_category('Result', inputs)
-
-    del st.session_state['state']  # 페이지에서 이동할 경우 state초기화
