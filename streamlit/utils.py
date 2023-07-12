@@ -45,3 +45,17 @@ def add_logo(logo_url: str, height: int = 120):
         """,
         unsafe_allow_html=True,
     )
+
+
+def delete_another_session_state(current_state: str):
+    """session_state 삭제.
+
+    현제 페이지의 session_state의 state만 남기고, 다른 페이지의 state를 삭제합니다.
+
+    Args:
+        remain_state (str): 현제 페이지의 session_state
+    """
+    for state in st.session_state.to_dict():
+        if 'state' in state and state != current_state:
+            del st.session_state[state]
+
