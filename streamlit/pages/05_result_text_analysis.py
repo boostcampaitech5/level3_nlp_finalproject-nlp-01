@@ -3,9 +3,11 @@ import os
 
 import streamlit as st
 from streamlit_space import space
-from pathlib import Path
 
-downloads_path = os.path.join(Path.home(), "Downloads")
+# custom
+from utils import add_logo
+from constraints import PATH
+
 
 # 문서 분석 방식
 TITLE = "문서 분석 방식"
@@ -59,6 +61,7 @@ class TextAnalysisContent():
 
 
 def result_text_analysis():
+    add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)
     summary_text = "Orchestral, with a strings, cinematic, slow bpm"
     audio_file = open(MUSIC_PATH, 'rb').read()
 

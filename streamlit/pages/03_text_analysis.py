@@ -7,22 +7,23 @@ from streamlit_tags import st_tags
 from streamlit_space import space
 
 # custom
-from utils import get_component
+from utils import get_component, add_logo
+from constraints import PATH
 
 ETC = get_component("etc")
 
 # 문서 분석 방식
+TITLE = "문서 분석 방식"
 
 
-def text_analysis(title):
+def text_analysis():
+    add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)
 
     title_cols1, title_cols2 = st.columns([14, 2])
     with title_cols1:
-        st.title(title)
+        st.title(TITLE)
     with title_cols2:
         ta_info = st.button(label='?')
-
-    st.title("문서 분석 방식")
     st.write("---")
 
     # 음악 길이 지정
@@ -62,7 +63,6 @@ def text_analysis(title):
             st.write(inputs)
             requests.post(url="http://127.0.0.1:8000/text_analysis",
                           data=json.dumps(inputs))
-
 
 
 text_analysis()

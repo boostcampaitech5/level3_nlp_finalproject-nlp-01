@@ -3,12 +3,15 @@ import requests
 import streamlit as st
 from streamlit_tags import st_tags
 
-
+# custom
+from utils import add_logo
+from constraints import PATH
 
 # 카테고리 선택 방식 Page
 
 
 def choice_category():
+    add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)
 
     st.title("카테고리 선택 방식")
     st.write("---")
@@ -49,7 +52,7 @@ def choice_category():
 
     if st.button("SUBMIT"):
         # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
-        min, sec = map(int,options_4.split(':'))
+        min, sec = map(int, options_4.split(':'))
         options_4 = min*60 + sec
         inputs = {
             "genre": options_0,
@@ -60,9 +63,8 @@ def choice_category():
             "tempo": options_5,
         }
         st.write(inputs)
-        requests.post(url = "http://127.0.0.1:8000/choice_category", data = json.dumps(inputs))
-        
-
+        requests.post(url="http://127.0.0.1:8000/choice_category",
+                      data=json.dumps(inputs))
 
 
 choice_category()
