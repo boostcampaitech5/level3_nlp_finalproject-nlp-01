@@ -1,9 +1,7 @@
 import json
 import requests
 import os
-import numpy as np
 import streamlit as st
-from pathlib import Path
 from PIL import Image
 
 # streamlit tools
