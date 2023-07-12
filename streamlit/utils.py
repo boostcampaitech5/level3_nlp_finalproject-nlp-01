@@ -6,14 +6,7 @@ from pathlib import Path
 import streamlit as st
 import validators
 
-from constraints import PATH
-
-
-def get_component(tag: str) -> List:
-    with open(PATH.DATA_PATH, "r") as file:
-        component = json.load(file)
-
-    return component[tag]
+from constraints import PATH, TAG
 
 
 def add_logo(logo_url: str, height: int = 120):
@@ -64,4 +57,9 @@ def get_music_category():
     with open(PATH.DATA_PATH, 'r', encoding='utf-8') as f:
         datas = json.load(f)
 
+    datas[TAG.GENRES] = [tag.title() for tag in datas[TAG.GENRES]]
+    datas[TAG.INSTRUMENTS] = [tag.title() for tag in datas[TAG.INSTRUMENTS]]
+    datas[TAG.MOODS] = [tag.title() for tag in datas[TAG.MOODS]]
+
+    datas[TAG.ETC] = datas[TAG.GENRES]+datas[TAG.INSTRUMENTS]+datas[TAG.MOODS]
     return datas
