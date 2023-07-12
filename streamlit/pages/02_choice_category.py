@@ -1,5 +1,3 @@
-import json
-import requests
 import numpy as np
 import streamlit as st
 from streamlit_tags import st_tags
