@@ -3,12 +3,42 @@ import requests
 import numpy as np
 import streamlit as st
 from streamlit_tags import st_tags
+from streamlit_space import space
+from PIL import Image
+
 
 # custom
 from utils import add_logo
 from constraints import PATH
 
 # 카테고리 선택 방식 Page
+button_num = 0
+
+
+class CategoryChoiceContent():
+    def __init__(self, file):
+        self.music_file = file
+
+    def set_content(self):
+        global button_num
+
+        # 첫번째 라인
+        col0, col1, col2 = st.columns([2, 8, 2])
+        with col0:        # 아이콘 부분
+            icon = Image.open(PATH.IMAGE_ICON_PATH).resize((100, 100))
+            st.image(icon)
+        with col1:        # 음악 재생 부분
+            st.audio(self.music_file, format='audio/ogg')
+        with col2:
+            music_caption = '_'.join(self.caption)
+            st.download_button(
+                label=":blue[DOWNLOAD]",        # 버튼 라벨 텍스트
+                key=f"button{str(button_num)}",
+                data=self.music_file,
+                file_name=f"{music_caption}_music.wav"
+            )
+            button_num += 1     # 버튼은 key값을 지정해야 하기때문에 임의로 Key를 지정
+        space(lines=2)      # 컨텐츠 구분을 짓기 위한 개행 처리
 
 
 def choice_category():
