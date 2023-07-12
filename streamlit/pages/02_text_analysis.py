@@ -121,7 +121,7 @@ def text_analysis():
                 "text": text,
             }
             # requests.post(url="http://127.0.0.1:8000/text_analysis", data=json.dumps(inputs))
-            st.session_state['state'] = 'result'
+            st.session_state['text_state'] = 'result'
             st.experimental_rerun()
 
 
@@ -146,7 +146,7 @@ def result_text_analysis():
         content.set_content()
 
     if st.button("Return"):
-        st.session_state['state'] = 'result'
+        st.session_state['text_state'] = 'execute'
         st.experimental_rerun()
 
 
@@ -155,13 +155,13 @@ def result_text_analysis():
 
 if __name__ == "__main__":
 
-    if 'state' not in st.session_state:
-        st.session_state['state'] = 'execute'
+    if 'text_state' not in st.session_state:
+        st.session_state['text_state'] = 'execute'
 
-    if st.session_state['state'] == 'execute':
+    if st.session_state['text_state'] == 'execute':
         text_analysis()
 
     else:
         result_text_analysis()
 
-    del st.session_state['state']
+
