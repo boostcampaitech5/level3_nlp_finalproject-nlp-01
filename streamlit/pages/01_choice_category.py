@@ -12,6 +12,8 @@ from constraints import PATH
 
 # 카테고리 선택 방식 Page
 button_num = 0
+TEST_MUSIC_PATH = os.path.join(PATH.BASE_PATH, "assets", "test_music.wav")
+TEST_CAPTION = ["Orchestral", "With a strings", "Cinematic", "Slow bpm"]
 
 
 class CategoryChoiceContent():
