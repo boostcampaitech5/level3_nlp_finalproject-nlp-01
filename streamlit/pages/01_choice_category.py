@@ -152,7 +152,7 @@ def create_exam_binary():
 
 # 결과 페이지
 def result_choice_category(title, inputs):
-
+    caption = inputs['captions']
     st.title(title)
     st.write("---")
 
@@ -164,11 +164,10 @@ def result_choice_category(title, inputs):
         disabled=True
     )
 
-    col_1, col_2 = st.columns([4, 1])
+    music_contents = [CategoryChoiceContent(caption, w) for w in inputs['wav']]
+    for content in music_contents:
+        content.set_content()
 
-    for i, w in enumerate(inputs['wav']):
-        col_1.audio(data=w)
-        col_2.download_button(label=f"Download{i+1}", data=w)
 
     _, button_cols = st.columns([14, 2])
 
