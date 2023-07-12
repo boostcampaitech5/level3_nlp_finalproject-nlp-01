@@ -63,6 +63,9 @@ def choice_category(title, options):
     st.title(title)
     st.write("---")
 
+    with st.expander("설명"):
+        st.write("사용법 설명")
+
     # multiselect
     st.subheader('🎼 장르 (Genre)')
     genre = st.multiselect(

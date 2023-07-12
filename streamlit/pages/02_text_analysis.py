@@ -86,6 +86,9 @@ def text_analysis():
 
     st.write("---")
 
+    with st.expander("설명"):
+        st.write("사용법 설명")
+
     # 음악 길이 지정
     st.subheader("재생 길이 (Length)")
     options_1 = st.selectbox(
