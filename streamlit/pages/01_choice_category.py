@@ -16,7 +16,6 @@ button_num = 0
 TEST_MUSIC_PATH = os.path.join(PATH.BASE_PATH, "assets", "test_music.wav")
 TEST_CAPTION = ["Orchestral", "With a strings", "Cinematic", "Slow bpm"]
 
-
 class CategoryChoiceContent():
     def __init__(self, caption, file):
         self.caption = caption
@@ -60,6 +59,38 @@ class CategoryChoiceContent():
 # 카테고리 선택 페이지
 def choice_category(title, options):
 
+    # default 설정
+    if "choice_inputs" not in st.session_state:
+        default = {
+            "genre": [],
+            "instruments": [],
+            "mood": [],
+            "etc": [],
+            "duration": 1, # index이므로
+            "tempo": 1, # index이므로
+        }
+    else:
+        duration = st.session_state['choice_inputs']['duration']
+        duration = str(int(duration/60))+':'+str(duration%60)
+        for i, s in enumerate(options['duration']):
+            if s == duration:
+                duration = i
+                break
+        
+        for i, s in enumerate(options['tempo']):
+            if s == st.session_state['choice_inputs']['tempo']:
+                tempo = i
+                break
+        
+        default = {
+            "genre": st.session_state['choice_inputs']['genre'],
+            "instruments": st.session_state['choice_inputs']['instruments'],
+            "mood": st.session_state['choice_inputs']['mood'],
+            "etc": st.session_state['choice_inputs']['etc'],
+            "duration": duration, # index이므로
+            "tempo": tempo, # index이므로
+        }
+
     st.title(title)
     st.write("---")
 
@@ -70,31 +101,30 @@ def choice_category(title, options):
     st.subheader('🎼 장르 (Genre)')
     genre = st.multiselect(
         label='생성할 음악의 장르를 선택해 주세요.',
-        options=['Green', 'Yellow', 'Red', 'Blue'],
-        default=['Red'])
+        options=options['genre'],
+        default=default['genre'])
     space(lines=1)
 
     st.subheader('🥁 악기 (Musical Instruments)')
-    Instruments = st.multiselect(
+    instruments = st.multiselect(
         label='생성할 음악의 악기를 선택해 주세요.',
-        options=['Green', 'Yellow', 'Red', 'Blue'],
-        default=['Yellow'])
+        options=options['instruments'],
+        default=default['instruments'])
     space(lines=1)
 
     st.subheader('📣 분위기 (Mood)')
     mood = st.multiselect(
         label='생성할 음악의 분위기를 선택해 주세요.',
-        options=['Green', 'Yellow', 'Red', 'Blue'],
-        default=['Green'])
+        options=options['mood'],
+        default=default['mood'])
     space(lines=1)
 
     # 사용자 keywords 생성
     etc = st_tags(
         label='### ⚙ 기타 (ETC)',
         text='생성할 음악의 추가정보를 입력해 주세요',
-        value=[],
-        suggestions=['Green', 'Yellow', 'Red', 'Blue'],
-        key="etc_choice")
+        value=default['etc'],
+        suggestions=[])
     space(lines=1)
 
     col_1, col_2 = st.columns([1, 1], gap="large")
@@ -102,12 +132,14 @@ def choice_category(title, options):
     col_1.subheader('⌛ 길이(Duration)')
     duration = col_1.selectbox(
         label='생성할 음악의 길이를 선택해 주세요',
-        options=['0:10', '0:30', '1:00', '1:30', '2:00', '3:00'],
-        index=1,
-    )
+        options=options['duration'],
+        index=default['duration'])
 
     col_2.subheader('🏇 속도 (Tempo)')
-    tempo = col_2.radio('생성할 음악의 빠르기를 선택해 주세요', ['Slow', 'Medium', 'Fast'])
+    tempo = col_2.radio(
+        label='생성할 음악의 빠르기를 선택해 주세요', 
+        options=options['tempo'], 
+        index=default['tempo'])
 
     _, button_cols = st.columns([14, 2])
     if button_cols.button("Submit"):
@@ -119,12 +151,14 @@ def choice_category(title, options):
         # input 생성
         inputs = {
             "genre": genre,
-            "instruments": Instruments,
+            "instruments": instruments,
             "mood": mood,
             "etc": etc,
             "duration": duration,
             "tempo": tempo,
         }
+        
+        st.session_state['choice_inputs'] = inputs
 
         # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
         # res = requests.post(url = "http://127.0.0.1:8000/choice_category", data = json.dumps(inputs))
@@ -186,6 +220,17 @@ def result_choice_category(title, inputs):
 
 if __name__ == "__main__":
 
+    
+    # 임시 options 생성 -> DB에서 받을 예정
+    options = {
+        "genre": ['Green', 'Yellow', 'Red', 'Blue'],
+        "instruments": ['Green', 'Yellow', 'Red', 'Blue'],
+        "mood": ['Green', 'Yellow', 'Red', 'Blue'],
+        "etc": [],
+        "duration": ['0:10', '0:30', '1:00', '1:30', '2:00', '3:00'],
+        "tempo": ['Slow', 'Medium', 'Fast'],
+    }
+
     audio_file = open(TEST_MUSIC_PATH, 'rb').read()
 
     if 'choice_state' not in st.session_state:
@@ -196,7 +241,7 @@ if __name__ == "__main__":
     add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)
 
     if st.session_state['choice_state'] == 'execute':
-        choice_category('카테고리 선택', None)
+        choice_category(title='카테고리 선택', options=options)
 
     else:
         # 임시 input 생성
