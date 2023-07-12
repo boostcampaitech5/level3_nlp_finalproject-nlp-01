@@ -87,14 +87,14 @@ def choice_category(title, options):
 
     # 사용자 keywords 생성
     etc = st_tags(
-        label='### 기타 (ETC)',
+        label='### ⚙ 기타 (ETC)',
         text='생성할 음악의 추가정보를 입력해 주세요',
         value=[],
         suggestions=['Green', 'Yellow', 'Red', 'Blue'],
         key="etc_choice")
     space(lines=1)
 
-    col_1, col_2 = st.columns([1, 1])
+    col_1, col_2 = st.columns([1, 1], gap="large")
 
     col_1.subheader('⌛ 길이(Duration)')
     duration = col_1.selectbox(
@@ -103,7 +103,7 @@ def choice_category(title, options):
         index=1,
     )
 
-    col_2.subheader('속도 (Tempo)')
+    col_2.subheader('🏇 속도 (Tempo)')
     tempo = col_2.radio('생성할 음악의 빠르기를 선택해 주세요', ['Slow', 'Medium', 'Fast'])
 
     _, button_cols = st.columns([14, 2])
@@ -157,13 +157,14 @@ def result_choice_category(title, inputs):
     st.title(title)
     st.write("---")
 
-    st.write("### Caption")
+    st.write("### 📃 \t캡션 정보 (Caption)")
     captions = st.multiselect(
-        label='선택된 Caption',
+        label='',
         options=inputs['captions'],
         default=inputs['captions'],
         disabled=True
     )
+    space(lines=3)
 
     music_contents = [CategoryChoiceContent(caption, w) for w in inputs['wav']]
     for content in music_contents:
@@ -197,6 +198,6 @@ if __name__ == "__main__":
             'captions': TEST_CAPTION,
             'wav': [audio_file, audio_file, audio_file, audio_file]
         }
-        result_choice_category('Result', inputs)
+        result_choice_category('🎧 Music Generate Result', inputs)
 
     del st.session_state['state']  # 페이지에서 이동할 경우 state초기화
