@@ -58,3 +58,10 @@ def delete_another_session_state(current_state: str) -> None:
     for state in st.session_state.to_dict():
         if 'state' in state and state != current_state:
             del st.session_state[state]
+
+
+def get_music_category():
+    with open(PATH.DATA_PATH, 'r', encoding='utf-8') as f:
+        datas = json.load(f)
+
+    return datas
