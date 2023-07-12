@@ -32,8 +32,15 @@ class TextAnalysisContent():
 
         st.markdown("""
         <style>
+        @import url('https://fonts.googleapis.com/css2?family=Stylish&display=swap');
         .big-font {
-            font-size:20px !important; text-align: center;
+            font-size:22px !important; text-align: center;
+            font-family: 'Stylish', sans-serif;
+        }
+        button {
+            height: auto;
+            padding-top: 14px !important;
+            padding-bottom: 14px !important;
         }
         </style>
         """, unsafe_allow_html=True)
@@ -41,7 +48,7 @@ class TextAnalysisContent():
         # 첫번째 라인
         self.col00, self.col01 = st.columns([1, 10])
         with self.col00:        # 아이콘 부분
-            icon = Image.open(PATH.IMAGE_ICON_PATH)
+            icon = Image.open(PATH.IMAGE_ICON_PATH).resize((60, 60))
             st.image(icon)
         with self.col01:        # 캡션 부분
             caption = ', '.join(self.caption)
