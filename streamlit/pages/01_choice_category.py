@@ -141,8 +141,13 @@ def choice_category(title, options):
         options=options['tempo'], 
         index=default['tempo'])
 
-    _, button_cols = st.columns([14, 2])
-    if button_cols.button("Submit"):
+    button_cols_1, button_cols_2 = st.columns([14, 2])
+    if button_cols_1.button('초기화'):
+        if "choice_inputs" in st.session_state:
+            del st.session_state['choice_inputs']
+            st.experimental_rerun()
+
+    if button_cols_2.button("Submit"):
 
         # duration 파싱
         min, sec = map(int, duration.split(':'))
