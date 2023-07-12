@@ -134,6 +134,8 @@ def text_analysis():
 
 
 def result_text_analysis():
+    # 사이드바 로고 추가
+    add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)
     summary_text = "Orchestral, with a strings, cinematic, slow bpm"
     audio_file = open(TEST_MUSIC_PATH, 'rb').read()
 
