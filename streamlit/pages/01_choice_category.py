@@ -7,9 +7,9 @@ from PIL import Image
 
 
 # custom
-from utils import add_logo, delete_another_session_state
+from utils import add_logo, delete_another_session_state, get_music_category
 from streamlit_space import space
-from constraints import PATH
+from constraints import PATH, TAG
 
 # 카테고리 선택 방식 Page
 button_num = 0
@@ -101,21 +101,21 @@ def choice_category(title, options):
     st.subheader('🎼 장르 (Genre)')
     genre = st.multiselect(
         label='생성할 음악의 장르를 선택해 주세요.',
-        options=options['genre'],
+        options=options[TAG.GENRES],
         default=default['genre'])
     space(lines=1)
 
     st.subheader('🥁 악기 (Musical Instruments)')
     instruments = st.multiselect(
         label='생성할 음악의 악기를 선택해 주세요.',
-        options=options['instruments'],
+        options=options[TAG.INSTRUMENTS],
         default=default['instruments'])
     space(lines=1)
 
     st.subheader('📣 분위기 (Mood)')
     mood = st.multiselect(
         label='생성할 음악의 분위기를 선택해 주세요.',
-        options=options['mood'],
+        options=options[TAG.MOODS],
         default=default['mood'])
     space(lines=1)
 
@@ -221,15 +221,10 @@ def result_choice_category(title, inputs):
 if __name__ == "__main__":
 
     
-    # 임시 options 생성 -> DB에서 받을 예정
-    options = {
-        "genre": ['Green', 'Yellow', 'Red', 'Blue'],
-        "instruments": ['Green', 'Yellow', 'Red', 'Blue'],
-        "mood": ['Green', 'Yellow', 'Red', 'Blue'],
-        "etc": [],
-        "duration": ['0:10', '0:30', '1:00', '1:30', '2:00', '3:00'],
-        "tempo": ['Slow', 'Medium', 'Fast'],
-    }
+    # 임시 options -> DB에서 받을 예정
+    options = get_music_category()
+    options['tempo'] = ['Slow', 'Medium', 'Fast']
+    options['duration'] = ['0:10', '0:30', '1:00', '1:30', '2:00', '3:00']
 
     audio_file = open(TEST_MUSIC_PATH, 'rb').read()
 
