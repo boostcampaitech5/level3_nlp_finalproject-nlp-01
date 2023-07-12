@@ -11,7 +11,7 @@ from streamlit_tags import st_tags
 from streamlit_space import space
 
 # custom
-from utils import get_component, add_logo
+from utils import get_component, add_logo, delete_another_session_state
 from constraints import PATH
 
 ETC = get_component("etc")
@@ -81,6 +81,10 @@ def text_analysis():
     # Title
     st.title(TITLE)
     st.write("---")
+
+    # 설명
+    with st.expander("설명"):
+        st.write("사용법 설명")
 
     # text area
     st.subheader("📔 텍스트 (Texts)")
@@ -160,6 +164,8 @@ if __name__ == "__main__":
 
     if 'text_state' not in st.session_state:
         st.session_state['text_state'] = 'execute'
+
+    delete_another_session_state('text_state')
 
     if st.session_state['text_state'] == 'execute':
         text_analysis()
