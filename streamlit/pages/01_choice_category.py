@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import streamlit as st
 from streamlit_tags import st_tags
@@ -168,7 +169,6 @@ def result_choice_category(title, inputs):
     for content in music_contents:
         content.set_content()
 
-
     _, button_cols = st.columns([14, 2])
 
     if button_cols.button("Return"):
@@ -181,6 +181,7 @@ def result_choice_category(title, inputs):
 
 
 if __name__ == "__main__":
+    audio_file = open(TEST_MUSIC_PATH, 'rb').read()
 
     if 'state' not in st.session_state:
         st.session_state['state'] = 'execute'
@@ -193,8 +194,8 @@ if __name__ == "__main__":
     else:
         # 임시 input 생성
         inputs = {
-            'captions': ['1', '2', '3'],
-            'wav': [create_exam_binary(), create_exam_binary(), create_exam_binary(), create_exam_binary()]
+            'captions': TEST_CAPTION,
+            'wav': [audio_file, audio_file, audio_file, audio_file]
         }
         result_choice_category('Result', inputs)
 

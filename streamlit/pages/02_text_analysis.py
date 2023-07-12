@@ -17,7 +17,7 @@ from constraints import PATH
 ETC = get_component("etc")
 
 TITLE = "문서 분석 방식"
-MUSIC_PATH = os.path.join(PATH.BASE_PATH, "assets", "test_music.wav")
+TEST_MUSIC_PATH = os.path.join(PATH.BASE_PATH, "assets", "test_music.wav")
 TEST_CAPTION = ["Orchestral", "With a strings", "Cinematic", "Slow bpm"]
 button_num = 0
 
@@ -120,7 +120,7 @@ def text_analysis():
 
 def result_text_analysis():
     summary_text = "Orchestral, with a strings, cinematic, slow bpm"
-    audio_file = open(MUSIC_PATH, 'rb').read()
+    audio_file = open(TEST_MUSIC_PATH, 'rb').read()
 
     st.title(TITLE)
     st.write("---")
