@@ -7,7 +7,7 @@ from PIL import Image
 
 
 # custom
-from utils import add_logo
+from utils import add_logo, delete_another_session_state
 from streamlit_space import space
 from constraints import PATH
 
@@ -187,6 +187,8 @@ if __name__ == "__main__":
 
     if 'choice_state' not in st.session_state:
         st.session_state['choice_state'] = 'execute'
+
+    delete_another_session_state('choice_state')
 
     add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)
 

@@ -11,7 +11,7 @@ from streamlit_tags import st_tags
 from streamlit_space import space
 
 # custom
-from utils import get_component, add_logo
+from utils import get_component, add_logo, delete_another_session_state
 from constraints import PATH
 
 ETC = get_component("etc")
@@ -158,10 +158,10 @@ if __name__ == "__main__":
     if 'text_state' not in st.session_state:
         st.session_state['text_state'] = 'execute'
 
+    delete_another_session_state('text_state')
+
     if st.session_state['text_state'] == 'execute':
         text_analysis()
 
     else:
         result_text_analysis()
-
-
