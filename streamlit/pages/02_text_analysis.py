@@ -1,9 +1,7 @@
 import json
 import requests
 import os
-import numpy as np
 import streamlit as st
-from pathlib import Path
 from PIL import Image
 
 # streamlit tools
@@ -11,10 +9,8 @@ from streamlit_tags import st_tags
 from streamlit_space import space
 
 # custom
-from utils import get_component, add_logo, delete_another_session_state
-from constraints import PATH
-
-ETC = get_component("etc")
+from utils import add_logo, delete_another_session_state, get_music_category
+from constraints import PATH, TAG
 
 TITLE = "문서 분석 방식"
 TEST_MUSIC_PATH = os.path.join(PATH.BASE_PATH, "assets", "test_music.wav")
@@ -77,58 +73,68 @@ TITLE = "문서 분석 방식"
 
 def text_analysis():
     add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)
+    category = get_music_category()
 
-    title_cols1, title_cols2 = st.columns([14, 2])
-    with title_cols1:
-        st.title(TITLE)
-    with title_cols2:
-        ta_info = st.button(label='?')
-
+    # Title
+    st.title(TITLE)
     st.write("---")
 
+    # 설명
     with st.expander("설명"):
         st.write("사용법 설명")
 
-    # 음악 길이 지정
-    st.subheader("재생 길이 (Length)")
-    options_1 = st.selectbox(
-        label='⌛ 생성할 음악의 시간을 정해주세요. ',
-        index=2,
-        options=['0 : 10', '0 : 20', '0 : 30', '0 : 40',
-                 '1 : 00', '1 : 30', '2 : 00', '3 : 00'],
-    )
-    space(lines=2)
+    # text area
+    st.subheader("📔 텍스트 (Texts)")
+    text = st.text_area('👉 분석을 진행하고 싶은 텍스트를 입력하세요.', height=300)
+    space(lines=1)
 
     # 사용자 keywords 생성
-    options_2 = st_tags(
-        label='### 그 외 (ETC)',
+    etc_data = st_tags(
+        label='### ⚙ 그 외 (ETC)',
         text='그 외에 추가하고 싶은 곡 정보를 입력해주세요.',
         value=[],
-        suggestions=ETC,
+        suggestions=category[TAG.ETC],
         key="etc_choice")
     space(lines=2)
-    # text area
-    st.subheader("텍스트 (Texts)")
-    text = st.text_area('👉 분석을 진행하고 싶은 텍스트를 입력하세요.')
-    space(lines=1)
+
+    col_1, col_2 = st.columns([1, 1], gap="large")
+
+    col_1.subheader('⌛ 길이(Duration)')
+    duration = col_1.selectbox(
+        label='생성할 음악의 길이를 선택해 주세요',
+        options=['0:10', '0:30', '1:00', '1:30', '2:00', '3:00'],
+        index=1,
+    )
+
+    col_2.subheader('🏇 속도 (Tempo)')
+    tempo = col_2.radio('생성할 음악의 빠르기를 선택해 주세요', ['Slow', 'Medium', 'Fast'])
+
+    space(lines=2)
+
     # Submit button
     _, button_cols = st.columns([14, 2])
     with button_cols:
         if st.button("SUBMIT"):
-            # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
-            min, sec = map(int, options_1.split(':'))
-            length = min*60 + sec
+            # duration 파싱
+            min, sec = map(int, duration.split(':'))
+            duration = min*60 + sec
             inputs = {
-                "length": length,
-                "etc": options_2,
                 "text": text,
+                "etc": etc_data,
+                "length": duration,
+                "tempo": tempo,
             }
+
             # requests.post(url="http://127.0.0.1:8000/text_analysis", data=json.dumps(inputs))
             st.session_state['text_state'] = 'result'
             st.experimental_rerun()
 
 
 def result_text_analysis():
+    # 사이드바 로고 추가
+    add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)
+
+    # 테스트 데이터
     summary_text = "Orchestral, with a strings, cinematic, slow bpm"
     audio_file = open(TEST_MUSIC_PATH, 'rb').read()
 
@@ -142,19 +148,19 @@ def result_text_analysis():
 
     # print contents
     music_contents = []
-    for _ in range(5):
+    for _ in range(3):
         music_contents.append(TextAnalysisContent(TEST_CAPTION, audio_file))
 
     for content in music_contents:
         content.set_content()
 
-    if st.button("Return"):
+    _, button_cols = st.columns([14, 2])
+    if button_cols.button("Return"):
         st.session_state['text_state'] = 'execute'
         st.experimental_rerun()
 
 
 # main
-
 
 if __name__ == "__main__":
 
