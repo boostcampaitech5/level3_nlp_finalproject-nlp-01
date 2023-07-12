@@ -147,13 +147,14 @@ def result_text_analysis():
 
     # print contents
     music_contents = []
-    for _ in range(5):
+    for _ in range(3):
         music_contents.append(TextAnalysisContent(TEST_CAPTION, audio_file))
 
     for content in music_contents:
         content.set_content()
 
-    if st.button("Return"):
+    _, button_cols = st.columns([14, 2])
+    if button_cols.button("Return"):
         st.session_state['text_state'] = 'execute'
         st.experimental_rerun()
 
