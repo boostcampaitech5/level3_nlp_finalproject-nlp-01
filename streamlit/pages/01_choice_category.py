@@ -17,16 +17,30 @@ TEST_CAPTION = ["Orchestral", "With a strings", "Cinematic", "Slow bpm"]
 
 
 class CategoryChoiceContent():
-    def __init__(self, file):
+    def __init__(self, caption, file):
+        self.caption = caption
         self.music_file = file
 
     def set_content(self):
         global button_num
 
+        st.markdown("""
+        <style>
+        .big-font {
+            font-size:20px !important; text-align: center;
+        }
+        button {
+            height: auto;
+            padding-top: 14px !important;
+            padding-bottom: 14px !important;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
         # 첫번째 라인
-        col0, col1, col2 = st.columns([2, 8, 2])
+        col0, col1, col2 = st.columns([2, 13, 3])
         with col0:        # 아이콘 부분
-            icon = Image.open(PATH.IMAGE_ICON_PATH).resize((100, 100))
+            icon = Image.open(PATH.IMAGE_ICON_PATH).resize((60, 60))
             st.image(icon)
         with col1:        # 음악 재생 부분
             st.audio(self.music_file, format='audio/ogg')
