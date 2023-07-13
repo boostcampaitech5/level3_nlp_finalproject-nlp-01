@@ -94,8 +94,12 @@ def choice_category(title, options):
     st.title(title)
     st.write("---")
 
-    with st.expander("설명"):
-        st.write("사용법 설명")
+    with st.expander("사용법 가이드"):
+        st.write("1. 장르와 악기, 분위기를 선택해 주세요 | 여러개를 선택하셔도, 선택하지 않으셔도 됩니다!")
+        st.write("2. 장르와 악기, 분위기를 제외하고 추가하고 싶은 키워드가 있다면 '기타(ETC)'에 추가해 주세요")
+        st.write("3. 마지막으로, 음악의 길이와 속도를 선택하고 Submit을 눌러주세요!")
+        space(lines=1)
+        st.write("(주의) 초기화 버튼을 누르면 선택한 모든 카테고리가 사라집니다")
 
     # multiselect
     st.subheader('🎼 장르 (Genre)')
@@ -226,7 +230,7 @@ def result_choice_category(title, inputs):
 if __name__ == "__main__":
 
     
-    # 임시 options -> DB에서 받을 예정
+    # 임시 options
     options = get_music_category()
     options['tempo'] = ['Slow', 'Medium', 'Fast']
     options['duration'] = ['0:10', '0:30', '1:00', '1:30', '2:00', '3:00']
