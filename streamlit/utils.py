@@ -1,5 +1,4 @@
 import json
-from typing import List
 import base64
 from pathlib import Path
 
@@ -31,7 +30,8 @@ def add_logo(logo_url: str, height: int = 120):
                 background-image: {logo};
                 background-repeat: no-repeat;
                 background-size: 250px;
-                padding-top: {height - 40}px;
+                padding-top: {height+50}px;
+                margin-top: 50px;
                 background-position: 20px 20px;
             }}
         </style>
