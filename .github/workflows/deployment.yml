@@ -22,8 +22,4 @@ jobs: # CI/CD 세부 동작 (Job) 설정.
         run: | # S3 버킷 이름.
           aws s3 cp --region ap-northeast-2 ./test-build.zip s3://${{ secrets.S3_BUCKET }}/build/test-build.zip
       - name: Deploy # S3에 올라간 zip 파일을 CodeDeploy를 통해 가져온다..
-        run: aws deploy create-deployment
-          --application-name ${{ secrets.CODEDEPLOY_NAME }} \
-          --deployment-config-name CodeDeployDefault.OneAtATime \
-          --deployment-group-name ${{ secrets.CODEDEPLOY_GROUP }} \
-          --s3-location bucket=${{ secrets.S3_BUCKET }},bundleType=zip
+        run: aws deploy create-deployment --application-name ${{ secrets.CODEDEPLOY_NAME }} --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name ${{ secrets.CODEDEPLOY_GROUP }} --s3-location bucket=${{ secrets.S3_BUCKET }},bundleType=zip
