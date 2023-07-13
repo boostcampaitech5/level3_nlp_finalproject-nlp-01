@@ -112,8 +112,12 @@ def text_analysis():
     space(lines=2)
 
     # Submit button
-    _, button_cols = st.columns([14, 2])
-    with button_cols:
+    button_cols_1, button_cols_2 = st.columns([14, 2])
+    if button_cols_1.button('초기화'):
+        if "choice_inputs" in st.session_state:
+            del st.session_state['choice_inputs']
+            st.experimental_rerun()
+    with button_cols_2:
         if st.button("SUBMIT"):
             # duration 파싱
             min, sec = map(int, duration.split(':'))
