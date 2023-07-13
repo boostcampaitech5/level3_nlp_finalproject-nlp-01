@@ -16,6 +16,7 @@ button_num = 0
 TEST_MUSIC_PATH = os.path.join(PATH.BASE_PATH, "assets", "test_music.wav")
 TEST_CAPTION = ["Orchestral", "With a strings", "Cinematic", "Slow bpm"]
 
+
 class CategoryChoiceContent():
     def __init__(self, caption, file):
         self.caption = caption
@@ -66,40 +67,40 @@ def choice_category(title, options):
             "instruments": [],
             "mood": [],
             "etc": [],
-            "duration": 1, # index이므로
-            "tempo": 1, # index이므로
+            "duration": 1,  # index이므로
+            "tempo": 1,  # index이므로
         }
     else:
         duration = st.session_state['choice_inputs']['duration']
-        duration = str(int(duration/60))+':'+str(duration%60)
+        duration = str(int(duration/60))+':'+str(duration % 60)
         for i, s in enumerate(options['duration']):
             if s == duration:
                 duration = i
                 break
-        
+
         for i, s in enumerate(options['tempo']):
             if s == st.session_state['choice_inputs']['tempo']:
                 tempo = i
                 break
-        
+
         default = {
             "genre": st.session_state['choice_inputs']['genre'],
             "instruments": st.session_state['choice_inputs']['instruments'],
             "mood": st.session_state['choice_inputs']['mood'],
             "etc": st.session_state['choice_inputs']['etc'],
-            "duration": duration, # index이므로
-            "tempo": tempo, # index이므로
+            "duration": duration,  # index이므로
+            "tempo": tempo,  # index이므로
         }
 
     st.title(title)
     st.write("---")
 
     with st.expander("사용법 가이드"):
-        st.write("1. 장르와 악기, 분위기를 선택해 주세요 | 여러개를 선택하셔도, 선택하지 않으셔도 됩니다!")
-        st.write("2. 장르와 악기, 분위기를 제외하고 추가하고 싶은 키워드가 있다면 '기타(ETC)'에 추가해 주세요")
-        st.write("3. 마지막으로, 음악의 길이와 속도를 선택하고 Submit을 눌러주세요!")
+        st.write("1. 장르와 악기, 분위기를 선택해 주세요. 여러개를 선택하셔도, 선택하지 않으셔도 됩니다!!")
+        st.write("2. 카테고리 외에 추가하고 싶은 키워드가 있다면 '기타(ETC)'에 추가해 주세요")
+        st.write("3. 마지막으로, 음악의 재생시간과 속도를 선택하고 Submit 버튼을 눌러주세요!!")
         space(lines=1)
-        st.write("(주의) 초기화 버튼을 누르면 선택한 모든 카테고리가 사라집니다")
+        st.write("※ 주의 ) 초기화 버튼을 누르면 선택한 모든 카테고리가 사라집니다")
 
     # multiselect
     st.subheader('🎼 장르 (Genre)')
@@ -141,8 +142,8 @@ def choice_category(title, options):
 
     col_2.subheader('🏇 속도 (Tempo)')
     tempo = col_2.radio(
-        label='생성할 음악의 빠르기를 선택해 주세요', 
-        options=options['tempo'], 
+        label='생성할 음악의 빠르기를 선택해 주세요',
+        options=options['tempo'],
         index=default['tempo'])
 
     button_cols_1, button_cols_2 = st.columns([14, 2])
@@ -166,7 +167,7 @@ def choice_category(title, options):
             "duration": duration,
             "tempo": tempo,
         }
-        
+
         st.session_state['choice_inputs'] = inputs
 
         # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
@@ -229,7 +230,6 @@ def result_choice_category(title, inputs):
 
 if __name__ == "__main__":
 
-    
     # 임시 options
     options = get_music_category()
     options['tempo'] = ['Slow', 'Medium', 'Fast']
