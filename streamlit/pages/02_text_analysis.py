@@ -130,7 +130,7 @@ def text_analysis():
             st.experimental_rerun()
 
 
-def result_text_analysis():
+def result_text_analysis(title):
     # 사이드바 로고 추가
     add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)
 
@@ -138,7 +138,7 @@ def result_text_analysis():
     summary_text = "Orchestral, with a strings, cinematic, slow bpm"
     audio_file = open(TEST_MUSIC_PATH, 'rb').read()
 
-    st.title(TITLE)
+    st.title(title)
     st.write("---")
 
     # summary text area
@@ -173,4 +173,4 @@ if __name__ == "__main__":
         text_analysis()
 
     else:
-        result_text_analysis()
+        result_text_analysis("🎧 Music Generate Result")
