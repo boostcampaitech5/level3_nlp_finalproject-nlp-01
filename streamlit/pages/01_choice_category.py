@@ -38,22 +38,22 @@ class CategoryChoiceContent():
         """, unsafe_allow_html=True)
 
         # 첫번째 라인
-        col0, col1, col2 = st.columns([2, 13, 3])
-        with col0:        # 아이콘 부분
+        col_0, col_1, col_2 = st.columns([2, 13, 3])
+        with col_0:     # 아이콘 부분
             icon = Image.open(PATH.IMAGE_ICON_PATH).resize((60, 60))
             st.image(icon)
-        with col1:        # 음악 재생 부분
+        with col_1:     # 음악 재생 부분
             st.audio(self.music_file, format='audio/ogg')
-        with col2:
+        with col_2:
             music_caption = '_'.join(self.caption)
             st.download_button(
-                label=":blue[DOWNLOAD]",        # 버튼 라벨 텍스트
+                label=":blue[DOWNLOAD]",    # 버튼 라벨 텍스트
                 key=f"button{str(button_num)}",
                 data=self.music_file,
                 file_name=f"{music_caption}_music.wav"
             )
             button_num += 1     # 버튼은 key값을 지정해야 하기때문에 임의로 Key를 지정
-        space(lines=2)      # 컨텐츠 구분을 짓기 위한 개행 처리
+        space(lines=1)      # 컨텐츠 구분을 짓기 위한 개행 처리
 
 
 # 카테고리 선택 페이지
@@ -94,8 +94,12 @@ def choice_category(title, options):
     st.title(title)
     st.write("---")
 
-    with st.expander("설명"):
-        st.write("사용법 설명")
+    with st.expander("사용법 가이드"):
+        st.write("1. 장르와 악기, 분위기를 선택해 주세요 | 여러개를 선택하셔도, 선택하지 않으셔도 됩니다!")
+        st.write("2. 장르와 악기, 분위기를 제외하고 추가하고 싶은 키워드가 있다면 '기타(ETC)'에 추가해 주세요")
+        st.write("3. 마지막으로, 음악의 길이와 속도를 선택하고 Submit을 눌러주세요!")
+        space(lines=1)
+        st.write("(주의) 초기화 버튼을 누르면 선택한 모든 카테고리가 사라집니다")
 
     # multiselect
     st.subheader('🎼 장르 (Genre)')
@@ -226,7 +230,7 @@ def result_choice_category(title, inputs):
 if __name__ == "__main__":
 
     
-    # 임시 options -> DB에서 받을 예정
+    # 임시 options
     options = get_music_category()
     options['tempo'] = ['Slow', 'Medium', 'Fast']
     options['duration'] = ['0:10', '0:30', '1:00', '1:30', '2:00', '3:00']
