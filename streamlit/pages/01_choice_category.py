@@ -129,7 +129,7 @@ def choice_category(title, options):
         label='### ⚙ 기타 (ETC)',
         text='생성할 음악의 추가정보를 입력해 주세요',
         value=default['etc'],
-        suggestions=[])
+        suggestions=options[TAG.ETC])
     space(lines=1)
 
     col_1, col_2 = st.columns([1, 1], gap="large")
