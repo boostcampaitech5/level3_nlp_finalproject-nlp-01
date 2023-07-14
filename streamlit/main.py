@@ -7,7 +7,7 @@ from streamlit_space import space
 from PIL import Image
 
 # custom
-from utils import add_logo
+from utils import add_logo, delete_another_session_state
 from constraints import PATH, INFO
 
 
@@ -39,6 +39,8 @@ class DemoContent():
 
 def guide():
     add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)
+
+    delete_another_session_state(' ')
 
     st.title("TextTuneS")
     st.write("---")
