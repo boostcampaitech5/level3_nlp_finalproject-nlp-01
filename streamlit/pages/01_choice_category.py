@@ -55,7 +55,6 @@ class CategoryChoiceContent():
             button_num += 1     # 버튼은 key값을 지정해야 하기때문에 임의로 Key를 지정
         space(lines=1)      # 컨텐츠 구분을 짓기 위한 개행 처리
 
-
 # 카테고리 선택 페이지
 def choice_category(title, options):
 
@@ -72,6 +71,8 @@ def choice_category(title, options):
     else:
         duration = st.session_state['choice_inputs']['duration']
         duration = str(int(duration/60))+':'+str(duration%60)
+        if len(duration) == 3:
+            duration += '0' # 3:0 인경우가 있음
         for i, s in enumerate(options['duration']):
             if s == duration:
                 duration = i
@@ -149,7 +150,7 @@ def choice_category(title, options):
     if button_cols_1.button('초기화'):
         if "choice_inputs" in st.session_state:
             del st.session_state['choice_inputs']
-            st.experimental_rerun()
+        st.experimental_rerun()
 
     if button_cols_2.button("Submit"):
 
