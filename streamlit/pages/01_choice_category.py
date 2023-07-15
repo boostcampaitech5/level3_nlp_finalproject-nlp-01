@@ -17,6 +17,7 @@ TEST_MUSIC_PATH = os.path.join(PATH.BASE_PATH, "assets", "test_music.wav")
 TEST_CAPTION = ["Orchestral", "With a strings", "Cinematic", "Slow bpm"]
 
 
+# 결과 페이지에 사용되는 클래스 -> 캡션, 음악파일, 다운로드버튼으로 구성됌
 class CategoryChoiceContent():
     def __init__(self, caption, file):
         self.caption = caption
@@ -59,7 +60,7 @@ class CategoryChoiceContent():
 # 카테고리 선택 페이지
 def choice_category(title, options):
 
-    # default 설정
+    # default 설정 -> 카테고리의 디폴트값 설정
     if "choice_inputs" not in st.session_state:
         default = {
             "genre": [],
@@ -70,6 +71,8 @@ def choice_category(title, options):
             "tempo": 1,  # index이므로
         }
     else:
+        # 결과페이지에서 돌아온 경우, default값은 선택한 카테고리를 보존
+        # duration이 int로 돌아오기 때문에 inb -> index로 변환하는 작업
         duration = st.session_state['choice_inputs']['duration']
         duration = str(int(duration/60))+':'+str(duration%60)
         if len(duration) == 3:
@@ -148,18 +151,18 @@ def choice_category(title, options):
         index=default['tempo'])
 
     button_cols_1, button_cols_2 = st.columns([14, 2])
-    if button_cols_1.button('초기화'):
+    if button_cols_1.button('초기화'): # 결과페이지에서 Return을 누르고 돌아오면 작동하지만, 첫화면에서는 작동 안됨
         if "choice_inputs" in st.session_state:
             del st.session_state['choice_inputs']
         st.experimental_rerun()
 
-    if button_cols_2.button("Submit"):
+    if button_cols_2.button("Submit"): # 제출버튼
 
-        # duration 파싱
+        # duration 파싱 -> str to int로 바꿔서 API서버로 전송
         min, sec = map(int, duration.split(':'))
         duration = min*60 + sec
 
-        # input 생성
+        # API로 전송하기 위해 input생성
         inputs = {
             "genre": genre,
             "instruments": instruments,
@@ -169,7 +172,7 @@ def choice_category(title, options):
             "tempo": tempo,
         }
 
-        st.session_state['choice_inputs'] = inputs
+        st.session_state['choice_inputs'] = inputs # 선택한 카테고리를 세션으로 저장해둠 -> 다시 Return으로 돌아갈 경우 default로 사용
 
         # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
         # res = requests.post(url = "http://127.0.0.1:8000/choice_category", data = json.dumps(inputs))
@@ -194,6 +197,7 @@ def create_exam_audio():
     return note_la
 
 
+# 임시 examp 생성
 def create_exam_binary():
     binary_contents = b'example content'
     return binary_contents
@@ -201,7 +205,7 @@ def create_exam_binary():
 
 # 결과 페이지
 def result_choice_category(title, inputs):
-    caption = inputs['captions']
+    caption = inputs['captions'] # 캡션의 정보를 받음
     st.title(title)
     st.write("---")
 
@@ -214,12 +218,14 @@ def result_choice_category(title, inputs):
     )
     space(lines=3)
 
+    # 음악, 다운로드 버튼 생성
     music_contents = [CategoryChoiceContent(caption, w) for w in inputs['wav']]
     for content in music_contents:
         content.set_content()
 
     _, button_cols = st.columns([14, 2])
 
+    # 카테고리 선택화면으로 돌아가기
     if button_cols.button("Return"):
         # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
         st.session_state['choice_state'] = 'execute'
@@ -238,16 +244,21 @@ if __name__ == "__main__":
 
     audio_file = open(TEST_MUSIC_PATH, 'rb').read()
 
+    # state가 없으면 생성 
     if 'choice_state' not in st.session_state:
         st.session_state['choice_state'] = 'execute'
 
+    # 다른 state 제거
     delete_another_session_state('choice_state')
 
+    # logo설정
     add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)
 
+    # state가 execute인 경우, 카테고리 선택페이지를 출력
     if st.session_state['choice_state'] == 'execute':
         choice_category(title='카테고리 선택', options=options)
 
+    # state가 result인 경우 결과화면을 출력
     else:
         # 임시 input 생성
         inputs = {
