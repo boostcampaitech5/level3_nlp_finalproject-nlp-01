@@ -72,8 +72,8 @@ class TextAnalysisContent():
 
 
 def text_analysis(title):
-    add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)
-    category = get_music_category()
+    add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)       # 사이드에 로고 추가
+    category = get_music_category()          # 각 카테고리의 정보 가져오기
 
     # Title
     st.title(TITLE)
