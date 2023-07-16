@@ -76,7 +76,7 @@ def text_analysis(title):
     category = get_music_category()          # 각 카테고리의 정보 가져오기
 
     # Title
-    st.title(TITLE)
+    st.title(title)
     st.write("---")
 
     # 설명
