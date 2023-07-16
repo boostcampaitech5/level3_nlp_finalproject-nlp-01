@@ -64,12 +64,12 @@ def choice_category(title, categoty):
     # default 설정 -> 카테고리의 디폴트값 설정
     if "choice_inputs" not in st.session_state:
         default = {
-            "genre": [],
-            "instruments": [],
-            "mood": [],
-            "etc": [],
-            "duration": 1,  # index이므로
-            "tempo": 1,  # index이므로
+            TAG.GENRES: [],
+            TAG.INSTRUMENTS: [],
+            TAG.MOODS: [],
+            TAG.ETC: [],
+            TAG.DURATION: 1,  # index이므로
+            TAG.TEMPO: 1,  # index이므로
         }
     else:
         # 결과페이지에서 돌아온 경우, default값은 선택한 카테고리를 보존
