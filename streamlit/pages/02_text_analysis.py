@@ -15,6 +15,8 @@ from constraints import PATH, TAG
 TITLE = "문서 분석 방식"
 button_num = 0
 
+# 문서 분석 컨텐츠 클래스
+
 
 class TextAnalysisContent():
     def __init__(self, caption, file):
@@ -24,6 +26,7 @@ class TextAnalysisContent():
     def set_content(self):
         global button_num
 
+        # css style 추가
         st.markdown("""
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Stylish&display=swap');
@@ -65,8 +68,7 @@ class TextAnalysisContent():
         space(lines=2)      # 컨텐츠 구분을 짓기 위한 개행 처리
 
 
-# 문서 분석 방식
-TITLE = "문서 분석 방식"
+# 문서 분석 페이지
 
 
 def text_analysis():
@@ -97,6 +99,7 @@ def text_analysis():
 
     col_1, col_2 = st.columns([1, 1], gap="large")
 
+    # 음악 길이
     col_1.subheader('⌛ 길이(Duration)')
     duration = col_1.selectbox(
         label='생성할 음악의 길이를 선택해 주세요',
@@ -104,12 +107,13 @@ def text_analysis():
         index=1,
     )
 
+    # 음악 속도
     col_2.subheader('🏇 속도 (Tempo)')
     tempo = col_2.radio('생성할 음악의 빠르기를 선택해 주세요', ['Slow', 'Medium', 'Fast'])
 
     space(lines=2)
 
-    # Submit button
+    # 초기화 버튼 / Submit 버튼
     button_cols_1, button_cols_2 = st.columns([14, 2])
     if button_cols_1.button('초기화'):
         if "choice_inputs" in st.session_state:
@@ -132,12 +136,14 @@ def text_analysis():
             st.experimental_rerun()
 
 
+# 생성 결과 창
+
+
 def result_text_analysis(title):
     # 사이드바 로고 추가
     add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)
 
-    # 테스트 데이터
-    summary_text = "Orchestral, with a strings, cinematic, slow bpm"
+    # 임시 데이터
     audio_file = open(PATH.TEST_MUSIC_PATH, 'rb').read()
 
     st.title(title)
