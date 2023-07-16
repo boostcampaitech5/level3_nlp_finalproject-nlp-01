@@ -104,13 +104,13 @@ def text_analysis(title):
     col_1.subheader('⌛ 길이(Duration)')
     duration = col_1.selectbox(
         label='생성할 음악의 길이를 선택해 주세요',
-        options=['0:10', '0:30', '1:00', '1:30', '2:00', '3:00'],
+        options=category[TAG.DURATION],
         index=1,
     )
 
     # 음악 속도
     col_2.subheader('🏇 속도 (Tempo)')
-    tempo = col_2.radio('생성할 음악의 빠르기를 선택해 주세요', ['Slow', 'Medium', 'Fast'])
+    tempo = col_2.radio('생성할 음악의 빠르기를 선택해 주세요', category[TAG.TEMPO])
 
     space(lines=2)
 
