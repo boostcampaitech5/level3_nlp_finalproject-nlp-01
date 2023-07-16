@@ -256,7 +256,7 @@ if __name__ == "__main__":
 
     # state가 execute인 경우, 카테고리 선택페이지를 출력
     if st.session_state['choice_state'] == 'execute':
-        choice_category(title='카테고리 선택', options=categoty)
+        choice_category(title='카테고리 선택', categoty=categoty)
 
     # state가 result인 경우 결과화면을 출력
     else:
