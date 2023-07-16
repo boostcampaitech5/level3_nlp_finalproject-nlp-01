@@ -82,6 +82,7 @@ def text_analysis(title):
     # 설명
     with st.expander("설명"):
         st.write("사용법 설명")
+        # To Do: 사용법 내용 채우기
 
     # text area
     st.subheader("📔 텍스트 (Texts)")
@@ -116,6 +117,8 @@ def text_analysis(title):
     # 초기화 버튼 / Submit 버튼
     button_cols_1, button_cols_2 = st.columns([14, 2])
     if button_cols_1.button('초기화'):
+
+        # To DO : 초기화 버튼 작업 진행
         if "choice_inputs" in st.session_state:
             del st.session_state['choice_inputs']
             st.experimental_rerun()
