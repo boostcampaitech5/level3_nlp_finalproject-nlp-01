@@ -62,4 +62,6 @@ def get_music_category():
     datas[TAG.MOODS] = [tag.title() for tag in datas[TAG.MOODS]]
 
     datas[TAG.ETC] = datas[TAG.GENRES]+datas[TAG.INSTRUMENTS]+datas[TAG.MOODS]
+    datas[TAG.TEMPO] = ['Slow', 'Medium', 'Fast']
+    datas[TAG.DURATION] = ['0:10', '0:30', '1:00', '1:30', '2:00', '3:00']
     return datas
