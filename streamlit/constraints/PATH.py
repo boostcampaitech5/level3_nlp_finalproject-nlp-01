@@ -9,3 +9,8 @@ DATA_PATH = os.path.join(BASE_PATH, "assets", "category_ver1.0.0.json")
 IMAGE_ICON_PATH = os.path.join(BASE_PATH, "assets", "music_icon.png")
 ICON_PATH = os.path.join(BASE_PATH, "assets", 'page_icon.png')
 MAIN_IMAGE = os.path.join(BASE_PATH, "assets", 'main_image.png')
+
+
+# 테스트용
+TEST_MUSIC_PATH = os.path.join(BASE_PATH, "assets", "test_music.wav")
+TEST_CAPTION = ["Orchestral", "With a strings", "Cinematic", "Slow bpm"]

@@ -13,8 +13,6 @@ from utils import add_logo, delete_another_session_state, get_music_category
 from constraints import PATH, TAG
 
 TITLE = "문서 분석 방식"
-TEST_MUSIC_PATH = os.path.join(PATH.BASE_PATH, "assets", "test_music.wav")
-TEST_CAPTION = ["Orchestral", "With a strings", "Cinematic", "Slow bpm"]
 button_num = 0
 
 
@@ -140,7 +138,7 @@ def result_text_analysis(title):
 
     # 테스트 데이터
     summary_text = "Orchestral, with a strings, cinematic, slow bpm"
-    audio_file = open(TEST_MUSIC_PATH, 'rb').read()
+    audio_file = open(PATH.TEST_MUSIC_PATH, 'rb').read()
 
     st.title(title)
     st.write("---")
@@ -153,7 +151,8 @@ def result_text_analysis(title):
     # print contents
     music_contents = []
     for _ in range(3):
-        music_contents.append(TextAnalysisContent(TEST_CAPTION, audio_file))
+        music_contents.append(TextAnalysisContent(
+            PATH.TEST_CAPTION, audio_file))
 
     for content in music_contents:
         content.set_content()
