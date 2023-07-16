@@ -153,7 +153,7 @@ def result_text_analysis(title):
     st.write("---")
 
     # summary text area
-    st.text_area(label="문서 요약 결과", value=summary_text,
+    st.text_area(label="문서 요약 결과", value=TAG.SUMMARY_TEXT,
                  height=50, disabled=True)
     space(lines=2)
 
