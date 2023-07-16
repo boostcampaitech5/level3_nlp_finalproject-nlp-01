@@ -71,7 +71,7 @@ class TextAnalysisContent():
 # 문서 분석 페이지
 
 
-def text_analysis():
+def text_analysis(title):
     add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)
     category = get_music_category()
 
@@ -179,7 +179,7 @@ if __name__ == "__main__":
     delete_another_session_state('text_state')
 
     if st.session_state['text_state'] == 'execute':
-        text_analysis()
+        text_analysis(TITLE)
 
     else:
         result_text_analysis("🎧 Music Generate Result")
