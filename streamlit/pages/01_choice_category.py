@@ -59,7 +59,7 @@ class CategoryChoiceContent():
 # 카테고리 선택 페이지
 
 
-def choice_category(title, options):
+def choice_category(title, categoty):
 
     # default 설정 -> 카테고리의 디폴트값 설정
     if "choice_inputs" not in st.session_state:
@@ -78,12 +78,12 @@ def choice_category(title, options):
         duration = str(int(duration/60))+':'+str(duration % 60)
         if len(duration) == 3:
             duration += '0'  # 3:0 인경우가 있음
-        for i, s in enumerate(options['duration']):
+        for i, s in enumerate(categoty['duration']):
             if s == duration:
                 duration = i
                 break
 
-        for i, s in enumerate(options['tempo']):
+        for i, s in enumerate(categoty['tempo']):
             if s == st.session_state['choice_inputs']['tempo']:
                 tempo = i
                 break
@@ -111,30 +111,30 @@ def choice_category(title, options):
     st.subheader('🎼 장르 (Genre)')
     genre = st.multiselect(
         label='생성할 음악의 장르를 선택해 주세요.',
-        options=options[TAG.GENRES],
-        default=default['genre'])
+        options=categoty[TAG.GENRES],
+        default=default[TAG.GENRES])
     space(lines=1)
 
     st.subheader('🥁 악기 (Musical Instruments)')
     instruments = st.multiselect(
         label='생성할 음악의 악기를 선택해 주세요.',
-        options=options[TAG.INSTRUMENTS],
-        default=default['instruments'])
+        options=categoty[TAG.INSTRUMENTS],
+        default=default[TAG.INSTRUMENTS])
     space(lines=1)
 
     st.subheader('📣 분위기 (Mood)')
     mood = st.multiselect(
         label='생성할 음악의 분위기를 선택해 주세요.',
-        options=options[TAG.MOODS],
-        default=default['mood'])
+        options=categoty[TAG.MOODS],
+        default=default[TAG.MOODS])
     space(lines=1)
 
     # 사용자 keywords 생성
     etc = st_tags(
         label='### ⚙ 기타 (ETC)',
         text='생성할 음악의 추가정보를 입력해 주세요',
-        value=default['etc'],
-        suggestions=options[TAG.ETC])
+        suggestions=categoty[TAG.ETC],
+        value=default[TAG.ETC])
     space(lines=1)
 
     col_1, col_2 = st.columns([1, 1], gap="large")
@@ -142,14 +142,14 @@ def choice_category(title, options):
     col_1.subheader('⌛ 길이(Duration)')
     duration = col_1.selectbox(
         label='생성할 음악의 길이를 선택해 주세요',
-        options=options['duration'],
-        index=default['duration'])
+        options=categoty[TAG.DURATION],
+        index=default[TAG.DURATION])
 
     col_2.subheader('🏇 속도 (Tempo)')
     tempo = col_2.radio(
         label='생성할 음악의 빠르기를 선택해 주세요',
-        options=options['tempo'],
-        index=default['tempo'])
+        options=categoty[TAG.TEMPO],
+        index=default[TAG.TEMPO])
 
     button_cols_1, button_cols_2 = st.columns([14, 2])
     if button_cols_1.button('초기화'):  # 결과페이지에서 Return을 누르고 돌아오면 작동하지만, 첫화면에서는 작동 안됨
@@ -240,9 +240,7 @@ def result_choice_category(title, inputs):
 if __name__ == "__main__":
 
     # 임시 options
-    options = get_music_category()
-    options['tempo'] = ['Slow', 'Medium', 'Fast']
-    options['duration'] = ['0:10', '0:30', '1:00', '1:30', '2:00', '3:00']
+    categoty = get_music_category()
 
     audio_file = open(PATH.TEST_MUSIC_PATH, 'rb').read()
 
@@ -258,7 +256,7 @@ if __name__ == "__main__":
 
     # state가 execute인 경우, 카테고리 선택페이지를 출력
     if st.session_state['choice_state'] == 'execute':
-        choice_category(title='카테고리 선택', options=options)
+        choice_category(title='카테고리 선택', options=categoty)
 
     # state가 result인 경우 결과화면을 출력
     else:
