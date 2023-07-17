@@ -4,11 +4,11 @@ from typing import List, Union
 from pydantic import BaseModel
 
 class CategoryInput(BaseModel):
-    genre: List[str]
-    instrument: List[str]
-    mood: List[str]
-    etc: List[str]
-    time: int
+    genres: Union[List[str], None]
+    instruments: Union[List[str], None]
+    moods: Union[List[str], None]
+    etc: Union[List[str], None]
+    duration: int
     tempo: str
 
 class TextInput(BaseModel):
