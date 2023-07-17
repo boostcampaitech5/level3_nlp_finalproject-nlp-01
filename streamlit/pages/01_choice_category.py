@@ -89,9 +89,9 @@ def choice_category(title, categoty):
                 break
 
         default = {
-            "genre": st.session_state['choice_inputs']['genre'],
+            "genres": st.session_state['choice_inputs']['genres'],
             "instruments": st.session_state['choice_inputs']['instruments'],
-            "mood": st.session_state['choice_inputs']['mood'],
+            "moods": st.session_state['choice_inputs']['moods'],
             "etc": st.session_state['choice_inputs']['etc'],
             "duration": duration,  # index이므로
             "tempo": tempo,  # index이므로
@@ -109,7 +109,7 @@ def choice_category(title, categoty):
 
     # multiselect
     st.subheader('🎼 장르 (Genre)')
-    genre = st.multiselect(
+    genres = st.multiselect(
         label='생성할 음악의 장르를 선택해 주세요.',
         options=categoty[TAG.GENRES],
         default=default[TAG.GENRES])
@@ -123,7 +123,7 @@ def choice_category(title, categoty):
     space(lines=1)
 
     st.subheader('📣 분위기 (Mood)')
-    mood = st.multiselect(
+    moods = st.multiselect(
         label='생성할 음악의 분위기를 선택해 주세요.',
         options=categoty[TAG.MOODS],
         default=default[TAG.MOODS])
@@ -165,9 +165,9 @@ def choice_category(title, categoty):
 
         # API로 전송하기 위해 input생성
         inputs = {
-            "genre": genre,
+            "genres": genres,
             "instruments": instruments,
-            "mood": mood,
+            "moods": moods,
             "etc": etc,
             "duration": duration,
             "tempo": tempo,
