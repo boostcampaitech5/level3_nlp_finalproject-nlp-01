@@ -4,6 +4,8 @@ import streamlit as st
 from streamlit_tags import st_tags
 from streamlit_space import space
 from PIL import Image
+import json
+import requests
 
 
 # custom
@@ -11,12 +13,12 @@ from utils import add_logo, delete_another_session_state, get_music_category
 from streamlit_space import space
 from constraints import PATH, TAG
 
+
 # 카테고리 선택 방식 Page
 button_num = 0
 
+
 # 결과 페이지에 사용되는 클래스 -> 캡션, 음악파일, 다운로드버튼으로 구성됌
-
-
 class CategoryChoiceContent():
     def __init__(self, caption, file):
         self.caption = caption
@@ -56,9 +58,8 @@ class CategoryChoiceContent():
             button_num += 1     # 버튼은 key값을 지정해야 하기때문에 임의로 Key를 지정
         space(lines=1)      # 컨텐츠 구분을 짓기 위한 개행 처리
 
+
 # 카테고리 선택 페이지
-
-
 def choice_category(title, categoty):
 
     # default 설정 -> 카테고리의 디폴트값 설정
@@ -190,11 +191,123 @@ def choice_category(title, categoty):
         st.session_state['choice_inputs'] = inputs
 
         # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
-        # res = requests.post(url = "http://127.0.0.1:8000/choice_category", data = json.dumps(inputs))
+        st.session_state['choice_state'] = 'submit'
+
+        # etc state생성 -> submit페이지에서 etc 정보를 받기 위함
+        if 'etc' not in st.session_state:
+            st.session_state['etc'] = etc
+        else:
+            st.session_state['etc'] = etc
 
         # session_state 변경 -> result 페이지로 이동
-        st.session_state['choice_state'] = 'result'
+        # st.session_state['choice_state'] = 'result'
         st.experimental_rerun()
+
+
+# 제출페이지 누르면 실행 -> disabled=True, button 삭제, post요청 보내고 spinner가 돌아감
+def submit(title, categoty, url, data):
+
+    # default 설정 -> 카테고리의 디폴트값 설정
+    if "choice_inputs" not in st.session_state:
+        default = {
+            TAG.GENRES: [],
+            TAG.INSTRUMENTS: [],
+            TAG.MOODS: [],
+            TAG.ETC: [],
+            TAG.DURATION: 1,  # index이므로
+            TAG.TEMPO: 1,  # index이므로
+        }
+    else:
+        # 결과페이지에서 돌아온 경우, default값은 선택한 카테고리를 보존
+        # duration이 int로 돌아오기 때문에 inb -> index로 변환하는 작업
+        duration = st.session_state['choice_inputs']['duration']
+        duration = str(int(duration/60))+':'+str(duration % 60)
+        if len(duration) == 3:
+            duration += '0'  # 3:0 인경우가 있음
+        for i, s in enumerate(categoty['duration']):
+            if s == duration:
+                duration = i
+                break
+
+        for i, s in enumerate(categoty['tempo']):
+            if s == st.session_state['choice_inputs']['tempo']:
+                tempo = i
+                break
+
+        default = {
+            "genres": st.session_state['choice_inputs']['genres'],
+            "instruments": st.session_state['choice_inputs']['instruments'],
+            "moods": st.session_state['choice_inputs']['moods'],
+            "etc": st.session_state['choice_inputs']['etc'],
+            "duration": duration,  # index이므로
+            "tempo": tempo,  # index이므로
+        }
+
+    st.title(title)
+    st.write("---")
+
+    with st.expander("사용법 가이드"):
+        st.write("1. 장르와 악기, 분위기를 선택해 주세요. 여러개를 선택하셔도, 선택하지 않으셔도 됩니다!!")
+        st.write("2. 카테고리 외에 추가하고 싶은 키워드가 있다면 '기타(ETC)'에 추가해 주세요")
+        st.write("3. 마지막으로, 음악의 재생시간과 속도를 선택하고 Submit 버튼을 눌러주세요!!")
+        space(lines=1)
+        st.write("※ 주의 ) 초기화 버튼을 누르면 선택한 모든 카테고리가 사라집니다")
+
+    # multiselect
+    st.subheader('🎼 장르 (Genre)')
+    genres = st.multiselect(
+        label='생성할 음악의 장르를 선택해 주세요.',
+        options=categoty[TAG.GENRES],
+        default=default[TAG.GENRES],
+        disabled=True)
+    space(lines=1)
+
+    st.subheader('🥁 악기 (Musical Instruments)')
+    instruments = st.multiselect(
+        label='생성할 음악의 악기를 선택해 주세요.',
+        options=categoty[TAG.INSTRUMENTS],
+        default=default[TAG.INSTRUMENTS],
+        disabled=True)
+    space(lines=1)
+
+    st.subheader('📣 분위기 (Mood)')
+    moods = st.multiselect(
+        label='생성할 음악의 분위기를 선택해 주세요.',
+        options=categoty[TAG.MOODS],
+        default=default[TAG.MOODS],
+        disabled=True)
+    space(lines=1)
+
+    # 사용자 keywords 생성
+    st.subheader('⚙ 기타 (ETC)')
+    etc = st.multiselect(
+        label='생성할 음악의 추가정보를 입력해 주세요',
+        options=st.session_state['etc'],
+        default=st.session_state['etc'],
+        disabled=True)
+    space(lines=1)
+
+    col_1, col_2 = st.columns([1, 1], gap="large")
+
+    col_1.subheader('⌛ 길이(Duration)')
+    duration = col_1.selectbox(
+        label='생성할 음악의 길이를 선택해 주세요',
+        options=categoty[TAG.DURATION],
+        index=default[TAG.DURATION],
+        disabled=True)
+
+    col_2.subheader('🏇 속도 (Tempo)')
+    tempo = col_2.radio(
+        label='생성할 음악의 빠르기를 선택해 주세요',
+        options=categoty[TAG.TEMPO],
+        index=default[TAG.TEMPO],
+        disabled=True)
+
+    with st.spinner('음악을 생성중입니다...'):
+        res = requests.post(url = url, data = json.dumps(data))
+
+    st.session_state['choice_state'] = 'result'
+    st.experimental_rerun()
 
 
 # 임시 examp생성
@@ -264,6 +377,7 @@ if __name__ == "__main__":
     # 초기화를 위한 key state생성
     if 'key' not in st.session_state:
         st.session_state['key'] = '1'
+
     # 다른 state 제거
     delete_another_session_state('choice_state')
 
@@ -273,6 +387,9 @@ if __name__ == "__main__":
     # state가 execute인 경우, 카테고리 선택페이지를 출력
     if st.session_state['choice_state'] == 'execute':
         choice_category(title='카테고리 선택', categoty=categoty)
+
+    elif st.session_state['choice_state'] == 'submit':
+        submit(title='카테고리 선택', url='http://127.0.0.1:8000/choice_category', data=st.session_state['choice_inputs'], categoty=categoty)
 
     # state가 result인 경우 결과화면을 출력
     else:
