@@ -60,7 +60,7 @@ class CategoryChoiceContent():
 
 
 # 카테고리 선택 페이지
-def choice_category(title, categoty):
+def choice_category(title, category):
 
     # default 설정 -> 카테고리의 디폴트값 설정
     if "choice_inputs" not in st.session_state:
@@ -79,12 +79,12 @@ def choice_category(title, categoty):
         duration = str(int(duration/60))+':'+str(duration % 60)
         if len(duration) == 3:
             duration += '0'  # 3:0 인경우가 있음
-        for i, s in enumerate(categoty['duration']):
+        for i, s in enumerate(category['duration']):
             if s == duration:
                 duration = i
                 break
 
-        for i, s in enumerate(categoty['tempo']):
+        for i, s in enumerate(category['tempo']):
             if s == st.session_state['choice_inputs']['tempo']:
                 tempo = i
                 break
@@ -112,7 +112,7 @@ def choice_category(title, categoty):
     st.subheader('🎼 장르 (Genre)')
     genres = st.multiselect(
         label='생성할 음악의 장르를 선택해 주세요.',
-        options=categoty[TAG.GENRES],
+        options=category[TAG.GENRES],
         default=default[TAG.GENRES],
         key="genres"+st.session_state['key'])
     space(lines=1)
@@ -120,7 +120,7 @@ def choice_category(title, categoty):
     st.subheader('🥁 악기 (Musical Instruments)')
     instruments = st.multiselect(
         label='생성할 음악의 악기를 선택해 주세요.',
-        options=categoty[TAG.INSTRUMENTS],
+        options=category[TAG.INSTRUMENTS],
         default=default[TAG.INSTRUMENTS],
         key="instruments"+st.session_state['key'])
     space(lines=1)
@@ -128,7 +128,7 @@ def choice_category(title, categoty):
     st.subheader('📣 분위기 (Mood)')
     moods = st.multiselect(
         label='생성할 음악의 분위기를 선택해 주세요.',
-        options=categoty[TAG.MOODS],
+        options=category[TAG.MOODS],
         default=default[TAG.MOODS],
         key="moods"+st.session_state['key'])
     space(lines=1)
@@ -137,7 +137,7 @@ def choice_category(title, categoty):
     etc = st_tags(
         label='### ⚙ 기타 (ETC)',
         text='생성할 음악의 추가정보를 입력해 주세요',
-        suggestions=categoty[TAG.ETC],
+        suggestions=category[TAG.ETC],
         value=default[TAG.ETC],
         key="etc"+st.session_state['key'])
     space(lines=1)
@@ -147,14 +147,14 @@ def choice_category(title, categoty):
     col_1.subheader('⌛ 길이(Duration)')
     duration = col_1.selectbox(
         label='생성할 음악의 길이를 선택해 주세요',
-        options=categoty[TAG.DURATION],
+        options=category[TAG.DURATION],
         index=default[TAG.DURATION],
         key="duration"+st.session_state['key'])
 
     col_2.subheader('🏇 속도 (Tempo)')
     tempo = col_2.radio(
         label='생성할 음악의 빠르기를 선택해 주세요',
-        options=categoty[TAG.TEMPO],
+        options=category[TAG.TEMPO],
         index=default[TAG.TEMPO],
         key="tempo"+st.session_state['key'])
 
@@ -192,15 +192,6 @@ def choice_category(title, categoty):
 
         # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
         st.session_state['choice_state'] = 'submit'
-
-        # etc state생성 -> submit페이지에서 etc 정보를 받기 위함
-        if 'etc' not in st.session_state:
-            st.session_state['etc'] = etc
-        else:
-            st.session_state['etc'] = etc
-
-        # session_state 변경 -> result 페이지로 이동
-        # st.session_state['choice_state'] = 'result'
         st.experimental_rerun()
 
 
@@ -224,12 +215,12 @@ def submit_choice_category(title, category, url, data):
         duration = str(int(duration/60))+':'+str(duration % 60)
         if len(duration) == 3:
             duration += '0'  # 3:0 인경우가 있음
-        for i, s in enumerate(categoty['duration']):
+        for i, s in enumerate(category['duration']):
             if s == duration:
                 duration = i
                 break
 
-        for i, s in enumerate(categoty['tempo']):
+        for i, s in enumerate(category['tempo']):
             if s == st.session_state['choice_inputs']['tempo']:
                 tempo = i
                 break
@@ -257,7 +248,7 @@ def submit_choice_category(title, category, url, data):
     st.subheader('🎼 장르 (Genre)')
     genres = st.multiselect(
         label='생성할 음악의 장르를 선택해 주세요.',
-        options=categoty[TAG.GENRES],
+        options=category[TAG.GENRES],
         default=default[TAG.GENRES],
         disabled=True)
     space(lines=1)
@@ -265,7 +256,7 @@ def submit_choice_category(title, category, url, data):
     st.subheader('🥁 악기 (Musical Instruments)')
     instruments = st.multiselect(
         label='생성할 음악의 악기를 선택해 주세요.',
-        options=categoty[TAG.INSTRUMENTS],
+        options=category[TAG.INSTRUMENTS],
         default=default[TAG.INSTRUMENTS],
         disabled=True)
     space(lines=1)
@@ -273,7 +264,7 @@ def submit_choice_category(title, category, url, data):
     st.subheader('📣 분위기 (Mood)')
     moods = st.multiselect(
         label='생성할 음악의 분위기를 선택해 주세요.',
-        options=categoty[TAG.MOODS],
+        options=category[TAG.MOODS],
         default=default[TAG.MOODS],
         disabled=True)
     space(lines=1)
@@ -282,8 +273,8 @@ def submit_choice_category(title, category, url, data):
     st.subheader('⚙ 기타 (ETC)')
     etc = st.multiselect(
         label='생성할 음악의 추가정보를 입력해 주세요',
-        options=st.session_state['etc'],
-        default=st.session_state['etc'],
+        options=default[TAG.ETC],
+        default=default[TAG.ETC],
         disabled=True)
     space(lines=1)
 
@@ -292,20 +283,21 @@ def submit_choice_category(title, category, url, data):
     col_1.subheader('⌛ 길이(Duration)')
     duration = col_1.selectbox(
         label='생성할 음악의 길이를 선택해 주세요',
-        options=categoty[TAG.DURATION],
+        options=category[TAG.DURATION],
         index=default[TAG.DURATION],
         disabled=True)
 
     col_2.subheader('🏇 속도 (Tempo)')
     tempo = col_2.radio(
         label='생성할 음악의 빠르기를 선택해 주세요',
-        options=categoty[TAG.TEMPO],
+        options=category[TAG.TEMPO],
         index=default[TAG.TEMPO],
         disabled=True)
 
     with st.spinner('음악을 생성중입니다...'):
         res = requests.post(url = url, data = json.dumps(data))
 
+    st.session_state['res'] = res
     st.session_state['choice_state'] = 'result'
     st.experimental_rerun()
 
@@ -366,7 +358,7 @@ def result_choice_category(title, inputs):
 if __name__ == "__main__":
 
     # 임시 options
-    categoty = get_music_category()
+    category = get_music_category()
 
     audio_file = open(PATH.TEST_MUSIC_PATH, 'rb').read()
 
@@ -386,7 +378,7 @@ if __name__ == "__main__":
 
     # state가 execute인 경우, 카테고리 선택페이지를 출력
     if st.session_state['choice_state'] == 'execute':
-        choice_category(title='카테고리 선택', categoty=categoty)
+        choice_category(title='카테고리 선택', category=category)
 
     elif st.session_state['choice_state'] == 'submit':
         submit_choice_category(title='카테고리 선택', url='http://127.0.0.1:8000/choice_category', data=st.session_state['choice_inputs'], category=category)
