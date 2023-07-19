@@ -205,7 +205,7 @@ def choice_category(title, categoty):
 
 
 # 제출페이지 누르면 실행 -> disabled=True, button 삭제, post요청 보내고 spinner가 돌아감
-def submit(title, categoty, url, data):
+def submit_choice_category(title, category, url, data):
 
     # default 설정 -> 카테고리의 디폴트값 설정
     if "choice_inputs" not in st.session_state:
@@ -389,7 +389,7 @@ if __name__ == "__main__":
         choice_category(title='카테고리 선택', categoty=categoty)
 
     elif st.session_state['choice_state'] == 'submit':
-        submit(title='카테고리 선택', url='http://127.0.0.1:8000/choice_category', data=st.session_state['choice_inputs'], categoty=categoty)
+        submit_choice_category(title='카테고리 선택', url='http://127.0.0.1:8000/choice_category', data=st.session_state['choice_inputs'], category=category)
 
     # state가 result인 경우 결과화면을 출력
     else:
