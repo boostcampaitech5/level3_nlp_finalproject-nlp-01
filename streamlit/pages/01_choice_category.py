@@ -179,12 +179,12 @@ def choice_category(title, categoty):
 
         # API로 전송하기 위해 input생성
         inputs = {
-            "genres": genres,
-            "instruments": instruments,
-            "moods": moods,
-            "etc": etc,
-            "duration": duration,
-            "tempo": tempo,
+            TAG.GENRES: genres,
+            TAG.INSTRUMENTS: instruments,
+            TAG.MOODS: moods,
+            TAG.ETC: etc,
+            TAG.DURATION: duration,
+            TAG.TEMPO: tempo,
         }
 
         # 선택한 카테고리를 세션으로 저장해둠 -> 다시 Return으로 돌아갈 경우 default로 사용
@@ -235,12 +235,12 @@ def submit(title, categoty, url, data):
                 break
 
         default = {
-            "genres": st.session_state['choice_inputs']['genres'],
-            "instruments": st.session_state['choice_inputs']['instruments'],
-            "moods": st.session_state['choice_inputs']['moods'],
-            "etc": st.session_state['choice_inputs']['etc'],
-            "duration": duration,  # index이므로
-            "tempo": tempo,  # index이므로
+            TAG.GENRES: st.session_state['choice_inputs']['genres'],
+            TAG.INSTRUMENTS: st.session_state['choice_inputs']['instruments'],
+            TAG.MOODS: st.session_state['choice_inputs']['moods'],
+            TAG.ETC: st.session_state['choice_inputs']['etc'],
+            TAG.DURATION: duration,  # index이므로
+            TAG.TEMPO: tempo,  # index이므로
         }
 
     st.title(title)
