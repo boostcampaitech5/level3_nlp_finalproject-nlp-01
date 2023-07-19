@@ -69,11 +69,36 @@ class TextAnalysisContent():
 
 
 # 문서 분석 페이지
+def text_analysis(title, category):
 
+    if "text_inputs" not in st.session_state:
+        default = {
+            TAG.TEXT: " ",
+            TAG.ETC: [],
+            TAG.DURATION: 1,  # index이므로
+            TAG.TEMPO: 1,  # index이므로
+        }
+    else:
+        duration = st.session_state['text_inputs']['duration']
+        duration = str(int(duration/60))+':'+str(duration % 60)
+        if len(duration) == 3:
+            duration += '0'  # 3:0 인경우가 있음
+        for i, s in enumerate(category['duration']):
+            if s == duration:
+                duration = i
+                break
 
-def text_analysis(title):
-    add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)       # 사이드에 로고 추가
-    category = get_music_category()          # 각 카테고리의 정보 가져오기
+        for i, s in enumerate(category['tempo']):
+            if s == st.session_state['text_inputs']['tempo']:
+                tempo = i
+                break
+
+        default = {
+            TAG.TEXT: st.session_state['text_inputs']['text'],
+            TAG.ETC: st.session_state['text_inputs']['etc'],
+            TAG.DURATION: duration,  # index이므로
+            TAG.TEMPO: tempo,  # index이므로
+        }
 
     # Title
     st.title(title)
@@ -86,16 +111,20 @@ def text_analysis(title):
 
     # text area
     st.subheader("📔 텍스트 (Texts)")
-    text = st.text_area('👉 분석을 진행하고 싶은 텍스트를 입력하세요.', height=300)
+    text = st.text_area(
+        '👉 분석을 진행하고 싶은 텍스트를 입력하세요.', 
+        height=300, 
+        value=default[TAG.TEXT],
+        key="text"+st.session_state['key'])
     space(lines=1)
 
     # 사용자 keywords 생성
     etc_data = st_tags(
         label='### ⚙ 그 외 (ETC)',
         text='그 외에 추가하고 싶은 곡 정보를 입력해주세요.',
-        value=[],
         suggestions=category[TAG.ETC],
-        key="etc_choice")
+        value=default[TAG.ETC],
+        key="etc_choice"+st.session_state['key'])
     space(lines=2)
 
     col_1, col_2 = st.columns([1, 1], gap="large")
@@ -105,13 +134,17 @@ def text_analysis(title):
     duration = col_1.selectbox(
         label='생성할 음악의 길이를 선택해 주세요',
         options=category[TAG.DURATION],
-        index=1,
+        index=default[TAG.DURATION],
+        key="duration"+st.session_state['key']
     )
 
     # 음악 속도
     col_2.subheader('🏇 속도 (Tempo)')
-    tempo = col_2.radio('생성할 음악의 빠르기를 선택해 주세요', category[TAG.TEMPO])
-
+    tempo = col_2.radio(
+        label='생성할 음악의 빠르기를 선택해 주세요',
+        options=category[TAG.TEMPO],
+        index=default[TAG.TEMPO],
+        key="tempo"+st.session_state['key'])
     space(lines=2)
 
     # 초기화 버튼 / Submit 버튼
@@ -119,9 +152,18 @@ def text_analysis(title):
     if button_cols_1.button('초기화'):
 
         # To DO : 초기화 버튼 작업 진행
-        if "choice_inputs" in st.session_state:
-            del st.session_state['choice_inputs']
-            st.experimental_rerun()
+        if "text_inputs" in st.session_state:
+            del st.session_state['text_inputs']
+
+        # key를 바꾸면 값이 초기화(덮어씌워짐)
+        if st.session_state['key'] == "1":
+            st.session_state['key'] = "2"
+        else:
+            st.session_state['key'] = "1"
+
+        st.experimental_rerun()
+        
+
     with button_cols_2:
         if st.button("SUBMIT"):
             # duration 파싱
@@ -130,21 +172,107 @@ def text_analysis(title):
             inputs = {
                 "text": text,
                 "etc": etc_data,
-                "length": duration,
+                "duration": duration,
                 "tempo": tempo,
             }
 
-            # requests.post(url="http://127.0.0.1:8000/text_analysis", data=json.dumps(inputs))
-            st.session_state['text_state'] = 'result'
+            # res = requests.post(url="http://127.0.0.1:8000/text_analysis", data=json.dumps(inputs))
+            st.session_state['text_inputs'] = inputs
+            st.session_state['text_state'] = 'submit'
             st.experimental_rerun()
 
 
+# 제출 화면
+def submit_text_analysis(title, category):
+    
+    if "text_inputs" not in st.session_state:
+        default = {
+            TAG.TEXT: " ", # []로 설정하면 []가 적혀있음
+            TAG.ETC: [],
+            TAG.DURATION: 1,  # index이므로
+            TAG.TEMPO: 1,  # index이므로
+        }
+    else:
+        duration = st.session_state['text_inputs']['duration']
+        duration = str(int(duration/60))+':'+str(duration % 60)
+        if len(duration) == 3:
+            duration += '0'  # 3:0 인경우가 있음
+        for i, s in enumerate(category['duration']):
+            if s == duration:
+                duration = i
+                break
+
+        for i, s in enumerate(category['tempo']):
+            if s == st.session_state['text_inputs']['tempo']:
+                tempo = i
+                break
+
+        default = {
+            TAG.TEXT: st.session_state['text_inputs']['text'],
+            TAG.ETC: st.session_state['text_inputs']['etc'],
+            TAG.DURATION: duration,  # index이므로
+            TAG.TEMPO: tempo,  # index이므로
+        }
+
+    # Title
+    st.title(title)
+    st.write("---")
+
+    # 설명
+    with st.expander("설명"):
+        st.write("사용법 설명")
+        # To Do: 사용법 내용 채우기
+
+    # text area
+    st.subheader("📔 텍스트 (Texts)")
+    text = st.text_area(
+        '👉 분석을 진행하고 싶은 텍스트를 입력하세요.', 
+        height=300, 
+        value=default[TAG.TEXT],
+        key="text"+st.session_state['key'],
+        disabled=True)
+    space(lines=1)
+
+    # 사용자 keywords 생성
+    st.subheader('⚙ 기타 (ETC)')
+    etc = st.multiselect(
+        label='생성할 음악의 추가정보를 입력해 주세요',
+        options=default[TAG.ETC],
+        default=default[TAG.ETC],
+        disabled=True)
+    space(lines=2)
+
+    col_1, col_2 = st.columns([1, 1], gap="large")
+
+    # 음악 길이
+    col_1.subheader('⌛ 길이(Duration)')
+    duration = col_1.selectbox(
+        label='생성할 음악의 길이를 선택해 주세요',
+        options=category[TAG.DURATION],
+        index=default[TAG.DURATION],
+        key="duration"+st.session_state['key'],
+        disabled=True
+    )
+
+    # 음악 속도
+    col_2.subheader('🏇 속도 (Tempo)')
+    tempo = col_2.radio(
+        label='생성할 음악의 빠르기를 선택해 주세요',
+        options=category[TAG.TEMPO],
+        index=default[TAG.TEMPO],
+        key="tempo"+st.session_state['key'],
+        disabled=True)
+    space(lines=2)
+
+    with st.spinner('음악을 생성중입니다...'):
+        res = requests.post(url = "http://127.0.0.1:8000/choice_category", data = json.dumps(st.session_state['text_inputs']))
+    
+    st.session_state['res'] = res
+    st.session_state['text_state'] = 'result'
+    st.experimental_rerun()
+
 # 생성 결과 창
-
-
 def result_text_analysis(title):
-    # 사이드바 로고 추가
-    add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)
 
     # 임시 데이터
     audio_file = open(PATH.TEST_MUSIC_PATH, 'rb').read()
@@ -176,13 +304,24 @@ def result_text_analysis(title):
 
 if __name__ == "__main__":
 
+    
+    add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)       # 사이드에 로고 추가
+    category = get_music_category()          # 각 카테고리의 정보 가져오기
+
     if 'text_state' not in st.session_state:
         st.session_state['text_state'] = 'execute'
+
+    # 초기화를 위한 key state생성
+    if 'key' not in st.session_state:
+        st.session_state['key'] = '1'
 
     delete_another_session_state('text_state')
 
     if st.session_state['text_state'] == 'execute':
-        text_analysis(TITLE)
+        text_analysis(TITLE, category=category)
+
+    elif st.session_state['text_state'] == 'submit':
+        submit_text_analysis(TITLE, category=category)
 
     else:
         result_text_analysis("🎧 Music Generate Result")
