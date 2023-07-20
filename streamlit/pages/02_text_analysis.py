@@ -73,6 +73,7 @@ def text_analysis(title, category):
 
     if "text_inputs" not in st.session_state:
         default = {
+            TAG.ORIGIN: " ",
             TAG.TEXT: " ",
             TAG.ETC: [],
             TAG.DURATION: 1,  # index이므로
@@ -94,8 +95,9 @@ def text_analysis(title, category):
                 break
 
         default = {
-            TAG.TEXT: st.session_state['text_inputs']['text'],
-            TAG.ETC: st.session_state['text_inputs']['etc'],
+            TAG.ORIGIN: st.session_state['text_inputs'][TAG.ORIGIN],
+            TAG.TEXT: st.session_state['text_inputs'][TAG.TEXT],
+            TAG.ETC: st.session_state['text_inputs'][TAG.ETC],
             TAG.DURATION: duration,  # index이므로
             TAG.TEMPO: tempo,  # index이므로
         }
@@ -112,9 +114,9 @@ def text_analysis(title, category):
     # text area
     st.subheader("📔 텍스트 (Texts)")
     text = st.text_area(
-        '👉 분석을 진행하고 싶은 텍스트를 입력하세요.', 
-        height=300, 
-        value=default[TAG.TEXT],
+        '👉 분석을 진행하고 싶은 텍스트를 입력하세요.',
+        height=300,
+        value=default[TAG.ORIGIN],
         key="text"+st.session_state['key_num'])
     space(lines=1)
 
@@ -170,7 +172,8 @@ def text_analysis(title, category):
             min, sec = map(int, duration.split(':'))
             duration = min*60 + sec
             inputs = {
-                "text": text,
+                "origin": text,
+                "text": google_trans(text),
                 "etc": etc_data,
                 "duration": duration,
                 "tempo": tempo,
@@ -187,7 +190,8 @@ def submit_text_analysis(title, category):
     
     if "text_inputs" not in st.session_state:
         default = {
-            TAG.TEXT: " ", # []로 설정하면 []가 적혀있음
+            TAG.ORIGIN: " ",
+            TAG.TEXT: " ",  # []로 설정하면 []가 적혀있음
             TAG.ETC: [],
             TAG.DURATION: 1,  # index이므로
             TAG.TEMPO: 1,  # index이므로
@@ -208,8 +212,9 @@ def submit_text_analysis(title, category):
                 break
 
         default = {
-            TAG.TEXT: st.session_state['text_inputs']['text'],
-            TAG.ETC: st.session_state['text_inputs']['etc'],
+            TAG.ORIGIN: st.session_state['text_inputs'][TAG.ORIGIN],
+            TAG.TEXT: st.session_state['text_inputs'][TAG.TEXT],
+            TAG.ETC: st.session_state['text_inputs'][TAG.ETC],
             TAG.DURATION: duration,  # index이므로
             TAG.TEMPO: tempo,  # index이므로
         }
@@ -226,9 +231,9 @@ def submit_text_analysis(title, category):
     # text area
     st.subheader("📔 텍스트 (Texts)")
     text = st.text_area(
-        '👉 분석을 진행하고 싶은 텍스트를 입력하세요.', 
-        height=300, 
-        value=default[TAG.TEXT],
+        '👉 분석을 진행하고 싶은 텍스트를 입력하세요.',
+        height=300,
+        value=default[TAG.ORIGIN],
         key="text"+st.session_state['key_num'],
         disabled=True)
     space(lines=1)
