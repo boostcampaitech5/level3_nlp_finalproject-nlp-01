@@ -114,7 +114,7 @@ def choice_category(title, category):
         label='생성할 음악의 장르를 선택해 주세요.',
         options=category[TAG.GENRES],
         default=default[TAG.GENRES],
-        key="genres"+st.session_state['key'])
+        key="genres"+st.session_state['key_num'])
     space(lines=1)
 
     st.subheader('🥁 악기 (Musical Instruments)')
@@ -122,7 +122,7 @@ def choice_category(title, category):
         label='생성할 음악의 악기를 선택해 주세요.',
         options=category[TAG.INSTRUMENTS],
         default=default[TAG.INSTRUMENTS],
-        key="instruments"+st.session_state['key'])
+        key="instruments"+st.session_state['key_num'])
     space(lines=1)
 
     st.subheader('📣 분위기 (Mood)')
@@ -130,7 +130,7 @@ def choice_category(title, category):
         label='생성할 음악의 분위기를 선택해 주세요.',
         options=category[TAG.MOODS],
         default=default[TAG.MOODS],
-        key="moods"+st.session_state['key'])
+        key="moods"+st.session_state['key_num'])
     space(lines=1)
 
     # 사용자 keywords 생성
@@ -139,7 +139,7 @@ def choice_category(title, category):
         text='생성할 음악의 추가정보를 입력해 주세요',
         suggestions=category[TAG.ETC],
         value=default[TAG.ETC],
-        key="etc"+st.session_state['key'])
+        key="etc"+st.session_state['key_num'])
     space(lines=1)
 
     col_1, col_2 = st.columns([1, 1], gap="large")
@@ -149,26 +149,26 @@ def choice_category(title, category):
         label='생성할 음악의 길이를 선택해 주세요',
         options=category[TAG.DURATION],
         index=default[TAG.DURATION],
-        key="duration"+st.session_state['key'])
+        key="duration"+st.session_state['key_num'])
 
     col_2.subheader('🏇 속도 (Tempo)')
     tempo = col_2.radio(
         label='생성할 음악의 빠르기를 선택해 주세요',
         options=category[TAG.TEMPO],
         index=default[TAG.TEMPO],
-        key="tempo"+st.session_state['key'])
+        key="tempo"+st.session_state['key_num'])
 
     button_cols_1, button_cols_2 = st.columns([14, 2])
     if button_cols_1.button('초기화'):  # 결과페이지에서 Return을 누르고 돌아오면 작동하지만, 첫화면에서는 작동 안됨
         if "choice_inputs" in st.session_state:
             del st.session_state['choice_inputs']
 
-        # key를 바꾸면 값이 초기화(덮어씌워짐)
-        if st.session_state['key'] == "1":
-            st.session_state['key'] = "2"
+        # key값 변경
+        if st.session_state['key_num'] == TAG.ONE:
+            st.session_state['key_num'] = TAG.TWO
         else:
-            st.session_state['key'] = "1"
-
+            st.session_state['key_num'] = TAG.ONE
+            
         st.experimental_rerun()
 
     if button_cols_2.button("Submit"):  # 제출버튼
@@ -366,9 +366,9 @@ if __name__ == "__main__":
     if 'choice_state' not in st.session_state:
         st.session_state['choice_state'] = 'execute'
 
-    # 초기화를 위한 key state생성
-    if 'key' not in st.session_state:
-        st.session_state['key'] = '1'
+    # key값을 변경 -> 값의 초기화하고 새로고침을 만들기 위해 key값을 다르게 설정
+    if 'key_num' not in st.session_state:
+        st.session_state['key_num'] = TAG.ONE
 
     # 다른 state 제거
     delete_another_session_state('choice_state')

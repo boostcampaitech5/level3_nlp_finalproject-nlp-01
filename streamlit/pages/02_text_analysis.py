@@ -115,7 +115,7 @@ def text_analysis(title, category):
         '👉 분석을 진행하고 싶은 텍스트를 입력하세요.', 
         height=300, 
         value=default[TAG.TEXT],
-        key="text"+st.session_state['key'])
+        key="text"+st.session_state['key_num'])
     space(lines=1)
 
     # 사용자 keywords 생성
@@ -124,7 +124,7 @@ def text_analysis(title, category):
         text='그 외에 추가하고 싶은 곡 정보를 입력해주세요.',
         suggestions=category[TAG.ETC],
         value=default[TAG.ETC],
-        key="etc_choice"+st.session_state['key'])
+        key="etc_choice"+st.session_state['key_num'])
     space(lines=2)
 
     col_1, col_2 = st.columns([1, 1], gap="large")
@@ -135,7 +135,7 @@ def text_analysis(title, category):
         label='생성할 음악의 길이를 선택해 주세요',
         options=category[TAG.DURATION],
         index=default[TAG.DURATION],
-        key="duration"+st.session_state['key']
+        key="duration"+st.session_state['key_num']
     )
 
     # 음악 속도
@@ -144,7 +144,7 @@ def text_analysis(title, category):
         label='생성할 음악의 빠르기를 선택해 주세요',
         options=category[TAG.TEMPO],
         index=default[TAG.TEMPO],
-        key="tempo"+st.session_state['key'])
+        key="tempo"+st.session_state['key_num'])
     space(lines=2)
 
     # 초기화 버튼 / Submit 버튼
@@ -155,11 +155,11 @@ def text_analysis(title, category):
         if "text_inputs" in st.session_state:
             del st.session_state['text_inputs']
 
-        # key를 바꾸면 값이 초기화(덮어씌워짐)
-        if st.session_state['key'] == "1":
-            st.session_state['key'] = "2"
+        # key값을 변경 -> 값의 초기화하고 새로고침을 만들기 위해 key값을 다르게 설정
+        if st.session_state['key_num'] == TAG.ONE:
+            st.session_state['key_num'] = TAG.TWO
         else:
-            st.session_state['key'] = "1"
+            st.session_state['key_num'] = TAG.ONE
 
         st.experimental_rerun()
         
@@ -229,7 +229,7 @@ def submit_text_analysis(title, category):
         '👉 분석을 진행하고 싶은 텍스트를 입력하세요.', 
         height=300, 
         value=default[TAG.TEXT],
-        key="text"+st.session_state['key'],
+        key="text"+st.session_state['key_num'],
         disabled=True)
     space(lines=1)
 
@@ -250,7 +250,7 @@ def submit_text_analysis(title, category):
         label='생성할 음악의 길이를 선택해 주세요',
         options=category[TAG.DURATION],
         index=default[TAG.DURATION],
-        key="duration"+st.session_state['key'],
+        key="duration"+st.session_state['key_num'],
         disabled=True
     )
 
@@ -260,12 +260,12 @@ def submit_text_analysis(title, category):
         label='생성할 음악의 빠르기를 선택해 주세요',
         options=category[TAG.TEMPO],
         index=default[TAG.TEMPO],
-        key="tempo"+st.session_state['key'],
+        key="tempo"+st.session_state['key_num'],
         disabled=True)
     space(lines=2)
 
     with st.spinner('음악을 생성중입니다...'):
-        res = requests.post(url = "http://127.0.0.1:8000/choice_category", data = json.dumps(st.session_state['text_inputs']))
+        res = requests.post(url = "http://127.0.0.1:8000/text_analysis", data = json.dumps(st.session_state['text_inputs']))
     
     st.session_state['res'] = res
     st.session_state['text_state'] = 'result'
@@ -312,8 +312,8 @@ if __name__ == "__main__":
         st.session_state['text_state'] = 'execute'
 
     # 초기화를 위한 key state생성
-    if 'key' not in st.session_state:
-        st.session_state['key'] = '1'
+    if 'key_num' not in st.session_state:
+        st.session_state['key_num'] = TAG.ONE
 
     delete_another_session_state('text_state')
 
