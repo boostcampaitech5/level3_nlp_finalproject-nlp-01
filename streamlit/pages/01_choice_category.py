@@ -196,7 +196,7 @@ def choice_category(title, category):
 
 
 # 제출페이지 누르면 실행 -> disabled=True, button 삭제, post요청 보내고 spinner가 돌아감
-def submit_choice_category(title, category, url, data):
+def submit_choice_category(title, category):
 
     # default 설정 -> 카테고리의 디폴트값 설정
     if "choice_inputs" not in st.session_state:
