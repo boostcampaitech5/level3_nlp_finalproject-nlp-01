@@ -295,7 +295,13 @@ def submit_choice_category(title, category):
         disabled=True)
 
     with st.spinner('음악을 생성중입니다...'):
-        res = requests.post(url = url, data = json.dumps(data))
+        my_json = make_category_request_json(st.session_state['choice_inputs'])
+        res = requests.post(SECRET.MUSICGEN_CATEGORY_URL, json=my_json)
+        print(res)      # log로 요청이 제대로 왔는지 확인
+
+        audio_files, caption = make_audio_data(res)
+        st.session_state['audiofile'] = {
+            'audios': audio_files, 'captions': caption}
 
     st.session_state['res'] = res
     st.session_state['choice_state'] = 'result'
