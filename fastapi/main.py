@@ -12,15 +12,11 @@ class CategoryInput(BaseModel):
     duration: int
     tempo: str
 
-
-# class TextInput(BaseModel):
-#     genre: List[str]
-#     instrument: List[str]
-#     mood: List[str]
-#     etc: List[str]
-#     text: str
-#     time: int
-#     tempo: str
+class TextInput(BaseModel):
+    etc: Union[List[str], None]
+    text: str
+    duration: int
+    tempo: str
 
 
 app = FastAPI()
@@ -38,10 +34,11 @@ def choice_category(inputs: CategoryInput):
     return {"message": "test"}
 
 
-# @app.post("/text_analysis")
-# def text_analysis(inputs: TextInput):
-#     print(inputs)
-#     return {"message": "test"}
+@app.post("/text_analysis")
+def text_analysis(inputs: TextInput):
+    print(inputs)
+    time.sleep(5)
+    return {"message": "test"}
 
 
 if __name__ == "__main__":
