@@ -287,10 +287,7 @@ def submit_text_analysis(title, category):
     st.experimental_rerun()
 
 # 생성 결과 창
-def result_text_analysis(title):
 
-    # 임시 데이터
-    audio_file = open(PATH.TEST_MUSIC_PATH, 'rb').read()
 
 def result_text_analysis(title, inputs):
     caption = inputs['captions'][0].split(', ')  # 캡션의 정보를 받음
