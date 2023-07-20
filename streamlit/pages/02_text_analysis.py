@@ -80,17 +80,17 @@ def text_analysis(title, category):
             TAG.TEMPO: 1,  # index이므로
         }
     else:
-        duration = st.session_state['text_inputs']['duration']
+        duration = st.session_state['text_inputs'][TAG.DURATION]
         duration = str(int(duration/60))+':'+str(duration % 60)
         if len(duration) == 3:
             duration += '0'  # 3:0 인경우가 있음
-        for i, s in enumerate(category['duration']):
+        for i, s in enumerate(category[TAG.DURATION]):
             if s == duration:
                 duration = i
                 break
 
-        for i, s in enumerate(category['tempo']):
-            if s == st.session_state['text_inputs']['tempo']:
+        for i, s in enumerate(category[TAG.TEMPO]):
+            if s == st.session_state['text_inputs'][TAG.TEMPO]:
                 tempo = i
                 break
 
@@ -197,17 +197,17 @@ def submit_text_analysis(title, category):
             TAG.TEMPO: 1,  # index이므로
         }
     else:
-        duration = st.session_state['text_inputs']['duration']
+        duration = st.session_state['text_inputs'][TAG.DURATION]
         duration = str(int(duration/60))+':'+str(duration % 60)
         if len(duration) == 3:
             duration += '0'  # 3:0 인경우가 있음
-        for i, s in enumerate(category['duration']):
+        for i, s in enumerate(category[TAG.DURATION]):
             if s == duration:
                 duration = i
                 break
 
         for i, s in enumerate(category['tempo']):
-            if s == st.session_state['text_inputs']['tempo']:
+            if s == st.session_state['text_inputs'][TAG.TEMPO]:
                 tempo = i
                 break
 
