@@ -7,6 +7,7 @@ DURATION = 'duration'
 TEXT = 'text'
 POPULAR = "popular"
 NORMAL = 'normal'
+ORIGIN = 'origin'
 
 # 초기화 버튼을 누르면 값이 순환 1 -> 2 -> 1 ...
 ONE = '1'
