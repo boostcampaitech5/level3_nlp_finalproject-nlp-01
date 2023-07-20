@@ -270,8 +270,18 @@ def submit_text_analysis(title, category):
     space(lines=2)
 
     with st.spinner('음악을 생성중입니다...'):
-        res = requests.post(url = "http://127.0.0.1:8000/text_analysis", data = json.dumps(st.session_state['text_inputs']))
-    
+        res = requests.post(url=SECRET.TEXT_ANALYSIS_URL,
+                            data=json.dumps(st.session_state['text_inputs']))
+
+        print(">> 문서 분석 완료 : ", res)
+        keywords = create_caption(res.json())
+        my_json = make_analysis_request_json(
+            st.session_state['text_inputs'], keywords)
+        res = requests.post(SECRET.MUSICGEN_ANALYSIS_URL, json=my_json)
+        print(">> 음악 생성 완료 : ", res)
+        audio_files, caption = make_audio_data(res)
+        st.session_state['audiofile'] = {
+            'audios': audio_files, 'captions': caption}
     st.session_state['res'] = res
     st.session_state['text_state'] = 'result'
     st.experimental_rerun()
