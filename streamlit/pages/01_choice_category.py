@@ -1,17 +1,20 @@
-import os
-import numpy as np
 import streamlit as st
 from streamlit_tags import st_tags
 from streamlit_space import space
 from PIL import Image
-import json
 import requests
 
 
 # custom
-from utils import add_logo, delete_another_session_state, get_music_category
+from attribute import get_music_category
+from utils import (
+    add_logo,
+    delete_another_session_state,
+    make_category_request_json,
+    make_audio_data
+)
 from streamlit_space import space
-from constraints import PATH, TAG
+from constraints import PATH, TAG, SECRET
 
 
 # 카테고리 선택 방식 Page
@@ -61,7 +64,6 @@ class CategoryChoiceContent():
 
 # 카테고리 선택 페이지
 def choice_category(title, category):
-
     # default 설정 -> 카테고리의 디폴트값 설정
     if "choice_inputs" not in st.session_state:
         default = {
@@ -168,7 +170,7 @@ def choice_category(title, category):
             st.session_state['key_num'] = TAG.TWO
         else:
             st.session_state['key_num'] = TAG.ONE
-            
+
         st.experimental_rerun()
 
     if button_cols_2.button("Submit"):  # 제출버튼
