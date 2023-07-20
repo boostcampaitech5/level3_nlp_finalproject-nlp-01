@@ -310,21 +310,22 @@ def submit_choice_category(title, category):
 
 # 결과 페이지
 def result_choice_category(title, inputs):
-    caption = inputs['captions']  # 캡션의 정보를 받음
+    caption = inputs['captions'][0].split(', ')  # 캡션의 정보를 받음
     st.title(title)
     st.write("---")
 
     st.write("### 📃 \t캡션 정보 (Caption)")
     captions = st.multiselect(
         label='',
-        options=inputs['captions'],
-        default=inputs['captions'],
+        options=caption,
+        default=caption,
         disabled=True
     )
     space(lines=3)
 
     # 음악, 다운로드 버튼 생성
-    music_contents = [CategoryChoiceContent(caption, w) for w in inputs['wav']]
+    music_contents = [CategoryChoiceContent(
+        caption, w) for w in inputs['audios']]
     for content in music_contents:
         content.set_content()
 
@@ -366,14 +367,9 @@ if __name__ == "__main__":
         choice_category(title='카테고리 선택', category=category)
 
     elif st.session_state['choice_state'] == 'submit':
-        submit_choice_category(title='카테고리 선택', url='http://127.0.0.1:8000/choice_category', data=st.session_state['choice_inputs'], category=category)
+        submit_choice_category(title='카테고리 선택', category=category)
 
     # state가 result인 경우 결과화면을 출력
     else:
-        # 임시 input 생성
-        inputs = {
-            'captions': PATH.TEST_CAPTION,
-            'wav': [audio_file, audio_file, audio_file, audio_file]
-        }
-
-        result_choice_category('🎧 Music Generate Result', inputs)
+        result_choice_category('🎧 Music Generate Result',
+                               st.session_state['audiofile'])
