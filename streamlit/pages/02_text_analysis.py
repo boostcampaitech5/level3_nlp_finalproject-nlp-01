@@ -292,19 +292,19 @@ def result_text_analysis(title):
     # 임시 데이터
     audio_file = open(PATH.TEST_MUSIC_PATH, 'rb').read()
 
+def result_text_analysis(title, inputs):
+    caption = inputs['captions'][0].split(', ')  # 캡션의 정보를 받음
     st.title(title)
     st.write("---")
 
     # summary text area
-    st.text_area(label="문서 요약 결과", value=TAG.SUMMARY_TEXT,
+    st.text_area(label="문서 요약 결과", value=caption,
                  height=50, disabled=True)
     space(lines=2)
 
     # print contents
-    music_contents = []
-    for _ in range(3):
-        music_contents.append(TextAnalysisContent(
-            PATH.TEST_CAPTION, audio_file))
+    music_contents = [TextAnalysisContent(
+        caption, audio) for audio in inputs['audios']]
 
     for content in music_contents:
         content.set_content()
@@ -339,4 +339,5 @@ if __name__ == "__main__":
         submit_text_analysis(TITLE, category=category)
 
     else:
-        result_text_analysis("🎧 Music Generate Result")
+        result_text_analysis("🎧 Music Generate Result",
+                             st.session_state['audiofile'])
