@@ -9,6 +9,7 @@ DATA_PATH = os.path.join(BASE_PATH, "assets", "category_ver1.0.2.json")
 IMAGE_ICON_PATH = os.path.join(BASE_PATH, "assets", "music_icon.png")
 ICON_PATH = os.path.join(BASE_PATH, "assets", 'page_icon.png')
 MAIN_IMAGE = os.path.join(BASE_PATH, "assets", 'main_image.png')
+SECRET_FILE = os.path.join(BASE_PATH, "assets", "secret.json")
 
 
 # 테스트용
