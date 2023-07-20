@@ -2,3 +2,5 @@
 /env
 __pycache__
 test.py
+
+secret.json
