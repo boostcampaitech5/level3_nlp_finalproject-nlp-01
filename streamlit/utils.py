@@ -57,9 +57,17 @@ def get_music_category():
     with open(PATH.DATA_PATH, 'r', encoding='utf-8') as f:
         datas = json.load(f)
 
-    datas[TAG.GENRES] = [tag.title() for tag in datas[TAG.GENRES]]
-    datas[TAG.INSTRUMENTS] = [tag.title() for tag in datas[TAG.INSTRUMENTS]]
-    datas[TAG.MOODS] = [tag.title() for tag in datas[TAG.MOODS]]
+def create_caption(res):
+    genre, summary = res['genre'], res['summary']
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": f"Based on the contents of {genre} as genre and {summary} as story, please create a caption that expresses musical elements such as genre, instrument, emotion, and song style.\
+             Just like the following sentence: Meditative song, calming and soothing, with flutes and guitars. The music is slow, with a focus on creating a sense of peace and tranquility."},
+            {"role": "assistant", "content": "Meditative song, calming and soothing, with flutes and guitars. The music is slow, with a focus on creating a sense of peace and tranquility."},
+        ]
+    )
 
     datas[TAG.ETC] = datas[TAG.GENRES]+datas[TAG.INSTRUMENTS]+datas[TAG.MOODS]
     datas[TAG.TEMPO] = ['Slow', 'Medium', 'Fast']
