@@ -1,6 +1,5 @@
 import json
 import requests
-import os
 import streamlit as st
 from PIL import Image
 
@@ -9,8 +8,16 @@ from streamlit_tags import st_tags
 from streamlit_space import space
 
 # custom
-from utils import add_logo, delete_another_session_state, get_music_category
-from constraints import PATH, TAG
+from attribute import get_music_category
+from utils import (
+    add_logo,
+    delete_another_session_state,
+    google_trans,
+    create_caption,
+    make_analysis_request_json,
+    make_audio_data
+)
+from constraints import PATH, TAG, SECRET
 
 TITLE = "문서 분석 방식"
 button_num = 0
@@ -164,7 +171,6 @@ def text_analysis(title, category):
             st.session_state['key_num'] = TAG.ONE
 
         st.experimental_rerun()
-        
 
     with button_cols_2:
         if st.button("SUBMIT"):
@@ -179,7 +185,6 @@ def text_analysis(title, category):
                 "tempo": tempo,
             }
 
-            # res = requests.post(url="http://127.0.0.1:8000/text_analysis", data=json.dumps(inputs))
             st.session_state['text_inputs'] = inputs
             st.session_state['text_state'] = 'submit'
             st.experimental_rerun()
@@ -187,7 +192,7 @@ def text_analysis(title, category):
 
 # 제출 화면
 def submit_text_analysis(title, category):
-    
+
     if "text_inputs" not in st.session_state:
         default = {
             TAG.ORIGIN: " ",
@@ -282,6 +287,7 @@ def submit_text_analysis(title, category):
         audio_files, caption = make_audio_data(res)
         st.session_state['audiofile'] = {
             'audios': audio_files, 'captions': caption}
+
     st.session_state['res'] = res
     st.session_state['text_state'] = 'result'
     st.experimental_rerun()
@@ -316,7 +322,6 @@ def result_text_analysis(title, inputs):
 
 if __name__ == "__main__":
 
-    
     add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)       # 사이드에 로고 추가
     category = get_music_category()          # 각 카테고리의 정보 가져오기
 
