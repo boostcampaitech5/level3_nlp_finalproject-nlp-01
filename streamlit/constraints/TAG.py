@@ -22,7 +22,7 @@ TEMPO_HEADER = '🏇 속도 (Tempo)'
 TEXT_HEADER = "📔 텍스트 (Texts)"
 
 # TITLE 태그
-SIMPLE_CATEGORY_TITLE = "Simple Category / 간단 카테고리 선택"
+SIMPLE_CATEGORY_TITLE = "Simple Category / 심플 카테고리 선택"
 EXTRA_CATEGORY_TITLE = 'Extra Category / 추가 카테고리 선택'
 TEXT_ANALYSIS_TITLE = "Text Analysis / 문서 분석 방식"
 MUSIC_OUTPUT_TITLE = "🎧 Music Generate Result"
