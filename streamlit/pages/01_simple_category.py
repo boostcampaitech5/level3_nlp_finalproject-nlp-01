@@ -183,20 +183,8 @@ def simple_category(title, category):
         st.experimental_rerun()
 
     if button_cols_2.button("Submit"):  # 제출버튼
-
-        # duration 파싱 -> str to int로 바꿔서 API서버로 전송
-        min, sec = map(int, duration.split(':'))
-        duration = min*60 + sec
-
         # API로 전송하기 위해 input생성
-        inputs = {
-            TAG.GENRES: genres,
-            TAG.INSTRUMENTS: instruments,
-            TAG.MOODS: moods,
-            TAG.ETC: etc,
-            TAG.DURATION: duration,
-            TAG.TEMPO: tempo,
-        }
+        inputs = make_simple_request_json(category, st.session_state)
 
         # 선택한 카테고리를 세션으로 저장해둠 -> 다시 Return으로 돌아갈 경우 default로 사용
         st.session_state['simple_inputs'] = inputs
