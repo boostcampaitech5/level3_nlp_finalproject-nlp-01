@@ -17,7 +17,7 @@ from utils import (
     make_analysis_request_json,
     make_audio_data
 )
-from constraints import PATH, TAG, SECRET
+from constraints import INFO, PATH, TAG, SECRET
 
 TITLE = "Text Analysis / 문서 분석 방식"
 button_num = 0
@@ -29,8 +29,6 @@ st.set_page_config(
 
 
 # 문서 분석 컨텐츠 클래스
-
-
 class TextAnalysisContent():
     def __init__(self, caption, file):
         self.caption = caption
