@@ -1,4 +1,4 @@
-from attribute import get_textunes_secret
+from utils.attribute import get_textunes_secret
 secrets = get_textunes_secret()
 
 OPENAI_API = secrets['openai_api_key']
