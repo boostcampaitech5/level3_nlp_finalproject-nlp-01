@@ -36,10 +36,8 @@ class TextAnalysisContent():
         # css style 추가
         st.markdown("""
         <style>
-        @import url('https://fonts.googleapis.com/css2?family=Stylish&display=swap');
         .big-font {
-            font-size:22px !important; text-align: center;
-            font-family: 'Stylish', sans-serif;
+            font-size:20px !important; text-align: center;
         }
         button {
             height: auto;
@@ -50,29 +48,22 @@ class TextAnalysisContent():
         """, unsafe_allow_html=True)
 
         # 첫번째 라인
-        self.col00, self.col01 = st.columns([1, 10])
-        with self.col00:        # 아이콘 부분
+        col_0, col_1, col_2 = st.columns([2, 13, 3])
+        with col_0:     # 아이콘 부분
             icon = Image.open(PATH.IMAGE_ICON_PATH).resize((60, 60))
             st.image(icon)
-        with self.col01:        # 캡션 부분
-            caption = ', '.join(self.caption)
-            st.markdown(
-                f'<p class="big-font">{caption}</p>', unsafe_allow_html=True)
-
-        # 두번째 라인
-        self.col10, self.col11 = st.columns([10, 2])
-        with self.col10:        # 음악 재생 부분
-            st.audio(self.music_file, format='audio/ogg')
-        with self.col11:        # 다운로드 부분
+        with col_1:     # 음악 재생 부분
+            st.audio(self.music_file, format='audio/wav')
+        with col_2:
             music_caption = '_'.join(self.caption)
             st.download_button(
-                label=":blue[DOWNLOAD]",        # 버튼 라벨 텍스트
+                label=":blue[DOWNLOAD]",    # 버튼 라벨 텍스트
                 key=f"button{str(button_num)}",
                 data=self.music_file,
                 file_name=f"{music_caption}_music.wav"
             )
             button_num += 1     # 버튼은 key값을 지정해야 하기때문에 임의로 Key를 지정
-        space(lines=2)      # 컨텐츠 구분을 짓기 위한 개행 처리
+        space(lines=1)      # 컨텐츠 구분을 짓기 위한 개행 처리
 
 
 # 문서 분석 페이지
@@ -296,14 +287,26 @@ def submit_text_analysis(title, category):
 
 
 def result_text_analysis(title, inputs):
+    st.markdown("""
+        <style>
+            .stMultiSelect [data-baseweb=select] span{
+                max-width: 50000px;
+                font-size: 1rem;
+            }
+        </style>
+        """, unsafe_allow_html=True)
     caption = inputs['captions'][0].split(', ')  # 캡션의 정보를 받음
     st.title(title)
-    st.write("---")
+    st.divider()
 
-    # summary text area
-    st.text_area(label="문서 요약 결과", value=caption,
-                 height=50, disabled=True)
-    space(lines=2)
+    st.write("### 📃 \t문서 요약 결과 (Summarization)")
+    captions = st.multiselect(
+        label='',
+        options=caption,
+        default=caption,
+        disabled=True
+    )
+    space(lines=3)
 
     # print contents
     music_contents = [TextAnalysisContent(
