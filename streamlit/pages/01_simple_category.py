@@ -10,11 +10,11 @@ from attribute import get_simple_category
 from utils import (
     add_logo,
     delete_another_session_state,
-    make_category_request_json,
+    make_simple_request_json,
     make_audio_data
 )
 from streamlit_space import space
-from constraints import PATH, TAG, SECRET
+from constraints import INFO, PATH, TAG, SECRET
 
 
 # 카테고리 선택 방식 Page
@@ -29,6 +29,8 @@ st.set_page_config(
 )
 
 # 결과 페이지에 사용되는 클래스 -> 캡션, 음악파일, 다운로드버튼으로 구성됌
+
+
 class CategorysimpleContent():
     def __init__(self, caption, file):
         self.caption = caption
@@ -108,7 +110,7 @@ def simple_category(title, category):
         }
 
     st.title(title)
-    st.write("---")
+    st.divider()
 
     with st.expander("사용법 가이드"):
         st.markdown("""
@@ -234,7 +236,7 @@ def submit_simple_category(title, category):
         }
 
     st.title(title)
-    st.write("---")
+    st.divider()
 
     with st.expander("사용법 가이드"):
         st.markdown("""

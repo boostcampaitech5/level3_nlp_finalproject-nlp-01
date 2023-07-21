@@ -14,7 +14,7 @@ from utils import (
     make_audio_data
 )
 from streamlit_space import space
-from constraints import PATH, TAG, SECRET
+from constraints import INFO, PATH, TAG, SECRET
 
 PAGE_TITLE = 'Extra Category / 추가 카테고리 선택'
 
@@ -55,7 +55,7 @@ class CategoryChoiceContent():
             icon = Image.open(PATH.IMAGE_ICON_PATH).resize((60, 60))
             st.image(icon)
         with col_1:     # 음악 재생 부분
-            st.audio(self.music_file, format='audio/ogg')
+            st.audio(self.music_file, format='audio/wav')
         with col_2:
             music_caption = '_'.join(self.caption)
             st.download_button(
@@ -326,7 +326,7 @@ def submit_choice_category(title, category):
 def result_choice_category(title, inputs):
     caption = inputs['captions'][0].split(', ')  # 캡션의 정보를 받음
     st.title(title)
-    st.write("---")
+    st.divider()
 
     st.write("### 📃 \t캡션 정보 (Caption)")
     captions = st.multiselect(
