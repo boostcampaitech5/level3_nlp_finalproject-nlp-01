@@ -61,6 +61,27 @@ def delete_another_session_state(current_state: str) -> None:
             del st.session_state[state]
 
 
+def make_simple_request_json(category, check_dict):
+    # genres
+    genres = [genre for genre in category['genres'] if check_dict[f"{genre}1"]]
+    # instruments
+    instruments = [instrument for instrument in category['instruments']
+                   if check_dict[f"{instrument}1"]]
+    # moods
+    moods = [mood for mood in category['moods'] if check_dict[f"{mood}1"]]
+
+    minute, second = map(int, check_dict[f"{TAG.DURATION}1"].split(':'))
+
+    return {
+        TAG.GENRES: genres,
+        TAG.INSTRUMENTS: instruments,
+        TAG.MOODS: moods,
+        TAG.ETC: [t.replace("  *", "") for t in check_dict[f"{TAG.ETC}1"]],
+        TAG.DURATION: minute*60+second,
+        TAG.TEMPO: check_dict[f"{TAG.TEMPO}1"],
+    }
+
+
 def make_category_request_json(json_dict):
     return {
         TAG.GENRES: [t.replace("  *", "") for t in json_dict[TAG.GENRES]],
