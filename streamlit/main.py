@@ -14,6 +14,7 @@ from constraints import PATH, INFO
 st.set_page_config(
     page_title=INFO.PROJECT_NAME,
     page_icon=PATH.ICON_PATH,
+    layout="wide"
 )
 
 
