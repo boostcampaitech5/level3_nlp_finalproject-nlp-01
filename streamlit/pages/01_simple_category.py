@@ -214,13 +214,13 @@ def submit_simple_category(title, category):
         minute, second = duration//60, duration % 60
 
         duration = f"{minute}:{second}"
-        for i, s in enumerate(category['duration']):
+        for i, s in enumerate(category[TAG.DURATION]):
             if s == duration:
                 duration = i
                 break
 
-        for i, s in enumerate(category['tempo']):
-            if s == st.session_state['simple_inputs']['tempo']:
+        for i, s in enumerate(category[TAG.TEMPO]):
+            if s == st.session_state['simple_inputs'][TAG.TEMPO]:
                 tempo = i
                 break
 
