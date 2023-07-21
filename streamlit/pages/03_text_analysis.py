@@ -106,8 +106,14 @@ def text_analysis(title, category):
 
     # 설명
     with st.expander("설명"):
-        st.write("사용법 설명")
-        # To Do: 사용법 내용 채우기
+        st.markdown("""
+            ### 😊 "Text Analysis"는 텍스트를 입력하면 분석하여 맞춤형 배경 음악을 생성하는 방식입니다.
+            1. 음악을 생성하고 싶은 텍스트를 입력해주세요!!  
+            2. 혹시 음악에 추가하고 싶은 키워드가 있다면 `기타(ETC)`에 추가해 주세요  
+            3. 마지막으로, 음악의 `재생시간`과 `속도`를 선택하고 Submit 버튼을 눌러주세요!!  
+
+            💢 주의 ) 초기화 버튼을 누르면 선택한 모든 카테고리가 사라집니다!!  
+            """)
 
     # text area
     st.subheader("📔 텍스트 (Texts)")
