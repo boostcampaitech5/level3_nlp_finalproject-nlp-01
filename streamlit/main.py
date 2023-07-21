@@ -43,20 +43,17 @@ def guide():
 
     delete_another_session_state(' ')
 
-    st.title("TextTuneS")
-    st.write("---")
+    st.title(INFO.PROJECT_NAME)
+    st.divider()
 
-    main_col0, main_col1 = st.columns([5, 5], gap="large")
+    main_col0, main_col1 = st.columns([2, 6], gap="large")
     with main_col0:
-        icon = Image.open(PATH.MAIN_IMAGE).resize((1280, 1280))
+        icon = Image.open(PATH.MAIN_IMAGE).resize((400, 400))
         st.image(icon)
     with main_col1:
-        st.markdown("### 크리에이터를 위한 음악생성 서비스")
-        st.write(
-            "저희 **Textunes**는 많은 컨텐츠 크리에이터들을 위한 프로젝트 입니다. 누구나 쉽고 간단하게 나만의 커스터마이징한 음악을 만들 수 있습니다.")
-        st.write("음악 생성 모델을 통해서 컨텐츠를 더 완성도 높게 만들어 보세요.")
+        st.markdown(INFO.PROJECT_DETAIL)
 
-    space(lines=5)
+    space(lines=3)
 
     st.markdown("# 데모 버젼")
     st.divider()
