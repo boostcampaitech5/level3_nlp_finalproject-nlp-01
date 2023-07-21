@@ -1,17 +1,20 @@
-import os
-import numpy as np
 import streamlit as st
 from streamlit_tags import st_tags
 from streamlit_space import space
 from PIL import Image
-import json
 import requests
 
 
 # custom
-from utils import add_logo, delete_another_session_state, get_music_category
+from attribute import get_music_category
+from utils import (
+    add_logo,
+    delete_another_session_state,
+    make_category_request_json,
+    make_audio_data
+)
 from streamlit_space import space
-from constraints import PATH, TAG
+from constraints import PATH, TAG, SECRET
 
 
 # 카테고리 선택 방식 Page
@@ -61,7 +64,6 @@ class CategoryChoiceContent():
 
 # 카테고리 선택 페이지
 def choice_category(title, category):
-
     # default 설정 -> 카테고리의 디폴트값 설정
     if "choice_inputs" not in st.session_state:
         default = {
@@ -168,7 +170,7 @@ def choice_category(title, category):
             st.session_state['key_num'] = TAG.TWO
         else:
             st.session_state['key_num'] = TAG.ONE
-            
+
         st.experimental_rerun()
 
     if button_cols_2.button("Submit"):  # 제출버튼
@@ -196,7 +198,7 @@ def choice_category(title, category):
 
 
 # 제출페이지 누르면 실행 -> disabled=True, button 삭제, post요청 보내고 spinner가 돌아감
-def submit_choice_category(title, category, url, data):
+def submit_choice_category(title, category):
 
     # default 설정 -> 카테고리의 디폴트값 설정
     if "choice_inputs" not in st.session_state:
@@ -295,51 +297,37 @@ def submit_choice_category(title, category, url, data):
         disabled=True)
 
     with st.spinner('음악을 생성중입니다...'):
-        res = requests.post(url = url, data = json.dumps(data))
+        my_json = make_category_request_json(st.session_state['choice_inputs'])
+        res = requests.post(SECRET.MUSICGEN_CATEGORY_URL, json=my_json)
+        print(res)      # log로 요청이 제대로 왔는지 확인
+
+        audio_files, caption = make_audio_data(res)
+        st.session_state['audiofile'] = {
+            'audios': audio_files, 'captions': caption}
 
     st.session_state['res'] = res
     st.session_state['choice_state'] = 'result'
     st.experimental_rerun()
 
 
-# 임시 examp생성
-def create_exam_audio():
-    sample_rate = 44100  # 44100 samples per second
-    seconds = 2  # Note duration of 2 seconds
-
-    frequency_la = 440  # Our played note will be 440 Hz
-
-    # Generate array with seconds*sample_rate steps, ranging between 0 and seconds
-    t = np.linspace(0, seconds, seconds * sample_rate, False)
-
-    # Generate a 440 Hz sine wave
-    note_la = np.sin(frequency_la * t * 2 * np.pi)
-    return note_la
-
-
-# 임시 examp 생성
-def create_exam_binary():
-    binary_contents = b'example content'
-    return binary_contents
-
-
 # 결과 페이지
 def result_choice_category(title, inputs):
-    caption = inputs['captions']  # 캡션의 정보를 받음
+    caption = inputs['captions'][0].split(', ')  # 캡션의 정보를 받음
     st.title(title)
     st.write("---")
 
     st.write("### 📃 \t캡션 정보 (Caption)")
     captions = st.multiselect(
         label='',
-        options=inputs['captions'],
-        default=inputs['captions'],
+        options=caption,
+        default=caption,
         disabled=True
     )
     space(lines=3)
 
     # 음악, 다운로드 버튼 생성
-    music_contents = [CategoryChoiceContent(caption, w) for w in inputs['wav']]
+    music_contents = [CategoryChoiceContent(
+        caption, w) for w in inputs['audios']]
     for content in music_contents:
         content.set_content()
 
@@ -381,14 +369,9 @@ if __name__ == "__main__":
         choice_category(title='카테고리 선택', category=category)
 
     elif st.session_state['choice_state'] == 'submit':
-        submit_choice_category(title='카테고리 선택', url='http://127.0.0.1:8000/choice_category', data=st.session_state['choice_inputs'], category=category)
+        submit_choice_category(title='카테고리 선택', category=category)
 
     # state가 result인 경우 결과화면을 출력
     else:
-        # 임시 input 생성
-        inputs = {
-            'captions': PATH.TEST_CAPTION,
-            'wav': [audio_file, audio_file, audio_file, audio_file]
-        }
-
-        result_choice_category('🎧 Music Generate Result', inputs)
+        result_choice_category('🎧 Music Generate Result',
+                               st.session_state['audiofile'])

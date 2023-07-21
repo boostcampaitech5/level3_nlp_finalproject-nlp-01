@@ -1,11 +1,19 @@
 import json
 import base64
 from pathlib import Path
+import numpy as np
+from IPython.display import Audio
+import urllib.request
+import urllib
+from googletrans import Translator  # googletrans==3.1.0a0
 
 import streamlit as st
 import validators
+import openai
 
-from constraints import PATH, TAG
+from constraints import PATH, TAG, SECRET
+
+openai.api_key = SECRET.OPENAI_API
 
 
 def add_logo(logo_url: str, height: int = 120):
@@ -53,15 +61,55 @@ def delete_another_session_state(current_state: str) -> None:
             del st.session_state[state]
 
 
-def get_music_category():
-    with open(PATH.DATA_PATH, 'r', encoding='utf-8') as f:
-        datas = json.load(f)
+def make_category_request_json(json_dict):
+    return {
+        TAG.GENRES: [t.replace("  *", "") for t in json_dict[TAG.GENRES]],
+        TAG.INSTRUMENTS: [t.replace("  *", "") for t in json_dict[TAG.INSTRUMENTS]],
+        TAG.MOODS: [t.replace("  *", "") for t in json_dict[TAG.MOODS]],
+        TAG.ETC: [t.replace("  *", "") for t in json_dict[TAG.ETC]],
+        TAG.DURATION: json_dict[TAG.DURATION],
+        TAG.TEMPO: json_dict[TAG.TEMPO],
+    }
 
-    datas[TAG.GENRES] = [tag.title() for tag in datas[TAG.GENRES]]
-    datas[TAG.INSTRUMENTS] = [tag.title() for tag in datas[TAG.INSTRUMENTS]]
-    datas[TAG.MOODS] = [tag.title() for tag in datas[TAG.MOODS]]
 
-    datas[TAG.ETC] = datas[TAG.GENRES]+datas[TAG.INSTRUMENTS]+datas[TAG.MOODS]
-    datas[TAG.TEMPO] = ['Slow', 'Medium', 'Fast']
-    datas[TAG.DURATION] = ['0:10', '0:30', '1:00', '1:30', '2:00', '3:00']
-    return datas
+def make_analysis_request_json(json_dict, keywords):
+    return {
+        TAG.TEXT: keywords.replace('. ', ', '),
+        TAG.ETC: [t.replace("  *", "") for t in json_dict[TAG.ETC]],
+        TAG.DURATION: json_dict[TAG.DURATION],
+        TAG.TEMPO: json_dict[TAG.TEMPO],
+    }
+
+
+def make_audio_data(response):
+    res_json = response.json()
+    sample_rate = res_json['sample_rate']
+    caption = res_json['caption']
+
+    music_output = []
+
+    for res in res_json['music']:
+        music_output.append(Audio(np.array(res), rate=sample_rate).data)
+
+    return music_output, caption
+
+
+def google_trans(text):
+    translator = Translator()
+    result = translator.translate(text, src='ko', dest='en')
+    return result.text
+
+
+def create_caption(res):
+    genre, summary = res['genre'], res['summary']
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": f"Based on the contents of {genre} as genre and {summary} as story, please create a caption that expresses musical elements such as genre, instrument, emotion, and song style.\
+             Just like the following sentence: Meditative song, calming and soothing, with flutes and guitars. The music is slow, with a focus on creating a sense of peace and tranquility."},
+            {"role": "assistant", "content": "Meditative song, calming and soothing, with flutes and guitars. The music is slow, with a focus on creating a sense of peace and tranquility."},
+        ]
+    )
+
+    return response['choices'][0]['message']['content']

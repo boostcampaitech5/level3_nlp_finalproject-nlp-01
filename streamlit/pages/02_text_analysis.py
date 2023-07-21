@@ -1,6 +1,5 @@
 import json
 import requests
-import os
 import streamlit as st
 from PIL import Image
 
@@ -9,8 +8,16 @@ from streamlit_tags import st_tags
 from streamlit_space import space
 
 # custom
-from utils import add_logo, delete_another_session_state, get_music_category
-from constraints import PATH, TAG
+from attribute import get_music_category
+from utils import (
+    add_logo,
+    delete_another_session_state,
+    google_trans,
+    create_caption,
+    make_analysis_request_json,
+    make_audio_data
+)
+from constraints import PATH, TAG, SECRET
 
 TITLE = "문서 분석 방식"
 button_num = 0
@@ -73,29 +80,31 @@ def text_analysis(title, category):
 
     if "text_inputs" not in st.session_state:
         default = {
+            TAG.ORIGIN: " ",
             TAG.TEXT: " ",
             TAG.ETC: [],
             TAG.DURATION: 1,  # index이므로
             TAG.TEMPO: 1,  # index이므로
         }
     else:
-        duration = st.session_state['text_inputs']['duration']
+        duration = st.session_state['text_inputs'][TAG.DURATION]
         duration = str(int(duration/60))+':'+str(duration % 60)
         if len(duration) == 3:
             duration += '0'  # 3:0 인경우가 있음
-        for i, s in enumerate(category['duration']):
+        for i, s in enumerate(category[TAG.DURATION]):
             if s == duration:
                 duration = i
                 break
 
-        for i, s in enumerate(category['tempo']):
-            if s == st.session_state['text_inputs']['tempo']:
+        for i, s in enumerate(category[TAG.TEMPO]):
+            if s == st.session_state['text_inputs'][TAG.TEMPO]:
                 tempo = i
                 break
 
         default = {
-            TAG.TEXT: st.session_state['text_inputs']['text'],
-            TAG.ETC: st.session_state['text_inputs']['etc'],
+            TAG.ORIGIN: st.session_state['text_inputs'][TAG.ORIGIN],
+            TAG.TEXT: st.session_state['text_inputs'][TAG.TEXT],
+            TAG.ETC: st.session_state['text_inputs'][TAG.ETC],
             TAG.DURATION: duration,  # index이므로
             TAG.TEMPO: tempo,  # index이므로
         }
@@ -112,9 +121,9 @@ def text_analysis(title, category):
     # text area
     st.subheader("📔 텍스트 (Texts)")
     text = st.text_area(
-        '👉 분석을 진행하고 싶은 텍스트를 입력하세요.', 
-        height=300, 
-        value=default[TAG.TEXT],
+        '👉 분석을 진행하고 싶은 텍스트를 입력하세요.',
+        height=300,
+        value=default[TAG.ORIGIN],
         key="text"+st.session_state['key_num'])
     space(lines=1)
 
@@ -162,7 +171,6 @@ def text_analysis(title, category):
             st.session_state['key_num'] = TAG.ONE
 
         st.experimental_rerun()
-        
 
     with button_cols_2:
         if st.button("SUBMIT"):
@@ -170,13 +178,13 @@ def text_analysis(title, category):
             min, sec = map(int, duration.split(':'))
             duration = min*60 + sec
             inputs = {
-                "text": text,
+                "origin": text,
+                "text": google_trans(text),
                 "etc": etc_data,
                 "duration": duration,
                 "tempo": tempo,
             }
 
-            # res = requests.post(url="http://127.0.0.1:8000/text_analysis", data=json.dumps(inputs))
             st.session_state['text_inputs'] = inputs
             st.session_state['text_state'] = 'submit'
             st.experimental_rerun()
@@ -184,32 +192,34 @@ def text_analysis(title, category):
 
 # 제출 화면
 def submit_text_analysis(title, category):
-    
+
     if "text_inputs" not in st.session_state:
         default = {
-            TAG.TEXT: " ", # []로 설정하면 []가 적혀있음
+            TAG.ORIGIN: " ",
+            TAG.TEXT: " ",  # []로 설정하면 []가 적혀있음
             TAG.ETC: [],
             TAG.DURATION: 1,  # index이므로
             TAG.TEMPO: 1,  # index이므로
         }
     else:
-        duration = st.session_state['text_inputs']['duration']
+        duration = st.session_state['text_inputs'][TAG.DURATION]
         duration = str(int(duration/60))+':'+str(duration % 60)
         if len(duration) == 3:
             duration += '0'  # 3:0 인경우가 있음
-        for i, s in enumerate(category['duration']):
+        for i, s in enumerate(category[TAG.DURATION]):
             if s == duration:
                 duration = i
                 break
 
         for i, s in enumerate(category['tempo']):
-            if s == st.session_state['text_inputs']['tempo']:
+            if s == st.session_state['text_inputs'][TAG.TEMPO]:
                 tempo = i
                 break
 
         default = {
-            TAG.TEXT: st.session_state['text_inputs']['text'],
-            TAG.ETC: st.session_state['text_inputs']['etc'],
+            TAG.ORIGIN: st.session_state['text_inputs'][TAG.ORIGIN],
+            TAG.TEXT: st.session_state['text_inputs'][TAG.TEXT],
+            TAG.ETC: st.session_state['text_inputs'][TAG.ETC],
             TAG.DURATION: duration,  # index이므로
             TAG.TEMPO: tempo,  # index이므로
         }
@@ -226,9 +236,9 @@ def submit_text_analysis(title, category):
     # text area
     st.subheader("📔 텍스트 (Texts)")
     text = st.text_area(
-        '👉 분석을 진행하고 싶은 텍스트를 입력하세요.', 
-        height=300, 
-        value=default[TAG.TEXT],
+        '👉 분석을 진행하고 싶은 텍스트를 입력하세요.',
+        height=300,
+        value=default[TAG.ORIGIN],
         key="text"+st.session_state['key_num'],
         disabled=True)
     space(lines=1)
@@ -265,31 +275,39 @@ def submit_text_analysis(title, category):
     space(lines=2)
 
     with st.spinner('음악을 생성중입니다...'):
-        res = requests.post(url = "http://127.0.0.1:8000/text_analysis", data = json.dumps(st.session_state['text_inputs']))
-    
+        res = requests.post(url=SECRET.TEXT_ANALYSIS_URL,
+                            data=json.dumps(st.session_state['text_inputs']))
+
+        print(">> 문서 분석 완료 : ", res)
+        keywords = create_caption(res.json())
+        my_json = make_analysis_request_json(
+            st.session_state['text_inputs'], keywords)
+        res = requests.post(SECRET.MUSICGEN_ANALYSIS_URL, json=my_json)
+        print(">> 음악 생성 완료 : ", res)
+        audio_files, caption = make_audio_data(res)
+        st.session_state['audiofile'] = {
+            'audios': audio_files, 'captions': caption}
+
     st.session_state['res'] = res
     st.session_state['text_state'] = 'result'
     st.experimental_rerun()
 
 # 생성 결과 창
-def result_text_analysis(title):
 
-    # 임시 데이터
-    audio_file = open(PATH.TEST_MUSIC_PATH, 'rb').read()
 
+def result_text_analysis(title, inputs):
+    caption = inputs['captions'][0].split(', ')  # 캡션의 정보를 받음
     st.title(title)
     st.write("---")
 
     # summary text area
-    st.text_area(label="문서 요약 결과", value=TAG.SUMMARY_TEXT,
+    st.text_area(label="문서 요약 결과", value=caption,
                  height=50, disabled=True)
     space(lines=2)
 
     # print contents
-    music_contents = []
-    for _ in range(3):
-        music_contents.append(TextAnalysisContent(
-            PATH.TEST_CAPTION, audio_file))
+    music_contents = [TextAnalysisContent(
+        caption, audio) for audio in inputs['audios']]
 
     for content in music_contents:
         content.set_content()
@@ -304,7 +322,6 @@ def result_text_analysis(title):
 
 if __name__ == "__main__":
 
-    
     add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)       # 사이드에 로고 추가
     category = get_music_category()          # 각 카테고리의 정보 가져오기
 
@@ -324,4 +341,5 @@ if __name__ == "__main__":
         submit_text_analysis(TITLE, category=category)
 
     else:
-        result_text_analysis("🎧 Music Generate Result")
+        result_text_analysis("🎧 Music Generate Result",
+                             st.session_state['audiofile'])
