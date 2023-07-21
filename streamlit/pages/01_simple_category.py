@@ -93,18 +93,18 @@ def simple_category(title, category):
                 duration = i
                 break
 
-        for i, s in enumerate(category['tempo']):
-            if s == st.session_state['simple_inputs']['tempo']:
+        for i, s in enumerate(category[TAG.TEMPO]):
+            if s == st.session_state['simple_inputs'][TAG.TEMPO]:
                 tempo = i
                 break
 
         default = {
-            "genres": st.session_state['simple_inputs']['genres'],
-            "instruments": st.session_state['simple_inputs']['instruments'],
-            "moods": st.session_state['simple_inputs']['moods'],
-            "etc": st.session_state['simple_inputs']['etc'],
-            "duration": duration,  # index이므로
-            "tempo": tempo,  # index이므로
+            TAG.GENRES: st.session_state['simple_inputs'][TAG.GENRES],
+            TAG.INSTRUMENTS: st.session_state['simple_inputs'][TAG.INSTRUMENTS],
+            TAG.MOODS: st.session_state['simple_inputs'][TAG.MOODS],
+            TAG.ETC: st.session_state['simple_inputs'][TAG.ETC],
+            TAG.DURATION: duration,  # index이므로
+            TAG.TEMPO: tempo,  # index이므로
         }
 
     st.title(title)
