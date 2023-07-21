@@ -295,9 +295,9 @@ def submit_simple_category(title, category):
         disabled=True)
 
     with st.spinner('음악을 생성중입니다...'):
-        my_json = make_category_request_json(st.session_state['simple_inputs'])
+        my_json = st.session_state['simple_inputs']
         res = requests.post(SECRET.MUSICGEN_CATEGORY_URL, json=my_json)
-        print(res)      # log로 요청이 제대로 왔는지 확인
+        print(">>", PAGE_TITLE, res)      # log로 요청이 제대로 왔는지 확인
 
         audio_files, caption = make_audio_data(res)
         st.session_state['audiofile'] = {
