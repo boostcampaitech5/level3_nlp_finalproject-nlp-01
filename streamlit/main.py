@@ -28,13 +28,13 @@ class DemoContent():
 
     def set_content(self):
         length = len(self.music)
-        cols = st.columns([4]+[3]*length)
+        cols = st.columns([4]+[5]*length)
 
         with cols[0]:
             st.write(self.caption)
         for idx, col in enumerate(cols[1:]):
             with col:
-                st.audio(self.music[idx], format='audio/ogg')
+                st.audio(self.music[idx], format='audio/wav')
         space(lines=3)
 
 
@@ -58,8 +58,8 @@ def guide():
 
     space(lines=5)
 
-    st.subheader("데모 버젼")
-    st.write("---")
+    st.markdown("# 데모 버젼")
+    st.divider()
 
     # 데모 불러오기
     demos = os.listdir(PATH.DEMO)
