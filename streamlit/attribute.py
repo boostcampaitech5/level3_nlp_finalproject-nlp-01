@@ -24,6 +24,7 @@ def get_music_category():
     output[TAG.INSTRUMENTS] = \
         [f"{tag.title()}  *" for tag in datas[TAG.INSTRUMENTS][TAG.POPULAR]] +\
         [f"{tag.title()}" for tag in datas[TAG.INSTRUMENTS][TAG.NORMAL]]
+
     output[TAG.MOODS] = \
         [f"{tag.title()}  *" for tag in datas[TAG.MOODS][TAG.POPULAR]] +\
         [f"{tag.title()}" for tag in datas[TAG.MOODS][TAG.NORMAL]]
@@ -31,5 +32,26 @@ def get_music_category():
     output[TAG.ETC] = output[TAG.GENRES] + \
         output[TAG.INSTRUMENTS]+output[TAG.MOODS]
     output[TAG.TEMPO] = ['Slow', 'Medium', 'Fast']
-    output[TAG.DURATION] = ['0:10', '0:30', '1:00', '1:30', '2:00', '3:00']
+    output[TAG.DURATION] = ['0:10', '0:30', '1:00']
+    return output
+
+
+def get_simple_category():
+    output = {}
+    with open(PATH.DATA_PATH, 'r', encoding='utf-8') as f:
+        datas = json.load(f)
+
+    output[TAG.GENRES] = \
+        [f"{tag.title()}" for tag in datas[TAG.GENRES][TAG.POPULAR]]
+        
+    output[TAG.INSTRUMENTS] = \
+        [f"{tag.title()}" for tag in datas[TAG.INSTRUMENTS][TAG.POPULAR]]
+
+    output[TAG.MOODS] = \
+        [f"{tag.title()}" for tag in datas[TAG.MOODS][TAG.POPULAR]]
+
+    output[TAG.ETC] = output[TAG.GENRES] + \
+        output[TAG.INSTRUMENTS]+output[TAG.MOODS]
+    output[TAG.TEMPO] = ['Slow', 'Medium', 'Fast']
+    output[TAG.DURATION] = ['0:10', '0:30', '1:00']
     return output
