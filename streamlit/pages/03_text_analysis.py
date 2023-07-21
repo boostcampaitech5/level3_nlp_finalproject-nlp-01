@@ -21,6 +21,12 @@ from constraints import PATH, TAG, SECRET
 
 TITLE = "Text Analysis / 문서 분석 방식"
 button_num = 0
+st.set_page_config(
+    page_title=INFO.PROJECT_NAME,
+    page_icon=PATH.ICON_PATH,
+    layout="wide"
+)
+
 
 # 문서 분석 컨텐츠 클래스
 
