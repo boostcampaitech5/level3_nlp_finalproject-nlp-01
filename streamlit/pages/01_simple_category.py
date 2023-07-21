@@ -18,6 +18,7 @@ from constraints import PATH, TAG, SECRET
 
 
 # 카테고리 선택 방식 Page
+COLS = 4
 PAGE_TITLE = 'Simple Category / 간단 카테고리 선택'
 
 button_num = 0
@@ -119,42 +120,29 @@ def simple_category(title, category):
             💢 주의 ) 초기화 버튼을 누르면 선택한 모든 카테고리가 사라집니다!!  
             """)
 
+    # 장르
     st.subheader('🎼 장르 (Genre)')
-    col_1, col_2, col_3 = st.columns([1, 1, 1])
+    cols_list = st.columns([1]*COLS)
     for i, genre in enumerate(category[TAG.GENRES]):
-        if i % 3 == 0:
-            col_1.checkbox(genre, key=genre+st.session_state['key_num'])
-        elif i % 3 == 1:
-            col_2.checkbox(genre, key=genre+st.session_state['key_num'])
-        else:
-            col_3.checkbox(genre, key=genre+st.session_state['key_num'])
+        cols_list[i % COLS].checkbox(
+            genre, key=genre+st.session_state['key_num'])
     space(lines=1)
 
-
+    # 악기
     st.subheader('🥁 악기 (Musical Instruments)')
-    col_1, col_2, col_3 = st.columns([1, 1, 1])
+    cols_list = st.columns([1]*COLS)
     for i, instrument in enumerate(category[TAG.INSTRUMENTS]):
-        if i % 3 == 0:
-            col_1.checkbox(instrument, key=instrument+st.session_state['key_num'])
-        elif i % 3 == 1:
-            col_2.checkbox(instrument, key=instrument+st.session_state['key_num'])
-        else:
-            col_3.checkbox(instrument, key=instrument+st.session_state['key_num'])
+        cols_list[i % COLS].checkbox(
+            instrument, key=instrument+st.session_state['key_num'])
     space(lines=1)
 
-
+    # 분위기
     st.subheader('📣 분위기 (Mood)')
-    col_1, col_2, col_3 = st.columns([1, 1, 1])
+    cols_list = st.columns([1]*COLS)
     for i, mood in enumerate(category[TAG.MOODS]):
-        if i % 3 == 0:
-            col_1.checkbox(mood, key=mood+st.session_state['key_num'])
-        elif i % 3 == 1:
-            col_2.checkbox(mood, key=mood+st.session_state['key_num'])
-        else:
-            col_3.checkbox(mood, key=mood+st.session_state['key_num'])
+        cols_list[i % COLS].checkbox(
+            mood, key=mood+st.session_state['key_num'])
     space(lines=1)
-    
-    st.write(st.session_state)
 
     # 사용자 keywords 생성
     etc = st_tags(
@@ -269,27 +257,26 @@ def submit_simple_category(title, category):
 
     # multiselect
     st.subheader('🎼 장르 (Genre)')
-    genres = st.multiselect(
-        label='생성할 음악의 장르를 선택해 주세요.',
-        options=category[TAG.GENRES],
-        default=default[TAG.GENRES],
-        disabled=True)
+    cols_list = st.columns([1]*COLS)
+    for i, genre in enumerate(category[TAG.GENRES]):
+        cols_list[i % COLS].checkbox(
+            genre, disabled=True)
     space(lines=1)
 
+    # 악기
     st.subheader('🥁 악기 (Musical Instruments)')
-    instruments = st.multiselect(
-        label='생성할 음악의 악기를 선택해 주세요.',
-        options=category[TAG.INSTRUMENTS],
-        default=default[TAG.INSTRUMENTS],
-        disabled=True)
+    cols_list = st.columns([1]*COLS)
+    for i, instrument in enumerate(category[TAG.INSTRUMENTS]):
+        cols_list[i % COLS].checkbox(
+            instrument, disabled=True)
     space(lines=1)
 
+    # 분위기
     st.subheader('📣 분위기 (Mood)')
-    moods = st.multiselect(
-        label='생성할 음악의 분위기를 선택해 주세요.',
-        options=category[TAG.MOODS],
-        default=default[TAG.MOODS],
-        disabled=True)
+    cols_list = st.columns([1]*COLS)
+    for i, mood in enumerate(category[TAG.MOODS]):
+        cols_list[i % COLS].checkbox(
+            mood, disabled=True)
     space(lines=1)
 
     # 사용자 keywords 생성
