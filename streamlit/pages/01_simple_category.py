@@ -310,9 +310,10 @@ def submit_simple_category(title, category):
 
 # 결과 페이지
 def result_simple_category(title, inputs):
-    caption = inputs['captions'][0].split(', ')  # 캡션의 정보를 받음
+    caption = [cpt for cpt in inputs['captions']
+               [0].split(', ') if cpt]  # 캡션의 정보를 받음
     st.title(title)
-    st.write("---")
+    st.divider()
 
     st.write("### 📃 \t캡션 정보 (Caption)")
     captions = st.multiselect(
