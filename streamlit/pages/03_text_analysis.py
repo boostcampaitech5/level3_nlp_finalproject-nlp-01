@@ -19,7 +19,7 @@ from utils import (
 )
 from constraints import PATH, TAG, SECRET
 
-TITLE = "문서 분석 방식"
+TITLE = "Text Analysis / 문서 분석 방식"
 button_num = 0
 
 # 문서 분석 컨텐츠 클래스
