@@ -83,27 +83,27 @@ def choice_category(title, category):
     else:
         # 결과페이지에서 돌아온 경우, default값은 선택한 카테고리를 보존
         # duration이 int로 돌아오기 때문에 inb -> index로 변환하는 작업
-        duration = st.session_state['choice_inputs']['duration']
+        duration = st.session_state['choice_inputs'][TAG.DURATION]
         duration = str(int(duration/60))+':'+str(duration % 60)
         if len(duration) == 3:
             duration += '0'  # 3:0 인경우가 있음
-        for i, s in enumerate(category['duration']):
+        for i, s in enumerate(category[TAG.DURATION]):
             if s == duration:
                 duration = i
                 break
 
-        for i, s in enumerate(category['tempo']):
-            if s == st.session_state['choice_inputs']['tempo']:
+        for i, s in enumerate(category[TAG.TEMPO]):
+            if s == st.session_state['choice_inputs'][TAG.TEMPO]:
                 tempo = i
                 break
 
         default = {
-            "genres": st.session_state['choice_inputs']['genres'],
-            "instruments": st.session_state['choice_inputs']['instruments'],
-            "moods": st.session_state['choice_inputs']['moods'],
-            "etc": st.session_state['choice_inputs']['etc'],
-            "duration": duration,  # index이므로
-            "tempo": tempo,  # index이므로
+            TAG.GENRES: st.session_state['simple_inputs'][TAG.GENRES],
+            TAG.INSTRUMENTS: st.session_state['simple_inputs'][TAG.INSTRUMENTS],
+            TAG.MOODS: st.session_state['simple_inputs'][TAG.MOODS],
+            TAG.ETC: st.session_state['simple_inputs'][TAG.ETC],
+            TAG.DURATION: duration,  # index이므로
+            TAG.TEMPO: tempo,  # index이므로
         }
 
     st.title(title)
