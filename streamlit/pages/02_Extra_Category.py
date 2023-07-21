@@ -1,89 +1,32 @@
 import streamlit as st
 from streamlit_tags import st_tags
 from streamlit_space import space
-from PIL import Image
 import requests
 
 
 # custom
-from attribute import get_music_category
-from utils import (
-    add_logo,
-    delete_another_session_state,
-    make_category_request_json,
-    make_audio_data
-)
+from utils.attribute import get_music_category
+from utils.config import add_logo, delete_another_session_state, set_page
+from utils.generator import make_category_request_json, make_audio_data
 from streamlit_space import space
-from constraints import INFO, PATH, TAG, SECRET
-
-PAGE_TITLE = 'Extra Category / 추가 카테고리 선택'
+from models.Content import MusicContent
+from constraints import INFO, PATH, TAG, SECRET, COMPONENT
 
 # 카테고리 선택 방식 Page
-button_num = 0
-st.set_page_config(
-    page_title=INFO.PROJECT_NAME,
-    page_icon=PATH.ICON_PATH,
-    layout="wide"
-)
-
-
-# 결과 페이지에 사용되는 클래스 -> 캡션, 음악파일, 다운로드버튼으로 구성됌
-class CategoryChoiceContent():
-    def __init__(self, caption, file):
-        self.caption = caption
-        self.music_file = file
-
-    def set_content(self):
-        global button_num
-
-        st.markdown("""
-        <style>
-        .big-font {
-            font-size:20px !important; text-align: center;
-        }
-        button {
-            height: auto;
-            padding-top: 14px !important;
-            padding-bottom: 14px !important;
-        }
-        </style>
-        """, unsafe_allow_html=True)
-
-        # 첫번째 라인
-        col_0, col_1, col_2 = st.columns([2, 13, 3])
-        with col_0:     # 아이콘 부분
-            icon = Image.open(PATH.IMAGE_ICON_PATH).resize((60, 60))
-            st.image(icon)
-        with col_1:     # 음악 재생 부분
-            st.audio(self.music_file, format='audio/wav')
-        with col_2:
-            music_caption = '_'.join(self.caption)
-            st.download_button(
-                label=":blue[DOWNLOAD]",    # 버튼 라벨 텍스트
-                key=f"button{str(button_num)}",
-                data=self.music_file,
-                file_name=f"{music_caption}_music.wav"
-            )
-            button_num += 1     # 버튼은 key값을 지정해야 하기때문에 임의로 Key를 지정
-        space(lines=1)      # 컨텐츠 구분을 짓기 위한 개행 처리
+st.session_state[TAG.BUTTON_NUM] = 0
+set_page()
+add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)
 
 
 # 카테고리 선택 페이지
 def choice_category(title, category):
     # default 설정 -> 카테고리의 디폴트값 설정
-    if "choice_inputs" not in st.session_state:
-        default = {
-            TAG.GENRES: [],
-            TAG.INSTRUMENTS: [],
-            TAG.MOODS: [],
-            TAG.ETC: [],
-            TAG.DURATION: 1,  # index이므로
-            TAG.TEMPO: 1,  # index이므로
-        }
+    if TAG.EXTRA_INPUTS not in st.session_state:
+        default = COMPONENT.DEFAULT_CATEGORY
     else:
         # 결과페이지에서 돌아온 경우, default값은 선택한 카테고리를 보존
         # duration이 int로 돌아오기 때문에 inb -> index로 변환하는 작업
-        duration = st.session_state['choice_inputs'][TAG.DURATION]
+        duration = st.session_state[TAG.EXTRA_INPUTS][TAG.DURATION]
         duration = str(int(duration/60))+':'+str(duration % 60)
         if len(duration) == 3:
             duration += '0'  # 3:0 인경우가 있음
@@ -93,34 +36,26 @@ def choice_category(title, category):
                 break
 
         for i, s in enumerate(category[TAG.TEMPO]):
-            if s == st.session_state['choice_inputs'][TAG.TEMPO]:
+            if s == st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO]:
                 tempo = i
                 break
 
         default = {
-            TAG.GENRES: st.session_state['simple_inputs'][TAG.GENRES],
-            TAG.INSTRUMENTS: st.session_state['simple_inputs'][TAG.INSTRUMENTS],
-            TAG.MOODS: st.session_state['simple_inputs'][TAG.MOODS],
-            TAG.ETC: st.session_state['simple_inputs'][TAG.ETC],
+            TAG.GENRES: st.session_state[TAG.EXTRA_INPUTS][TAG.GENRES],
+            TAG.INSTRUMENTS: st.session_state[TAG.EXTRA_INPUTS][TAG.INSTRUMENTS],
+            TAG.MOODS: st.session_state[TAG.EXTRA_INPUTS][TAG.MOODS],
+            TAG.ETC: st.session_state[TAG.EXTRA_INPUTS][TAG.ETC],
             TAG.DURATION: duration,  # index이므로
             TAG.TEMPO: tempo,  # index이므로
         }
-
     st.title(title)
-    st.write("---")
+    st.divider()
 
-    with st.expander("사용법 가이드"):
-        st.markdown("""
-            ### 😊 "Extra Category"는 더 많은 카테고리 중에서 원하는 정보를 선택하여 배경 음악을 생성하는 방식입니다.
-            1. 원하는 `장르`와 `악기`, `분위기`를 선택해 주세요. 여러 개를 선택하셔도 됩니다!!  
-            2. 카테고리 외에 추가하고 싶은 키워드가 있다면 `기타(ETC)`에 추가해 주세요  
-            3. 마지막으로, 음악의 `재생시간`과 `속도`를 선택하고 Submit 버튼을 눌러주세요!!  
-
-            💢 주의 ) 초기화 버튼을 누르면 선택한 모든 카테고리가 사라집니다!!  
-            """)
+    with st.expander(TAG.GUIDE_HEADER):
+        st.markdown(INFO.EXTRA_CATEGORY_GUIDE)
 
     # multiselect
-    st.subheader('🎼 장르 (Genre)')
+    st.subheader(TAG.GENRES_HEADER)
     genres = st.multiselect(
         label='생성할 음악의 장르를 선택해 주세요.',
         options=category[TAG.GENRES],
@@ -128,7 +63,7 @@ def choice_category(title, category):
         key="genres"+st.session_state['key_num'])
     space(lines=1)
 
-    st.subheader('🥁 악기 (Musical Instruments)')
+    st.subheader(TAG.INSTRUMENTS_HEADER)
     instruments = st.multiselect(
         label='생성할 음악의 악기를 선택해 주세요.',
         options=category[TAG.INSTRUMENTS],
@@ -136,7 +71,7 @@ def choice_category(title, category):
         key="instruments"+st.session_state['key_num'])
     space(lines=1)
 
-    st.subheader('📣 분위기 (Mood)')
+    st.subheader(TAG.MOODS_HEADER)
     moods = st.multiselect(
         label='생성할 음악의 분위기를 선택해 주세요.',
         options=category[TAG.MOODS],
@@ -146,7 +81,7 @@ def choice_category(title, category):
 
     # 사용자 keywords 생성
     etc = st_tags(
-        label='### ⚙ 기타 (ETC)',
+        label=TAG.ETC_HEADER,
         text='생성할 음악의 추가정보를 입력해 주세요',
         suggestions=category[TAG.ETC],
         value=default[TAG.ETC],
@@ -155,14 +90,14 @@ def choice_category(title, category):
 
     col_1, col_2 = st.columns([1, 1], gap="large")
 
-    col_1.subheader('⌛ 길이(Duration)')
+    col_1.subheader(TAG.DURATION_HEADER)
     duration = col_1.selectbox(
         label='생성할 음악의 길이를 선택해 주세요',
         options=category[TAG.DURATION],
         index=default[TAG.DURATION],
         key="duration"+st.session_state['key_num'])
 
-    col_2.subheader('🏇 속도 (Tempo)')
+    col_2.subheader(TAG.TEMPO_HEADER)
     tempo = col_2.radio(
         label='생성할 음악의 빠르기를 선택해 주세요',
         options=category[TAG.TEMPO],
@@ -171,8 +106,8 @@ def choice_category(title, category):
 
     button_cols_1, button_cols_2 = st.columns([14, 2])
     if button_cols_1.button('초기화'):  # 결과페이지에서 Return을 누르고 돌아오면 작동하지만, 첫화면에서는 작동 안됨
-        if "choice_inputs" in st.session_state:
-            del st.session_state['choice_inputs']
+        if TAG.EXTRA_INPUTS in st.session_state:
+            del st.session_state[TAG.EXTRA_INPUTS]
 
         # key값 변경
         if st.session_state['key_num'] == TAG.ONE:
@@ -199,10 +134,10 @@ def choice_category(title, category):
         }
 
         # 선택한 카테고리를 세션으로 저장해둠 -> 다시 Return으로 돌아갈 경우 default로 사용
-        st.session_state['choice_inputs'] = inputs
+        st.session_state[TAG.EXTRA_INPUTS] = inputs
 
         # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
-        st.session_state['choice_state'] = 'submit'
+        st.session_state[TAG.EXTRA_STATE] = 'submit'
         st.experimental_rerun()
 
 
@@ -210,37 +145,30 @@ def choice_category(title, category):
 def submit_choice_category(title, category):
 
     # default 설정 -> 카테고리의 디폴트값 설정
-    if "choice_inputs" not in st.session_state:
-        default = {
-            TAG.GENRES: [],
-            TAG.INSTRUMENTS: [],
-            TAG.MOODS: [],
-            TAG.ETC: [],
-            TAG.DURATION: 1,  # index이므로
-            TAG.TEMPO: 1,  # index이므로
-        }
+    if TAG.EXTRA_INPUTS not in st.session_state:
+        default = COMPONENT.DEFAULT_CATEGORY
     else:
         # 결과페이지에서 돌아온 경우, default값은 선택한 카테고리를 보존
         # duration이 int로 돌아오기 때문에 inb -> index로 변환하는 작업
-        duration = st.session_state['choice_inputs']['duration']
+        duration = st.session_state[TAG.EXTRA_INPUTS][TAG.DURATION]
         duration = str(int(duration/60))+':'+str(duration % 60)
         if len(duration) == 3:
             duration += '0'  # 3:0 인경우가 있음
-        for i, s in enumerate(category['duration']):
+        for i, s in enumerate(category[TAG.DURATION]):
             if s == duration:
                 duration = i
                 break
 
-        for i, s in enumerate(category['tempo']):
-            if s == st.session_state['choice_inputs']['tempo']:
+        for i, s in enumerate(category[TAG.TEMPO]):
+            if s == st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO]:
                 tempo = i
                 break
 
         default = {
-            TAG.GENRES: st.session_state['choice_inputs']['genres'],
-            TAG.INSTRUMENTS: st.session_state['choice_inputs']['instruments'],
-            TAG.MOODS: st.session_state['choice_inputs']['moods'],
-            TAG.ETC: st.session_state['choice_inputs']['etc'],
+            TAG.GENRES: st.session_state[TAG.EXTRA_INPUTS][TAG.GENRES],
+            TAG.INSTRUMENTS: st.session_state[TAG.EXTRA_INPUTS][TAG.INSTRUMENTS],
+            TAG.MOODS: st.session_state[TAG.EXTRA_INPUTS][TAG.MOODS],
+            TAG.ETC: st.session_state[TAG.EXTRA_INPUTS][TAG.ETC],
             TAG.DURATION: duration,  # index이므로
             TAG.TEMPO: tempo,  # index이므로
         }
@@ -248,18 +176,11 @@ def submit_choice_category(title, category):
     st.title(title)
     st.write("---")
 
-    with st.expander("사용법 가이드"):
-        st.markdown("""
-            ### 😊 "Extra Category"는 더 많은 카테고리 중에서 원하는 정보를 선택하여 배경 음악을 생성하는 방식입니다.
-            1. 원하는 `장르`와 `악기`, `분위기`를 선택해 주세요. 여러 개를 선택하셔도 됩니다!!  
-            2. 카테고리 외에 추가하고 싶은 키워드가 있다면 `기타(ETC)`에 추가해 주세요  
-            3. 마지막으로, 음악의 `재생시간`과 `속도`를 선택하고 Submit 버튼을 눌러주세요!!  
-
-            💢 주의 ) 초기화 버튼을 누르면 선택한 모든 카테고리가 사라집니다!!  
-            """)
+    with st.expander(TAG.GUIDE_HEADER):
+        st.markdown(INFO.EXTRA_CATEGORY_GUIDE)
 
     # multiselect
-    st.subheader('🎼 장르 (Genre)')
+    st.subheader(TAG.GENRES_HEADER)
     genres = st.multiselect(
         label='생성할 음악의 장르를 선택해 주세요.',
         options=category[TAG.GENRES],
@@ -267,7 +188,7 @@ def submit_choice_category(title, category):
         disabled=True)
     space(lines=1)
 
-    st.subheader('🥁 악기 (Musical Instruments)')
+    st.subheader(TAG.INSTRUMENTS_HEADER)
     instruments = st.multiselect(
         label='생성할 음악의 악기를 선택해 주세요.',
         options=category[TAG.INSTRUMENTS],
@@ -275,7 +196,7 @@ def submit_choice_category(title, category):
         disabled=True)
     space(lines=1)
 
-    st.subheader('📣 분위기 (Mood)')
+    st.subheader(TAG.MOODS_HEADER)
     moods = st.multiselect(
         label='생성할 음악의 분위기를 선택해 주세요.',
         options=category[TAG.MOODS],
@@ -284,7 +205,7 @@ def submit_choice_category(title, category):
     space(lines=1)
 
     # 사용자 keywords 생성
-    st.subheader('⚙ 기타 (ETC)')
+    st.subheader(TAG.ETC_HEADER[3:])
     etc = st.multiselect(
         label='생성할 음악의 추가정보를 입력해 주세요',
         options=default[TAG.ETC],
@@ -294,37 +215,39 @@ def submit_choice_category(title, category):
 
     col_1, col_2 = st.columns([1, 1], gap="large")
 
-    col_1.subheader('⌛ 길이(Duration)')
+    col_1.subheader(TAG.DURATION_HEADER)
     duration = col_1.selectbox(
         label='생성할 음악의 길이를 선택해 주세요',
         options=category[TAG.DURATION],
         index=default[TAG.DURATION],
         disabled=True)
 
-    col_2.subheader('🏇 속도 (Tempo)')
+    col_2.subheader(TAG.TEMPO_HEADER)
     tempo = col_2.radio(
         label='생성할 음악의 빠르기를 선택해 주세요',
         options=category[TAG.TEMPO],
         index=default[TAG.TEMPO],
         disabled=True)
 
-    with st.spinner('음악을 생성중입니다...'):
-        my_json = make_category_request_json(st.session_state['choice_inputs'])
+    with st.spinner(TAG.REQUEST_MESSAGE):
+        my_json = make_category_request_json(
+            st.session_state[TAG.EXTRA_INPUTS])
         res = requests.post(SECRET.MUSICGEN_CATEGORY_URL, json=my_json)
         print(res)      # log로 요청이 제대로 왔는지 확인
 
         audio_files, caption = make_audio_data(res)
-        st.session_state['audiofile'] = {
-            'audios': audio_files, 'captions': caption}
+        st.session_state[TAG.AUDIOFILE] = {
+            TAG.AUDIOS: audio_files, TAG.CAPTIONS: caption}
 
     st.session_state['res'] = res
-    st.session_state['choice_state'] = 'result'
+    st.session_state[TAG.EXTRA_STATE] = 'result'
     st.experimental_rerun()
 
 
 # 결과 페이지
 def result_choice_category(title, inputs):
-    caption = inputs['captions'][0].split(', ')  # 캡션의 정보를 받음
+    caption = [cpt for cpt in inputs[TAG.CAPTIONS]
+               [0].split(', ') if cpt]  # 캡션의 정보를 받음
     st.title(title)
     st.divider()
 
@@ -338,8 +261,7 @@ def result_choice_category(title, inputs):
     space(lines=3)
 
     # 음악, 다운로드 버튼 생성
-    music_contents = [CategoryChoiceContent(
-        caption, w) for w in inputs['audios']]
+    music_contents = [MusicContent(caption, w) for w in inputs[TAG.AUDIOS]]
     for content in music_contents:
         content.set_content()
 
@@ -348,42 +270,34 @@ def result_choice_category(title, inputs):
     # 카테고리 선택화면으로 돌아가기
     if button_cols.button("Return"):
         # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
-        st.session_state['choice_state'] = 'execute'
+        st.session_state[TAG.EXTRA_STATE] = 'execute'
         st.experimental_rerun()
 
 
 # main
-
-
 if __name__ == "__main__":
-
-    # 임시 options
     category = get_music_category()
 
-    audio_file = open(PATH.TEST_MUSIC_PATH, 'rb').read()
-
     # state가 없으면 생성
-    if 'choice_state' not in st.session_state:
-        st.session_state['choice_state'] = 'execute'
+    if TAG.EXTRA_STATE not in st.session_state:
+        st.session_state[TAG.EXTRA_STATE] = 'execute'
 
     # key값을 변경 -> 값의 초기화하고 새로고침을 만들기 위해 key값을 다르게 설정
     if 'key_num' not in st.session_state:
         st.session_state['key_num'] = TAG.ONE
 
     # 다른 state 제거
-    delete_another_session_state('choice_state')
-
-    # logo설정
-    add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)
+    delete_another_session_state(TAG.EXTRA_STATE)
 
     # state가 execute인 경우, 카테고리 선택페이지를 출력
-    if st.session_state['choice_state'] == 'execute':
-        choice_category(title=PAGE_TITLE, category=category)
+    if st.session_state[TAG.EXTRA_STATE] == 'execute':
+        choice_category(title=TAG.EXTRA_CATEGORY_TITLE, category=category)
 
-    elif st.session_state['choice_state'] == 'submit':
-        submit_choice_category(title=PAGE_TITLE, category=category)
+    elif st.session_state[TAG.EXTRA_STATE] == 'submit':
+        submit_choice_category(
+            title=TAG.EXTRA_CATEGORY_TITLE, category=category)
 
     # state가 result인 경우 결과화면을 출력
     else:
-        result_choice_category('🎧 Music Generate Result',
-                               st.session_state['audiofile'])
+        result_choice_category(TAG.MUSIC_OUTPUT_TITLE,
+                               st.session_state[TAG.AUDIOFILE])

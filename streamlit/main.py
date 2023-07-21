@@ -3,39 +3,17 @@ import os
 
 # streamlit tools
 import streamlit as st
+from streamlit_extras.colored_header import colored_header
 from streamlit_space import space
 from PIL import Image
 
 # custom
-from utils import add_logo, delete_another_session_state
+from utils.config import add_logo, delete_another_session_state, set_page
+from models.Content import Demo
 from constraints import PATH, INFO
 
 
-st.set_page_config(
-    page_title=INFO.PROJECT_NAME,
-    page_icon=PATH.ICON_PATH,
-    layout="wide"
-)
-
-
-class DemoContent():
-    def __init__(self, caption, music_path_list):
-        self.caption = caption
-        self.music = []
-
-        for path in music_path_list:
-            self.music.append(open(path, 'rb').read())
-
-    def set_content(self):
-        length = len(self.music)
-        cols = st.columns([4]+[5]*length)
-
-        with cols[0]:
-            st.write(self.caption)
-        for idx, col in enumerate(cols[1:]):
-            with col:
-                st.audio(self.music[idx], format='audio/wav')
-        space(lines=3)
+set_page()
 
 
 def guide():
@@ -56,13 +34,16 @@ def guide():
 
     st.markdown("# 데모 버젼")
     st.divider()
+    st.markdown("##### ✨ 데모버젼과 함께 음악 생성의 아이디어를 얻어보세요!!")
+    space(lines=3)
 
     # 데모 불러오기
     demos = os.listdir(PATH.DEMO)
     for demo in demos:
         music_paths = [os.path.join(PATH.DEMO, demo, file)
                        for file in os.listdir(os.path.join(PATH.DEMO, demo))]
-        DemoContent(demo, music_paths).set_content()
+        Demo(demo, music_paths).set_content()
 
 
-guide()
+if __name__ == "__main__":
+    guide()
