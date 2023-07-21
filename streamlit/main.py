@@ -40,7 +40,6 @@ class DemoContent():
 
 def guide():
     add_logo(PATH.SIDEBAR_IMAGE_PATH, height=250)
-
     delete_another_session_state(' ')
 
     st.title(INFO.PROJECT_NAME)
