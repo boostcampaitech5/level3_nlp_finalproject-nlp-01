@@ -18,6 +18,8 @@ from constraints import PATH, TAG, SECRET
 
 
 # 카테고리 선택 방식 Page
+PAGE_TITLE = 'Simple Category / 간단 카테고리 선택'
+
 button_num = 0
 
 

@@ -16,6 +16,7 @@ from utils import (
 from streamlit_space import space
 from constraints import PATH, TAG, SECRET
 
+PAGE_TITLE = 'Extra Category / 추가 카테고리 선택'
 
 # 카테고리 선택 방식 Page
 button_num = 0
