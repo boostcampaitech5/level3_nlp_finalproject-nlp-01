@@ -1,4 +1,3 @@
-import json
 import base64
 from pathlib import Path
 import numpy as np
@@ -11,7 +10,7 @@ import streamlit as st
 import validators
 import openai
 
-from constraints import PATH, TAG, SECRET
+from constraints import TAG, SECRET
 
 openai.api_key = SECRET.OPENAI_API
 
