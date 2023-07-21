@@ -384,10 +384,10 @@ if __name__ == "__main__":
 
     # state가 execute인 경우, 카테고리 선택페이지를 출력
     if st.session_state['simple_state'] == 'execute':
-        simple_category(title='카테고리 선택', category=category)
+        simple_category(title=PAGE_TITLE, category=category)
 
     elif st.session_state['simple_state'] == 'submit':
-        submit_simple_category(title='카테고리 선택', category=category)
+        submit_simple_category(title=PAGE_TITLE, category=category)
 
     # state가 result인 경우 결과화면을 출력
     else:
