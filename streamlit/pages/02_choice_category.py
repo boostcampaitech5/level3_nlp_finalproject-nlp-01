@@ -20,6 +20,11 @@ PAGE_TITLE = 'Extra Category / 추가 카테고리 선택'
 
 # 카테고리 선택 방식 Page
 button_num = 0
+st.set_page_config(
+    page_title=INFO.PROJECT_NAME,
+    page_icon=PATH.ICON_PATH,
+    layout="wide"
+)
 
 
 # 결과 페이지에 사용되는 클래스 -> 캡션, 음악파일, 다운로드버튼으로 구성됌
