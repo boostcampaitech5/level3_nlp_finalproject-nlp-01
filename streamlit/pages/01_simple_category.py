@@ -29,8 +29,8 @@ def simple_category(title, category):
         # 결과페이지에서 돌아온 경우, default값은 선택한 카테고리를 보존
         # duration이 int로 돌아오기 때문에 inb -> index로 변환하는 작업
         duration = st.session_state[TAG.SIMPLE_INPUTS][TAG.DURATION]
-        hour, minute = duration//60, duration % 60
-        duration = f"{hour}:{minute}"
+        minute, second = duration//60, duration % 60
+        duration = f"{minute}:{str(second).rjust(2,'0')}"
 
         for i, s in enumerate(category[TAG.DURATION]):
             if s == duration:
@@ -144,7 +144,7 @@ def submit_simple_category(title, category):
         duration = st.session_state[TAG.SIMPLE_INPUTS][TAG.DURATION]
         minute, second = duration//60, duration % 60
 
-        duration = f"{minute}:{second}"
+        duration = f"{minute}:{str(second).rjust(2,'0')}"
         for i, s in enumerate(category[TAG.DURATION]):
             if s == duration:
                 duration = i
