@@ -18,16 +18,16 @@ def get_music_category():
         datas = json.load(f)
 
     output[TAG.GENRES] = \
-        [f"{tag.title()}  *" for tag in datas[TAG.GENRES][TAG.POPULAR]] +\
-        [f"{tag.title()}" for tag in datas[TAG.GENRES][TAG.NORMAL]]
+        [f"{tag}  *" for tag in datas[TAG.GENRES][TAG.POPULAR]] +\
+        [f"{tag}" for tag in datas[TAG.GENRES][TAG.NORMAL]]
 
     output[TAG.INSTRUMENTS] = \
-        [f"{tag.title()}  *" for tag in datas[TAG.INSTRUMENTS][TAG.POPULAR]] +\
-        [f"{tag.title()}" for tag in datas[TAG.INSTRUMENTS][TAG.NORMAL]]
+        [f"{tag}  *" for tag in datas[TAG.INSTRUMENTS][TAG.POPULAR]] +\
+        [f"{tag}" for tag in datas[TAG.INSTRUMENTS][TAG.NORMAL]]
 
     output[TAG.MOODS] = \
-        [f"{tag.title()}  *" for tag in datas[TAG.MOODS][TAG.POPULAR]] +\
-        [f"{tag.title()}" for tag in datas[TAG.MOODS][TAG.NORMAL]]
+        [f"{tag}  *" for tag in datas[TAG.MOODS][TAG.POPULAR]] +\
+        [f"{tag}" for tag in datas[TAG.MOODS][TAG.NORMAL]]
 
     output[TAG.ETC] = output[TAG.GENRES] + \
         output[TAG.INSTRUMENTS]+output[TAG.MOODS]
@@ -42,13 +42,13 @@ def get_simple_category():
         datas = json.load(f)
 
     output[TAG.GENRES] = \
-        [f"{tag.title()}" for tag in datas[TAG.GENRES][TAG.POPULAR]]
+        [f"{tag}" for tag in datas[TAG.GENRES][TAG.POPULAR]]
 
     output[TAG.INSTRUMENTS] = \
-        [f"{tag.title()}" for tag in datas[TAG.INSTRUMENTS][TAG.POPULAR]]
+        [f"{tag}" for tag in datas[TAG.INSTRUMENTS][TAG.POPULAR]]
 
     output[TAG.MOODS] = \
-        [f"{tag.title()}" for tag in datas[TAG.MOODS][TAG.POPULAR]]
+        [f"{tag}" for tag in datas[TAG.MOODS][TAG.POPULAR]]
 
     output[TAG.ETC] = output[TAG.GENRES] + \
         output[TAG.INSTRUMENTS]+output[TAG.MOODS]
