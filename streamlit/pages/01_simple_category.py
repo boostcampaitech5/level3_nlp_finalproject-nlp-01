@@ -196,7 +196,7 @@ def submit_simple_category(title, category):
     space(lines=1)
 
     # 사용자 keywords 생성
-    st.subheader(TAG.ETC_HEADER)
+    st.subheader(TAG.ETC_HEADER[3:])
     etc = st.multiselect(
         label=TAG.ETC_DESCRIPTION,
         options=default[TAG.ETC],
