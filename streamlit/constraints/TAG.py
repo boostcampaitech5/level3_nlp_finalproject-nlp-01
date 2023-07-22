@@ -21,6 +21,16 @@ TEMPO_HEADER = '🏇 속도 (Tempo)'
 
 TEXT_HEADER = "📔 텍스트 (Texts)"
 
+# 설명 태그
+GENRES_DESCRIPTION = '생성할 음악의 장르를 선택해 주세요.  검색을 통해 원하는 키워드를 찾을 수 있습니다.'
+INSTRUMENTS_DESCRIPTION = '생성할 음악의 악기를 선택해 주세요.  검색을 통해 원하는 키워드를 찾을 수 있습니다.'
+MOODS_DESCRIPTION = '생성할 음악의 분위기를 선택해 주세요.  검색을 통해 원하는 키워드를 찾을 수 있습니다.'
+ETC_DESCRIPTION = '더 추가할 키워드를 입력후 엔터를 눌러주세요.'
+DURATION_DESCRIPTION = '생성할 음악의 길이를 선택해 주세요'
+TEMPO_DESCRIPTION = '생성할 음악의 빠르기를 선택해 주세요'
+
+TEXT_DESCRIPTION = '👉 분석을 진행하고 싶은 텍스트를 입력하세요.'
+
 # TITLE 태그
 SIMPLE_CATEGORY_TITLE = "Simple Category / 심플 카테고리 선택"
 EXTRA_CATEGORY_TITLE = 'Extra Category / 추가 카테고리 선택'

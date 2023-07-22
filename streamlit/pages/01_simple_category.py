@@ -85,7 +85,7 @@ def simple_category(title, category):
     # 사용자 keywords 생성
     etc = st_tags(
         label=TAG.ETC_HEADER,
-        text='생성할 음악의 추가정보를 입력해 주세요',
+        text=TAG.ETC_DESCRIPTION,
         suggestions=category[TAG.ETC],
         value=default[TAG.ETC],
         key="etc"+st.session_state['key_num'])
@@ -95,14 +95,14 @@ def simple_category(title, category):
 
     col_1.subheader(TAG.DURATION_HEADER)
     duration = col_1.selectbox(
-        label='생성할 음악의 길이를 선택해 주세요',
+        label=TAG.DURATION_DESCRIPTION,
         options=category[TAG.DURATION],
         index=default[TAG.DURATION],
         key="duration"+st.session_state['key_num'])
 
     col_2.subheader(TAG.TEMPO_HEADER)
     tempo = col_2.radio(
-        label='생성할 음악의 빠르기를 선택해 주세요',
+        label=TAG.TEMPO_DESCRIPTION,
         options=category[TAG.TEMPO],
         index=default[TAG.TEMPO],
         key="tempo"+st.session_state['key_num'])
@@ -198,7 +198,7 @@ def submit_simple_category(title, category):
     # 사용자 keywords 생성
     st.subheader(TAG.ETC_HEADER)
     etc = st.multiselect(
-        label='생성할 음악의 추가정보를 입력해 주세요',
+        label=TAG.ETC_DESCRIPTION,
         options=default[TAG.ETC],
         default=default[TAG.ETC],
         disabled=True)
@@ -208,14 +208,14 @@ def submit_simple_category(title, category):
 
     col_1.subheader(TAG.DURATION_HEADER)
     duration = col_1.selectbox(
-        label='생성할 음악의 길이를 선택해 주세요',
+        label=TAG.DURATION_DESCRIPTION,
         options=category[TAG.DURATION],
         index=default[TAG.DURATION],
         disabled=True)
 
     col_2.subheader(TAG.TEMPO_HEADER)
     tempo = col_2.radio(
-        label='생성할 음악의 빠르기를 선택해 주세요',
+        label=TAG.TEMPO_DESCRIPTION,
         options=category[TAG.TEMPO],
         index=default[TAG.TEMPO],
         disabled=True)

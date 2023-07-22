@@ -57,7 +57,7 @@ def choice_category(title, category):
     # multiselect
     st.subheader(TAG.GENRES_HEADER)
     genres = st.multiselect(
-        label='생성할 음악의 장르를 선택해 주세요.',
+        label=TAG.GENRES_DESCRIPTION,
         options=category[TAG.GENRES],
         default=default[TAG.GENRES],
         key="genres"+st.session_state['key_num'])
@@ -65,7 +65,7 @@ def choice_category(title, category):
 
     st.subheader(TAG.INSTRUMENTS_HEADER)
     instruments = st.multiselect(
-        label='생성할 음악의 악기를 선택해 주세요.',
+        label=TAG.INSTRUMENTS_DESCRIPTION,
         options=category[TAG.INSTRUMENTS],
         default=default[TAG.INSTRUMENTS],
         key="instruments"+st.session_state['key_num'])
@@ -73,7 +73,7 @@ def choice_category(title, category):
 
     st.subheader(TAG.MOODS_HEADER)
     moods = st.multiselect(
-        label='생성할 음악의 분위기를 선택해 주세요.',
+        label=TAG.MOODS_DESCRIPTION,
         options=category[TAG.MOODS],
         default=default[TAG.MOODS],
         key="moods"+st.session_state['key_num'])
@@ -82,7 +82,7 @@ def choice_category(title, category):
     # 사용자 keywords 생성
     etc = st_tags(
         label=TAG.ETC_HEADER,
-        text='생성할 음악의 추가정보를 입력해 주세요',
+        text=TAG.ETC_DESCRIPTION,
         suggestions=category[TAG.ETC],
         value=default[TAG.ETC],
         key="etc"+st.session_state['key_num'])
@@ -92,14 +92,14 @@ def choice_category(title, category):
 
     col_1.subheader(TAG.DURATION_HEADER)
     duration = col_1.selectbox(
-        label='생성할 음악의 길이를 선택해 주세요',
+        label=TAG.DURATION_DESCRIPTION,
         options=category[TAG.DURATION],
         index=default[TAG.DURATION],
         key="duration"+st.session_state['key_num'])
 
     col_2.subheader(TAG.TEMPO_HEADER)
     tempo = col_2.radio(
-        label='생성할 음악의 빠르기를 선택해 주세요',
+        label=TAG.TEMPO_DESCRIPTION,
         options=category[TAG.TEMPO],
         index=default[TAG.TEMPO],
         key="tempo"+st.session_state['key_num'])
@@ -182,7 +182,7 @@ def submit_choice_category(title, category):
     # multiselect
     st.subheader(TAG.GENRES_HEADER)
     genres = st.multiselect(
-        label='생성할 음악의 장르를 선택해 주세요.',
+        label=TAG.GENRES_DESCRIPTION,
         options=category[TAG.GENRES],
         default=default[TAG.GENRES],
         disabled=True)
@@ -190,7 +190,7 @@ def submit_choice_category(title, category):
 
     st.subheader(TAG.INSTRUMENTS_HEADER)
     instruments = st.multiselect(
-        label='생성할 음악의 악기를 선택해 주세요.',
+        label=TAG.INSTRUMENTS_DESCRIPTION,
         options=category[TAG.INSTRUMENTS],
         default=default[TAG.INSTRUMENTS],
         disabled=True)
@@ -198,7 +198,7 @@ def submit_choice_category(title, category):
 
     st.subheader(TAG.MOODS_HEADER)
     moods = st.multiselect(
-        label='생성할 음악의 분위기를 선택해 주세요.',
+        label=TAG.MOODS_DESCRIPTION,
         options=category[TAG.MOODS],
         default=default[TAG.MOODS],
         disabled=True)
@@ -207,7 +207,7 @@ def submit_choice_category(title, category):
     # 사용자 keywords 생성
     st.subheader(TAG.ETC_HEADER[3:])
     etc = st.multiselect(
-        label='생성할 음악의 추가정보를 입력해 주세요',
+        label=TAG.ETC_DESCRIPTION,
         options=default[TAG.ETC],
         default=default[TAG.ETC],
         disabled=True)
@@ -217,14 +217,14 @@ def submit_choice_category(title, category):
 
     col_1.subheader(TAG.DURATION_HEADER)
     duration = col_1.selectbox(
-        label='생성할 음악의 길이를 선택해 주세요',
+        label=TAG.DURATION_DESCRIPTION,
         options=category[TAG.DURATION],
         index=default[TAG.DURATION],
         disabled=True)
 
     col_2.subheader(TAG.TEMPO_HEADER)
     tempo = col_2.radio(
-        label='생성할 음악의 빠르기를 선택해 주세요',
+        label=TAG.TEMPO_DESCRIPTION,
         options=category[TAG.TEMPO],
         index=default[TAG.TEMPO],
         disabled=True)

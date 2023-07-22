@@ -58,7 +58,7 @@ def text_analysis(title, category):
     # text area
     st.subheader(TAG.TEXT_HEADER)
     text = st.text_area(
-        '👉 분석을 진행하고 싶은 텍스트를 입력하세요.',
+        TAG.TEXT_DESCRIPTION,
         height=300,
         value=default[TAG.ORIGIN],
         key="text"+st.session_state['key_num'])
@@ -67,7 +67,7 @@ def text_analysis(title, category):
     # 사용자 keywords 생성
     etc_data = st_tags(
         label=TAG.ETC_HEADER,
-        text='그 외에 추가하고 싶은 곡 정보를 입력해주세요.',
+        text=TAG.ETC_DESCRIPTION,
         suggestions=category[TAG.ETC],
         value=default[TAG.ETC],
         key="etc_choice"+st.session_state['key_num'])
@@ -78,7 +78,7 @@ def text_analysis(title, category):
     # 음악 길이
     col_1.subheader(TAG.DURATION)
     duration = col_1.selectbox(
-        label='생성할 음악의 길이를 선택해 주세요',
+        label=TAG.DURATION_DESCRIPTION,
         options=category[TAG.DURATION],
         index=default[TAG.DURATION],
         key="duration"+st.session_state['key_num']
@@ -87,7 +87,7 @@ def text_analysis(title, category):
     # 음악 속도
     col_2.subheader(TAG.TEMPO)
     tempo = col_2.radio(
-        label='생성할 음악의 빠르기를 선택해 주세요',
+        label=TAG.TEMPO_DESCRIPTION,
         options=category[TAG.TEMPO],
         index=default[TAG.TEMPO],
         key="tempo"+st.session_state['key_num'])
@@ -166,7 +166,7 @@ def submit_text_analysis(title, category):
     # text area
     st.subheader(TAG.TEXT_HEADER)
     text = st.text_area(
-        '👉 분석을 진행하고 싶은 텍스트를 입력하세요.',
+        TAG.TEXT_DESCRIPTION,
         height=300,
         value=default[TAG.ORIGIN],
         key="text"+st.session_state['key_num'],
@@ -176,7 +176,7 @@ def submit_text_analysis(title, category):
     # 사용자 keywords 생성
     st.subheader(TAG.ETC_HEADER[3:])
     etc = st.multiselect(
-        label='생성할 음악의 추가정보를 입력해 주세요',
+        label=TAG.ETC_DESCRIPTION,
         options=default[TAG.ETC],
         default=default[TAG.ETC],
         disabled=True)
@@ -187,7 +187,7 @@ def submit_text_analysis(title, category):
     # 음악 길이
     col_1.subheader(TAG.DURATION)
     duration = col_1.selectbox(
-        label='생성할 음악의 길이를 선택해 주세요',
+        label=TAG.DURATION_DESCRIPTION,
         options=category[TAG.DURATION],
         index=default[TAG.DURATION],
         key="duration"+st.session_state['key_num'],
@@ -197,7 +197,7 @@ def submit_text_analysis(title, category):
     # 음악 속도
     col_2.subheader(TAG.TEMPO)
     tempo = col_2.radio(
-        label='생성할 음악의 빠르기를 선택해 주세요',
+        label=TAG.TEMPO_DESCRIPTION,
         options=category[TAG.TEMPO],
         index=default[TAG.TEMPO],
         key="tempo"+st.session_state['key_num'],
