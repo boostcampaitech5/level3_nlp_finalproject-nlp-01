@@ -9,7 +9,8 @@ from streamlit_space import space
 
 # custom
 from utils.attribute import get_music_category
-from utils.config import add_logo, delete_another_session_state, set_page, print_error
+from utils.config import add_logo, delete_another_session_state, set_page
+from utils.log import print_error
 from utils.generator import make_analysis_request_json, make_audio_data
 from utils.api import google_trans, create_gpt_caption
 from models.Content import MusicContent

@@ -6,7 +6,8 @@ from fastapi import status
 
 # custom
 from utils.attribute import get_simple_category
-from utils.config import add_logo, delete_another_session_state, set_page, print_error
+from utils.config import add_logo, delete_another_session_state, set_page
+from utils.log import print_error
 from utils.generator import make_simple_request_json, make_audio_data
 from streamlit_space import space
 from constraints import INFO, PATH, TAG, SECRET, COMPONENT
