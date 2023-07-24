@@ -42,9 +42,13 @@ SIMPLE_INPUTS = "simple_inputs"
 EXTRA_INPUTS = "extra_inputs"
 TEXT_INPUTS = "text_inputs"
 
-SIMPLE_STATE = "simple_state"
-EXTRA_STATE = "extra_state"
-TEXT_STATE = "text_state"
+SIMPLE_STATE = "simple"
+EXTRA_STATE = "extra"
+TEXT_STATE = "text"
+
+SIMPLE_RES_STATE = "simple_res_state"
+EXTRA_RES_STATE = "extra_res_state"
+TEXT_RES_STATE = "text_res_state"
 
 # Request 태그
 ORIGIN = 'origin'
