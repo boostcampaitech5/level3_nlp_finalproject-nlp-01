@@ -4,6 +4,7 @@ import validators
 
 import streamlit as st
 from constraints import INFO, PATH
+from fastapi import status
 
 
 def add_logo(logo_url: str, height: int = 120):
@@ -59,4 +60,7 @@ def set_page():
     )
 
 def print_error(error_code):
-    return "ERROR: "+error_code
+    if error_code == status.HTTP_500_INTERNAL_SERVER_ERROR:
+        return "[서버오류] 잠시 후 다시 실행해 주세요"
+    else:
+        return "ERROR_NUM: "+error_code
