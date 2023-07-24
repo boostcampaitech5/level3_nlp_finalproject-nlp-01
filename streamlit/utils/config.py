@@ -47,7 +47,7 @@ def delete_another_session_state(current_state: str) -> None:
         remain_state (str): 현제 페이지의 session_state
     """
     for state in st.session_state.to_dict():
-        if 'state' in state and state != current_state:
+        if 'state' in state and current_state not in state:
             del st.session_state[state]
 
 
