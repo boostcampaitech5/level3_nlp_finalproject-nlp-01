@@ -223,7 +223,7 @@ def submit_text_analysis(title, category):
             st.session_state[TAG.TEXT_INPUTS], keywords)
         res = requests.post(SECRET.MUSICGEN_ANALYSIS_URL, json=my_json)
 
-        st.session_state[TAG.TEXT_RES_STATE] = res.status_code
+        st.session_state[TAG.TEXT_RES_STATE] = str(res.status_code) +" "+ res.reason
 
         if res.status_code != status.HTTP_200_OK:
             st.session_state[TAG.TEXT_RES_STATE] = 'execute'

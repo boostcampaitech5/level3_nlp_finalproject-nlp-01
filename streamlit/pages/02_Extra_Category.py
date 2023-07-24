@@ -249,7 +249,7 @@ def submit_choice_category(title, category):
         res = requests.post(SECRET.MUSICGEN_CATEGORY_URL, json=my_json)
         print(res)      # log로 요청이 제대로 왔는지 확인
 
-        st.session_state[TAG.EXTRA_RES_STATE] = res.status_code
+        st.session_state[TAG.EXTRA_RES_STATE] = str(res.status_code) +" "+ res.reason
 
         if res.status_code != status.HTTP_200_OK:
             st.session_state[TAG.EXTRA_STATE] = 'execute'

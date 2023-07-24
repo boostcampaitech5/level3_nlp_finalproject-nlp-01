@@ -235,7 +235,7 @@ def submit_simple_category(title, category):
         res = requests.post(SECRET.MUSICGEN_CATEGORY_URL, json=my_json)
         print(">>", TAG.SIMPLE_CATEGORY_TITLE, res)      # log로 요청이 제대로 왔는지 확인
 
-        st.session_state[TAG.SIMPLE_RES_STATE] = res.status_code
+        st.session_state[TAG.SIMPLE_RES_STATE] = str(res.status_code) +" "+ res.reason
         
         if res.status_code != status.HTTP_200_OK:
             st.session_state[TAG.SIMPLE_STATE] = 'execute'
@@ -290,6 +290,7 @@ if __name__ == "__main__":
     if TAG.SIMPLE_RES_STATE not in st.session_state:
         st.session_state[TAG.SIMPLE_RES_STATE] = status.HTTP_200_OK
 
+    
     # key값을 변경 -> 값의 초기화하고 새로고침을 만들기 위해 key값을 다르게 설정
     if 'key_num' not in st.session_state:
         st.session_state['key_num'] = TAG.ONE
