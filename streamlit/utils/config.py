@@ -57,3 +57,6 @@ def set_page():
         page_icon=PATH.ICON_PATH,
         layout="wide"
     )
+
+def print_error(error_code):
+    return "ERROR: "+error_code

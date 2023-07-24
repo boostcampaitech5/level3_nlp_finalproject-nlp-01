@@ -2,11 +2,11 @@ import streamlit as st
 from streamlit_tags import st_tags
 from streamlit_space import space
 import requests
-
+from fastapi import status
 
 # custom
 from utils.attribute import get_music_category
-from utils.config import add_logo, delete_another_session_state, set_page
+from utils.config import add_logo, delete_another_session_state, set_page, print_error
 from utils.generator import make_category_request_json, make_audio_data
 from streamlit_space import space
 from models.Content import MusicContent
@@ -48,6 +48,11 @@ def choice_category(title, category):
             TAG.DURATION: duration,  # index이므로
             TAG.TEMPO: tempo,  # index이므로
         }
+
+    # 오류 발생
+    if st.session_state[TAG.EXTRA_RES_STATE] != status.HTTP_200_OK:
+        st.toast(print_error(st.session_state[TAG.EXTRA_RES_STATE]))
+    
     st.title(title)
     st.divider()
 
@@ -133,12 +138,17 @@ def choice_category(title, category):
             TAG.TEMPO: tempo,
         }
 
-        # 선택한 카테고리를 세션으로 저장해둠 -> 다시 Return으로 돌아갈 경우 default로 사용
-        st.session_state[TAG.EXTRA_INPUTS] = inputs
+        # 입력이 없다면
+        if inputs[TAG.GENRES] == [] and inputs[TAG.INSTRUMENTS] == [] and inputs[TAG.MOODS] == [] and inputs[TAG.ETC] == []:
+            st.toast('입력을 확인해 주세요!')
 
-        # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
-        st.session_state[TAG.EXTRA_STATE] = 'submit'
-        st.experimental_rerun()
+        else:
+            # 선택한 카테고리를 세션으로 저장해둠 -> 다시 Return으로 돌아갈 경우 default로 사용
+            st.session_state[TAG.EXTRA_INPUTS] = inputs
+
+            # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
+            st.session_state[TAG.EXTRA_STATE] = 'submit'
+            st.experimental_rerun()
 
 
 # 제출페이지 누르면 실행 -> disabled=True, button 삭제, post요청 보내고 spinner가 돌아감
@@ -172,6 +182,10 @@ def submit_choice_category(title, category):
             TAG.DURATION: duration,  # index이므로
             TAG.TEMPO: tempo,  # index이므로
         }
+
+    # 오류 발생
+    if st.session_state['TAG.EXTRA_RES_STATE'] != status.HTTP_200_OK:
+        st.toast(st.session_state['TAG.EXTRA_RES_STATE'])
 
     st.title(title)
     st.write("---")
@@ -235,13 +249,19 @@ def submit_choice_category(title, category):
         res = requests.post(SECRET.MUSICGEN_CATEGORY_URL, json=my_json)
         print(res)      # log로 요청이 제대로 왔는지 확인
 
-        audio_files, caption = make_audio_data(res)
-        st.session_state[TAG.AUDIOFILE] = {
-            TAG.AUDIOS: audio_files, TAG.CAPTIONS: caption}
+        st.session_state[TAG.EXTRA_RES_STATE] = res.status_code
 
-    st.session_state['res'] = res
-    st.session_state[TAG.EXTRA_STATE] = 'result'
-    st.experimental_rerun()
+        if res.status_code != status.HTTP_200_OK:
+            st.session_state[TAG.EXTRA_STATE] = 'execute'
+            st.experimental_rerun()
+        else:
+            audio_files, caption = make_audio_data(res)
+            st.session_state[TAG.AUDIOFILE] = {
+                TAG.AUDIOS: audio_files, TAG.CAPTIONS: caption}
+
+            st.session_state['res'] = res
+            st.session_state[TAG.EXTRA_STATE] = 'result'
+            st.experimental_rerun()
 
 
 # 결과 페이지
@@ -281,10 +301,13 @@ if __name__ == "__main__":
     # state가 없으면 생성
     if TAG.EXTRA_STATE not in st.session_state:
         st.session_state[TAG.EXTRA_STATE] = 'execute'
+    if TAG.EXTRA_RES_STATE not in st.session_state:
+        st.session_state[TAG.EXTRA_RES_STATE] = status.HTTP_200_OK
 
     # key값을 변경 -> 값의 초기화하고 새로고침을 만들기 위해 key값을 다르게 설정
     if 'key_num' not in st.session_state:
         st.session_state['key_num'] = TAG.ONE
+    
 
     # 다른 state 제거
     delete_another_session_state(TAG.EXTRA_STATE)
