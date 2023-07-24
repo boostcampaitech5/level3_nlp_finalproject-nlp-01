@@ -1,6 +1,7 @@
 import json
 import requests
 import streamlit as st
+from fastapi import status
 
 # streamlit tools
 from streamlit_tags import st_tags
@@ -9,6 +10,7 @@ from streamlit_space import space
 # custom
 from utils.attribute import get_music_category
 from utils.config import add_logo, delete_another_session_state, set_page
+from utils.log import print_error
 from utils.generator import make_analysis_request_json, make_audio_data
 from utils.api import google_trans, create_gpt_caption
 from models.Content import MusicContent
@@ -46,6 +48,10 @@ def text_analysis(title, category):
             TAG.DURATION: duration,  # index이므로
             TAG.TEMPO: tempo,  # index이므로
         }
+
+    # 오류 발생
+    if st.session_state[TAG.TEXT_RES_STATE] != status.HTTP_200_OK:
+        st.toast(print_error(st.session_state[TAG.TEXT_RES_STATE]))
 
     # Title
     st.title(title)
@@ -122,9 +128,13 @@ def text_analysis(title, category):
                 TAG.TEMPO: tempo,
             }
 
-            st.session_state[TAG.TEXT_INPUTS] = inputs
-            st.session_state[TAG.TEXT_STATE] = 'submit'
-            st.experimental_rerun()
+            if inputs[TAG.ORIGIN] == [] and inputs[TAG.ETC] == []:
+                st.toast('입력을 확인해 주세요')
+
+            else:
+                st.session_state[TAG.TEXT_INPUTS] = inputs
+                st.session_state[TAG.TEXT_STATE] = 'submit'
+                st.experimental_rerun()
 
 
 # 제출 화면
@@ -213,14 +223,22 @@ def submit_text_analysis(title, category):
         my_json = make_analysis_request_json(
             st.session_state[TAG.TEXT_INPUTS], keywords)
         res = requests.post(SECRET.MUSICGEN_ANALYSIS_URL, json=my_json)
-        print(">> 음악 생성 완료 : ", res)
-        audio_files, caption = make_audio_data(res)
-        st.session_state[TAG.AUDIOFILE] = {
-            TAG.AUDIOS: audio_files, TAG.CAPTIONS: caption}
 
-    st.session_state['res'] = res
-    st.session_state[TAG.TEXT_STATE] = 'result'
-    st.experimental_rerun()
+        st.session_state[TAG.TEXT_RES_STATE] = res.status_code
+
+        if res.status_code != status.HTTP_200_OK:
+            st.session_state[TAG.TEXT_RES_STATE] = 'execute'
+            st.experimental_rerun()
+
+        else:
+            print(">> 음악 생성 완료 : ", res)
+            audio_files, caption = make_audio_data(res)
+            st.session_state[TAG.AUDIOFILE] = {
+                TAG.AUDIOS: audio_files, TAG.CAPTIONS: caption}
+
+            st.session_state['res'] = res
+            st.session_state[TAG.TEXT_STATE] = 'result'
+            st.experimental_rerun()
 
 # 생성 결과 창
 
@@ -266,6 +284,8 @@ if __name__ == "__main__":
 
     if TAG.TEXT_STATE not in st.session_state:
         st.session_state[TAG.TEXT_STATE] = 'execute'
+    if TAG.TEXT_RES_STATE not in st.session_state:
+        st.session_state[TAG.TEXT_RES_STATE] = status.HTTP_200_OK
 
     # 초기화를 위한 key state생성
     if 'key_num' not in st.session_state:

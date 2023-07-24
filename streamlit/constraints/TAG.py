@@ -46,6 +46,10 @@ SIMPLE_STATE = "simple_state"
 EXTRA_STATE = "extra_state"
 TEXT_STATE = "text_state"
 
+SIMPLE_RES_STATE = "res_simple_state"
+EXTRA_RES_STATE = "res_extra_state"
+TEXT_RES_STATE = "res_text_state"
+
 # Request 태그
 ORIGIN = 'origin'
 AUDIOS = 'audios'
