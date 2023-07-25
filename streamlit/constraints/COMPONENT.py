@@ -6,7 +6,7 @@ DEFAULT_CATEGORY = {
     TAG.MOODS: [],
     TAG.ETC: [],
     TAG.DURATION: 1,  # index이므로
-    TAG.TEMPO: 1,  # index이므로
+    TAG.TEMPO: 0,  # index이므로
 }
 
 DEFAULT_TEXT = {
@@ -14,5 +14,5 @@ DEFAULT_TEXT = {
     TAG.TEXT: " ",
     TAG.ETC: [],
     TAG.DURATION: 1,  # index이므로
-    TAG.TEMPO: 1,  # index이므로
+    TAG.TEMPO: 0,  # index이므로
 }
