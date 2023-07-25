@@ -9,23 +9,26 @@ openai.api_key = SECRET.OPENAI_API
 
 
 def make_simple_request_json(category, check_dict):
+
+    key_num = check_dict['key_num']
+
     # genres
-    genres = [genre for genre in category['genres'] if check_dict[f"{genre}1"]]
+    genres = [genre for genre in category['genres'] if check_dict[f"{genre}{key_num}"]]
     # instruments
     instruments = [instrument for instrument in category['instruments']
-                   if check_dict[f"{instrument}1"]]
+                   if check_dict[f"{instrument}{key_num}"]]
     # moods
-    moods = [mood for mood in category['moods'] if check_dict[f"{mood}1"]]
+    moods = [mood for mood in category['moods'] if check_dict[f"{mood}{key_num}"]]
 
-    minute, second = map(int, check_dict[f"{TAG.DURATION}1"].split(':'))
+    minute, second = map(int, check_dict[f"{TAG.DURATION}{key_num}"].split(':'))
 
     return {
         TAG.GENRES: genres,
         TAG.INSTRUMENTS: instruments,
         TAG.MOODS: moods,
-        TAG.ETC: [t.replace("  *", "") for t in check_dict[f"{TAG.ETC}1"]],
+        TAG.ETC: [t.replace("  *", "") for t in check_dict[f"{TAG.ETC}{key_num}"]],
         TAG.DURATION: minute*60+second,
-        TAG.TEMPO: check_dict[f"{TAG.TEMPO}1"],
+        TAG.TEMPO: check_dict[f"{TAG.TEMPO}{key_num}"],
     }
 
 
