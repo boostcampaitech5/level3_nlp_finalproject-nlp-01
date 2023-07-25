@@ -35,6 +35,10 @@ def choice_category(title, category):
             if s == duration:
                 duration = i
                 break
+            
+        # [] 인 경우, Auto
+        if st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO] == []:
+                st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO] = 'Auto'
 
         for i, s in enumerate(category[TAG.TEMPO]):
             if s == st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO]:
@@ -144,6 +148,10 @@ def choice_category(title, category):
             st.toast('입력을 확인해 주세요!')
 
         else:
+            # tempo가 Auto인 경우
+            if inputs[TAG.TEMPO] == 'Auto':
+                inputs[TAG.TEMPO] = []
+
             # 선택한 카테고리를 세션으로 저장해둠 -> 다시 Return으로 돌아갈 경우 default로 사용
             st.session_state[TAG.EXTRA_INPUTS] = inputs
 
@@ -169,6 +177,10 @@ def submit_choice_category(title, category):
             if s == duration:
                 duration = i
                 break
+        
+        # [] 인 경우, Auto
+        if st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO] == []:
+                st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO] = 'Auto'
 
         for i, s in enumerate(category[TAG.TEMPO]):
             if s == st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO]:
@@ -185,8 +197,8 @@ def submit_choice_category(title, category):
         }
 
     # 오류 발생
-    if st.session_state['TAG.EXTRA_RES_STATE'] != status.HTTP_200_OK:
-        st.toast(st.session_state['TAG.EXTRA_RES_STATE'])
+    if st.session_state[TAG.EXTRA_RES_STATE] != status.HTTP_200_OK:
+        st.toast(st.session_state[TAG.EXTRA_RES_STATE])
 
     st.title(title)
     st.write("---")

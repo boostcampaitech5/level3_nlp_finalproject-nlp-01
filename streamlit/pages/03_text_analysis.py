@@ -35,6 +35,10 @@ def text_analysis(title, category):
             if s == duration:
                 duration = i
                 break
+        
+        # [] 인 경우, Auto
+        if st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO] == []:
+                st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO] = 'Auto'
 
         for i, s in enumerate(category[TAG.TEMPO]):
             if s == st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO]:
@@ -132,6 +136,9 @@ def text_analysis(title, category):
                 st.toast('입력을 확인해 주세요')
 
             else:
+                # tempo가 Auto인 경우
+                if inputs[TAG.TEMPO] == 'Auto':
+                    inputs[TAG.TEMPO] = []
                 st.session_state[TAG.TEXT_INPUTS] = inputs
                 st.session_state[TAG.TEXT_STATE] = 'submit'
                 st.experimental_rerun()
@@ -151,6 +158,10 @@ def submit_text_analysis(title, category):
             if s == duration:
                 duration = i
                 break
+        
+        # [] 인 경우, Auto
+        if st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO] == []:
+                st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO] = 'Auto'
 
         for i, s in enumerate(category[TAG.TEMPO]):
             if s == st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO]:
