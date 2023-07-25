@@ -31,7 +31,7 @@ def get_music_category():
 
     output[TAG.ETC] = output[TAG.GENRES] + \
         output[TAG.INSTRUMENTS]+output[TAG.MOODS]
-    output[TAG.TEMPO] = ['Slow', 'Medium', 'Fast']
+    output[TAG.TEMPO] = ['Slow', 'Medium', 'Fast', 'Auto']
     output[TAG.DURATION] = ['0:15', '0:30', '1:00']
     return output
 
@@ -52,6 +52,6 @@ def get_simple_category():
 
     output[TAG.ETC] = output[TAG.GENRES] + \
         output[TAG.INSTRUMENTS]+output[TAG.MOODS]
-    output[TAG.TEMPO] = ['Slow', 'Medium', 'Fast']
+    output[TAG.TEMPO] = ['Slow', 'Medium', 'Fast', 'Auto']
     output[TAG.DURATION] = ['0:15', '0:30', '1:00']
     return output
