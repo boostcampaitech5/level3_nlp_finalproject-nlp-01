@@ -37,7 +37,7 @@ def simple_category(title, category):
             if s == duration:
                 duration = i
                 break
-        
+
         # [] 인 경우, Auto
         if st.session_state[TAG.SIMPLE_INPUTS][TAG.TEMPO] == []:
             st.session_state[TAG.SIMPLE_INPUTS][TAG.TEMPO] = 'Auto'
@@ -59,7 +59,6 @@ def simple_category(title, category):
     if st.session_state[TAG.SIMPLE_RES_STATE] != status.HTTP_200_OK:
         st.toast(print_error(st.session_state[TAG.SIMPLE_RES_STATE]))
         st.session_state[TAG.SIMPLE_RES_STATE] = 200
-        
 
     st.title(title)
     st.divider()
@@ -74,7 +73,6 @@ def simple_category(title, category):
     with st.expander(TAG.GUIDE_HEADER):
         st.markdown(INFO.SIMPLE_CATEGORY_GUIDE)
     space(lines=2)
-
 
     # 장르
     st.subheader(TAG.GENRES_HEADER)
@@ -136,7 +134,7 @@ def simple_category(title, category):
         # 입력이 없다면 toast 발생
         if inputs[TAG.GENRES] == [] and inputs[TAG.INSTRUMENTS] == [] and inputs[TAG.MOODS] == []:
             st.toast('입력을 확인해 주세요!')
-        
+
         else:
             # tempo가 Auto인 경우
             if inputs[TAG.TEMPO] == 'Auto':
@@ -144,7 +142,7 @@ def simple_category(title, category):
 
             # 선택한 카테고리를 세션으로 저장해둠 -> 다시 Return으로 돌아갈 경우 default로 사용
             st.session_state[TAG.SIMPLE_INPUTS] = inputs
-            
+
             # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
             st.session_state[TAG.SIMPLE_STATE] = 'submit'
             st.experimental_rerun()
@@ -167,10 +165,10 @@ def submit_simple_category(title, category):
             if s == duration:
                 duration = i
                 break
-        
+
         # [] 인 경우, Auto
         if st.session_state[TAG.SIMPLE_INPUTS][TAG.TEMPO] == []:
-                st.session_state[TAG.SIMPLE_INPUTS][TAG.TEMPO] = 'Auto'
+            st.session_state[TAG.SIMPLE_INPUTS][TAG.TEMPO] = 'Auto'
 
         for i, s in enumerate(category[TAG.TEMPO]):
             if s == st.session_state[TAG.SIMPLE_INPUTS][TAG.TEMPO]:
@@ -234,11 +232,11 @@ def submit_simple_category(title, category):
 
     with st.spinner(TAG.REQUEST_MESSAGE):
         my_json = st.session_state[TAG.SIMPLE_INPUTS]
-        res = requests.post(SECRET.MUSICGEN_CATEGORY_URL, json=my_json)
+        res = requests.post(SECRET.MUSICGEN_SIMPLE_URL, json=my_json)
         print(">>", TAG.SIMPLE_CATEGORY_TITLE, res)      # log로 요청이 제대로 왔는지 확인
 
         st.session_state[TAG.SIMPLE_RES_STATE] = res.status_code
-        
+
         if res.status_code != status.HTTP_200_OK:
             st.session_state[TAG.SIMPLE_STATE] = 'execute'
             st.experimental_rerun()
@@ -292,7 +290,6 @@ if __name__ == "__main__":
     if TAG.SIMPLE_RES_STATE not in st.session_state:
         st.session_state[TAG.SIMPLE_RES_STATE] = status.HTTP_200_OK
 
-    
     # key값을 변경 -> 값의 초기화하고 새로고침을 만들기 위해 key값을 다르게 설정
     if 'key_num' not in st.session_state:
         st.session_state['key_num'] = TAG.ONE
