@@ -106,7 +106,7 @@ def choice_category(title, category):
         suggestions=category[TAG.ETC],
         value=default[TAG.ETC],
         key="etc"+st.session_state['key_num'])
-    st.write('※　ex) calm music, smooth jazz, Dark, Funny music, Children music, christmas music')
+    st.write(INFO.ETC_EXAMPLE)
     space(lines=1)
 
     col_1, col_2 = st.columns([1, 1], gap="large")
@@ -259,7 +259,7 @@ def submit_choice_category(title, category):
         options=default[TAG.ETC],
         default=default[TAG.ETC],
         disabled=True)
-    st.write('※　ex) calm music, smooth jazz, Dark, Funny music, Children music, christmas music')
+    st.write(INFO.ETC_EXAMPLE)
     space(lines=1)
 
     col_1, col_2 = st.columns([1, 1], gap="large")
@@ -316,8 +316,8 @@ def result_choice_category(title, inputs):
     st.title(title)
     st.divider()
 
-    st.header("주의! AI가 생성한 음악의 소리가 '매우' 클 수 있습니다!")
-    space(lines=2)
+    st.markdown(TAG.RESULT_WRANING)
+    space(lines=3)
 
     st.write("### 📃 \t캡션 정보 (Caption)")
     captions = st.multiselect(
