@@ -31,45 +31,56 @@ def guide():
     with col_1:
         st.markdown(INFO.PROJECT_DETAIL)
     space(lines=10)
-
+    st.markdown("""
+            <style>
+            button {
+                height: auto;
+                padding-top: 20px !important;
+                padding-bottom: 20px !important;
+                padding-left: 20px !important;
+                padding-right: 20px !important;
+                font-size:20px !important; 
+                font-weight : bold !important;
+            }
+            </style>
+        """, unsafe_allow_html=True)
     ## 설명
-    col_0, col_1, col_2 = st.columns([7,1,4])
+    col_0, _, col_2 = st.columns([5,1,5], gap="small")
     with col_2:
-        icon2 = Image.open(PATH.MAIN_IMAGE).resize((640, 480))
-        space(lines=3)
+        icon2 = Image.open(PATH.MAIN_SIMPLE).resize((960, 640))
         st.image(image=icon2)
     with col_0:
         st.markdown(INFO.MAIN_SIMPLE_CATEGORY)
-        space(lines=2)
+        space(lines=5)
 
-        if st.button('Simple-Category 바로가기'):
+        if st.button('# Simple-Category 바로가기'):
             switch_page("Simple_Category")
-    space(lines=4)
+    space(lines=2)
     
-    col_0, col_1, col_2 = st.columns([4,1,7])
+    col_0, _, col_2 = st.columns([3,1,7], gap="small")
     with col_2:
+        space(lines=4)
         st.markdown(INFO.MAIN_EXTRA_CATEGORY)
-
-        space(lines=2)
-        if st.button('Extra-Category 바로가기'):
+        space(lines=4)
+        if st.button('# Extra-Category 바로가기'):
             switch_page("Extra_Category")
     with col_0:
-        space(lines=6)
-        icon2 = Image.open(PATH.MAIN_IMAGE).resize((640, 480))
-        st.image(image=icon2)
-    space(lines=4)
+        space(lines=2)
+        icon3 = Image.open(PATH.MAIN_EXTRA).resize((560, 720))
+        st.image(image=icon3)
+    space(lines=2)
 
-    col_0, col_1, col_2 = st.columns([7,1,4])
+    col_0, _,col_2 = st.columns([7,1,4], gap="small")
     with col_0:
+        space(lines=6)
         st.markdown(INFO.MAIN_TEXT_ANALYSIS)
         space(lines=2)
-        if st.button('Text-Analysis 바로가기'):
+        if st.button('# Text-Analysis 바로가기'):
             switch_page('Text_analysis')
     with col_2:
-        space(lines=3)
-        icon2 = Image.open(PATH.MAIN_IMAGE).resize((640, 480))
-        st.image(image=icon2)
-    space(lines=10)
+        icon4 = Image.open(PATH.MAIN_TEXT).resize((560, 720))
+        st.image(image=icon4)
+    space(lines=5)
 
 
     st.markdown("# 데모 버전")
