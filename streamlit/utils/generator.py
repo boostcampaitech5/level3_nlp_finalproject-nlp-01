@@ -26,7 +26,6 @@ def make_simple_request_json(category, check_dict):
         TAG.GENRES: genres,
         TAG.INSTRUMENTS: instruments,
         TAG.MOODS: moods,
-        TAG.ETC: [t.replace("  *", "") for t in check_dict[f"{TAG.ETC}{key_num}"]],
         TAG.DURATION: minute*60+second,
         TAG.TEMPO: check_dict[f"{TAG.TEMPO}{key_num}"],
     }
