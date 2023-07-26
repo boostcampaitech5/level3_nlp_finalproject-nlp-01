@@ -18,22 +18,25 @@ def get_music_category():
         datas = json.load(f)
 
     output[TAG.GENRES] = \
-        [f"{list(tag.keys())[0]} ({list(tag.values())[0]})  *" for tag in datas[TAG.GENRES][TAG.POPULAR]] +\
-        [f"{list(tag.keys())[0]} ({list(tag.values())[0]})" for tag in datas[TAG.GENRES][TAG.NORMAL]]
+        [f"{key} ({value})  *" for key, value in datas[TAG.GENRES][TAG.POPULAR].items()] +\
+        [f"{key} ({value})" for key, value in datas[TAG.GENRES]
+         [TAG.NORMAL].items()]
 
     output[TAG.INSTRUMENTS] = \
-        [f"{list(tag.keys())[0]} ({list(tag.values())[0]})  *" for tag in (datas[TAG.INSTRUMENTS][TAG.POPULAR])] +\
-        [f"{list(tag.keys())[0]} ({list(tag.values())[0]})" for tag in datas[TAG.INSTRUMENTS][TAG.NORMAL]]
+        [f"{key} ({value})  *" for key, value in (datas[TAG.INSTRUMENTS][TAG.POPULAR]).items()] +\
+        [f"{key} ({value})" for key, value in datas[TAG.INSTRUMENTS]
+         [TAG.NORMAL].items()]
 
     output[TAG.MOODS] = \
-        [f"{list(tag.keys())[0]} ({list(tag.values())[0]})  *" for tag in datas[TAG.MOODS][TAG.POPULAR]] +\
-        [f"{list(tag.keys())[0]} ({list(tag.values())[0]})" for tag in datas[TAG.MOODS][TAG.NORMAL]]
+        [f"{key} ({value})  *" for key, value in datas[TAG.MOODS][TAG.POPULAR].items()] +\
+        [f"{key} ({value})" for key, value in datas[TAG.MOODS]
+         [TAG.NORMAL].items()]
 
     output[TAG.ETC] = output[TAG.GENRES] + \
         output[TAG.INSTRUMENTS]+output[TAG.MOODS]
     output[TAG.TEMPO] = ['Auto', 'Slow', 'Medium', 'Fast']
     output[TAG.DURATION] = ['0:15', '0:30', '1:00']
-    
+
     return output
 
 
@@ -43,16 +46,26 @@ def get_simple_category():
         datas = json.load(f)
 
     output[TAG.GENRES] = \
-        [f"{list(tag.keys())[0]} ({list(tag.values())[0]})" for tag in datas[TAG.GENRES][TAG.POPULAR]]
+        [f"{key} ({value})" for key, value in datas[TAG.GENRES]
+         [TAG.POPULAR].items()]
 
     output[TAG.INSTRUMENTS] = \
-        [f"{list(tag.keys())[0]} ({list(tag.values())[0]})" for tag in datas[TAG.INSTRUMENTS][TAG.POPULAR]]
+        [f"{key} ({value})" for key, value in datas[TAG.INSTRUMENTS]
+         [TAG.POPULAR].items()]
 
     output[TAG.MOODS] = \
-        [f"{list(tag.keys())[0]} ({list(tag.values())[0]})" for tag in datas[TAG.MOODS][TAG.POPULAR]]
+        [f"{key} ({value})" for key, value in datas[TAG.MOODS]
+         [TAG.POPULAR].items()]
 
     output[TAG.ETC] = output[TAG.GENRES] + \
         output[TAG.INSTRUMENTS]+output[TAG.MOODS]
     output[TAG.TEMPO] = ['Auto', 'Slow', 'Medium', 'Fast']
     output[TAG.DURATION] = ['0:15', '0:30', '1:00']
-    return output
+
+    base_output = {
+        TAG.GENRES: datas[TAG.GENRES][TAG.POPULAR],
+        TAG.INSTRUMENTS: datas[TAG.INSTRUMENTS][TAG.POPULAR],
+        TAG.MOODS: datas[TAG.MOODS][TAG.POPULAR],
+    }
+
+    return output, base_output

@@ -129,7 +129,7 @@ def simple_category(title, category):
 
     if button_cols_2.button("Submit"):  # 제출버튼
         # API로 전송하기 위해 input생성
-        inputs = make_simple_request_json(category, st.session_state)
+        inputs = make_simple_request_json(st.session_state)
 
         # 입력이 없다면 toast 발생
         if inputs[TAG.GENRES] == [] and inputs[TAG.INSTRUMENTS] == [] and inputs[TAG.MOODS] == []:
@@ -282,7 +282,7 @@ def result_simple_category(title, inputs):
 
 # main
 if __name__ == "__main__":
-    category = get_simple_category()
+    category, _ = get_simple_category()
 
     # state가 없으면 생성
     if TAG.SIMPLE_STATE not in st.session_state:
