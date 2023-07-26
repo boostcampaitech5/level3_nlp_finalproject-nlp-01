@@ -1,0 +1,1089 @@
+{
+    "instruments": {
+        "normal": [
+            {
+                "808": "808"
+            },
+            {
+                "ASMR": "ASMR"
+            },
+            {
+                "아코디언": "Accordion"
+            },
+            {
+                "어쿠스틱 베이스": "Acoustic Bass"
+            },
+            {
+                "어쿠스틱 베이스": "Acoustic bass"
+            },
+            {
+                "어쿠스틱 기타": "Acoustic guitar"
+            },
+            {
+                "백파이프": "Bagpipes"
+            },
+            {
+                "발라폰": "Balafon"
+            },
+            {
+                "밴조": "Banjo"
+            },
+            {
+                "반수리": "Bansuri"
+            },
+            {
+                "벨": "Bell"
+            },
+            {
+                "벨": "Bells"
+            },
+            {
+                "볼론": "Bolon"
+            },
+            {
+                "봉고": "Bongo"
+            },
+            {
+                "현악기": "Bowed string instrument"
+            },
+            {
+                "금관 악기": "Brass"
+            },
+            {
+                "금관 악기": "Brass instrument"
+            },
+            {
+                "카혼": "Cajon"
+            },
+            {
+                "첼레스타": "Celesta"
+            },
+            {
+                "첼레스타": "Celeste"
+            },
+            {
+                "성가": "찬트"
+            },
+            {
+                "차랑고": "Charango"
+            },
+            {
+                "차임": "Chimes"
+            },
+            {
+                "클라리넷": "Clarinet"
+            },
+            {
+                "클라비넷": "Clavinet"
+            },
+            {
+                "콩가": "Congas"
+            },
+            {
+                "콘트라베이스": "Double bass"
+            },
+            {
+                "드럼 머신": "Drum machine"
+            },
+            {
+                "드럼라인": "Drumline"
+            },
+            {
+                "드럼": "Drums"
+            },
+            {
+                "두둑": "Duduk"
+            },
+            {
+                "덜시머": "Dulcimer"
+            },
+            {
+                "일렉 기타": "Electric guitar"
+            },
+            {
+                "전자 피아노": "Electric piano"
+            },
+            {
+                "일렉트릭 슬라이드 기타": "Electric slide guitar"
+            },
+            {
+                "민족 피리": "Ethnic flute"
+            },
+            {
+                "민족 타악기": "Ethnic percussion"
+            },
+            {
+                "에스닉 스트링": "Ethnic strings"
+            },
+            {
+                "피들": "Fiddle"
+            },
+            {
+                "플라멩코 기타": "Flamenco guitar"
+            },
+            {
+                "플루겔호른": "Flugelhorn"
+            },
+            {
+                "프렌치 호른": "French horn"
+            },
+            {
+                "글로켄슈필": "Glockenspiel"
+            },
+            {
+                "공": "Gong"
+            },
+            {
+                "기타": "Guitars"
+            },
+            {
+                "하몬드 오르간": "Hammond organ"
+            },
+            {
+                "박수": "Handclaps"
+            },
+            {
+                "행드럼": "Hang drum"
+            },
+            {
+                "하모니카": "Harmonica"
+            },
+            {
+                "턱 하프": "Jaw harp"
+            },
+            {
+                "칼림바": "Kalimba"
+            },
+            {
+                "건반": "Keyboard"
+            },
+            {
+                "고토": "Koto"
+            },
+            {
+                "만돌린": "Mandolin"
+            },
+            {
+                "멜로트론": "Melotron"
+            },
+            {
+                "뮤지컬 앙상블": "Musical ensemble"
+            },
+            {
+                "뮤직 박스": "Musicbox"
+            },
+            {
+                "오보에": "Oboe"
+            },
+            {
+                "오케스트라": "Orchestra"
+            },
+            {
+                "오르간": "Organ"
+            },
+            {
+                "우드": "Oud"
+            },
+            {
+                "패드": "Pads"
+            },
+            {
+                "타악기": "Percussion"
+            },
+            {
+                "피치카토 스트링": "Pizzicato strings"
+            },
+            {
+                "사로드": "Sarod"
+            },
+            {
+                "셰이커": "Shaker"
+            },
+            {
+                "샤쿠하치 플룻": "Shakuhachi flute"
+            },
+            {
+                "쇼파르": "Shofar"
+            },
+            {
+                "시타르": "Sitar"
+            },
+            {
+                "스냅": "Snaps"
+            },
+            {
+                "소프라노 색소폰": "Soprano saxophone"
+            },
+            {
+                "스틸 드럼": "Steel drums"
+            },
+            {
+                "신시사이저 베이스": "Synth bass"
+            },
+            {
+                "신시사이저 드럼": "Synth drums"
+            },
+            {
+                "신시사이저 루프": "Synth loops"
+            },
+            {
+                "타블라 드럼": "Tabla drum"
+            },
+            {
+                "타이코 드럼": "Taiko drums"
+            },
+            {
+                "탬버린": "Tambourine"
+            },
+            {
+                "팀파니": "Timpani"
+            },
+            {
+                "장난감 피아노": "Toy piano"
+            },
+            {
+                "트라이앵글": "Triangle"
+            },
+            {
+                "트롬본": "Trombone"
+            },
+            {
+                "튜바": "Tuba"
+            },
+            {
+                "업라이트 베이스": "Upright bass"
+            },
+            {
+                "비브라폰": "Vibraphone"
+            },
+            {
+                "비올라": "Viola"
+            },
+            {
+                "와 와 기타": "Wah wah guitar"
+            },
+            {
+                "휘파람": "Whistle"
+            },
+            {
+                "관악기": "Wind instrument"
+            },
+            {
+                "목관악기": "Woodwinds"
+            },
+            {
+                "월리처 오르간": "Wurlitzer organ"
+            },
+            {
+                "실로폰": "Xylophone"
+            },
+            {
+                "치터": "Zither"
+            }
+        ],
+        "popular": [
+            {
+                "어쿠스틱 기타": "Acoustic Guitar"
+            },
+            {
+                "베이스": "Bass"
+            },
+            {
+                "첼로": "Cello"
+            },
+            {
+                "드럼": "Drum"
+            },
+            {
+                "일렉 기타": "Electric Guitar"
+            },
+            {
+                "플루트": "Flute"
+            },
+            {
+                "하프": "Harp"
+            },
+            {
+                "마림바": "Marimba"
+            },
+            {
+                "피아노": "Piano"
+            },
+            {
+                "색소폰": "Saxophone"
+            },
+            {
+                "스트링": "Strings"
+            },
+            {
+                "신디사이저": "Synthesizer"
+            },
+            {
+                "트럼펫": "Trumpet"
+            },
+            {
+                "우쿨렐레": "Ukulele"
+            },
+            {
+                "바이올린": "Violin"
+            }
+        ]
+    },
+    "genres": {
+        "normal": [
+            {
+                "액션": "Action"
+            },
+            {
+                "어덜트 컨템포러리": "Adult Contemporary"
+            },
+            {
+                "아프리카": "African"
+            },
+            {
+                "Alt R&B": "Alt R&B"
+            },
+            {
+                "잔잔한": "Ambient"
+            },
+            {
+                "발리": "Bali"
+            },
+            {
+                "발라드": "Ballad"
+            },
+            {
+                "전투": "Battle"
+            },
+            {
+                "블루그래스": "Bluegrass"
+            },
+            {
+                "발리우드": "Bollywood"
+            },
+            {
+                "브라질": "Brazil"
+            },
+            {
+                "브라질": "Brazilian"
+            },
+            {
+                "브레이크비트": "Breakbeat"
+            },
+            {
+                "어린이": "Children"
+            },
+            {
+                "칠아웃": "Chill Out"
+            },
+            {
+                "칠웨이브": "Chillwave"
+            },
+            {
+                "중국": "China"
+            },
+            {
+                "기독교 음악": "Christian music"
+            },
+            {
+                "크리스마스": "Christmas"
+            },
+            {
+                "시네마틱": "Cinematic"
+            },
+            {
+                "클래식 록": "Classic Rock"
+            },
+            {
+                "고전": "Classical"
+            },
+            {
+                "국가": "Country"
+            },
+            {
+                "깊은 집": "Deep House"
+            },
+            {
+                "드럼 앤 베이스": "DnB"
+            },
+            {
+                "다운템포": "Downtempo"
+            },
+            {
+                "드래머디": "Dramedy"
+            },
+            {
+                "드림팝": "Dream Pop"
+            },
+            {
+                "드론": "Drones"
+            },
+            {
+                "덥스텝": "Dubstep"
+            },
+            {
+                "이지 리스닝": "Easy Listening"
+            },
+            {
+                "일렉트로니카": "Electric"
+            },
+            {
+                "일렉트로 팝": "Electro Pop"
+            },
+            {
+                "일렉트로닉 뮤직": "Electronic music"
+            },
+            {
+                "서사적": "Epic"
+            },
+            {
+                "미묘한": "Ethereal"
+            },
+            {
+                "유럽 ": "European"
+            },
+            {
+                "엑조티카": "Exotica"
+            },
+            {
+                "판타지": "Fantasy"
+            },
+            {
+                "플라멩코": "Flamenco"
+            },
+            {
+                "포크 음악": "Folk music"
+            },
+            {
+                "포크트로니카": "Folktronica"
+            },
+            {
+                "프랑스": "France"
+            },
+            {
+                "프랑스": "French"
+            },
+            {
+                "펑키 재즈": "Funk"
+            },
+            {
+                "퓨처 하우스": "Future House"
+            },
+            {
+                "퓨처베이스": "Futurebass"
+            },
+            {
+                "퓨처웨이브": "Futurewave"
+            },
+            {
+                "가믈란": "Gamelan"
+            },
+            {
+                "게임": "Games"
+            },
+            {
+                "갱스터": "Gangsta"
+            },
+            {
+                "글리치 하우스": "Glitch House"
+            },
+            {
+                "그나와": "Gnawa"
+            },
+            {
+                "그룹": "Group"
+            },
+            {
+                "할로윈": "Halloween"
+            },
+            {
+                "하와이안": "Hawaiian"
+            },
+            {
+                "헤드라인": "Headlines"
+            },
+            {
+                "헤비메탈": "Heavy Metal"
+            },
+            {
+                "공포": "Horror"
+            },
+            {
+                "집": "House"
+            },
+            {
+                "휴먼 드라마": "Human Drama"
+            },
+            {
+                "인디": "Independent"
+            },
+            {
+                "인디 음악": "Independent music"
+            },
+            {
+                "인도 사람": "Indian"
+            },
+            {
+                "인디 포크": "Indie Folk"
+            },
+            {
+                "인디 팝": "Indie Pop"
+            },
+            {
+                "인디 락": "Indie Rock"
+            },
+            {
+                "산업": "Industrial"
+            },
+            {
+                "국제적인": "International"
+            },
+            {
+                "일본 전통 음악": "Japanese traditional music"
+            },
+            {
+                "어린이": "Kids"
+            },
+            {
+                "랩탑 포크": "Laptop Folk"
+            },
+            {
+                "라틴어": "Latin"
+            },
+            {
+                "기운찬": "Lively"
+            },
+            {
+                "라운지": "Lounge"
+            },
+            {
+                "자장가": "Lullaby"
+            },
+            {
+                "메탈": "Metal"
+            },
+            {
+                "중동": "Middle Eastern"
+            },
+            {
+                "중동 음악": "Middle Eastern music"
+            },
+            {
+                "미니멀리즘": "Minimalism"
+            },
+            {
+                "모던 클래식": "Modern Classical"
+            },
+            {
+                "모던 재즈": "Modern Jazz"
+            },
+            {
+                "몽골리안": "Mongolian"
+            },
+            {
+                "동기 부여": "Motivational"
+            },
+            {
+                "라틴 아메리카의 음악": "Music of Latin America"
+            },
+            {
+                "네오": "Neo"
+            },
+            {
+                "네오 클래식": "Neo Classical"
+            },
+            {
+                "뉴웨이브": "New Wave"
+            },
+            {
+                "뉴스": "News"
+            },
+            {
+                "올드 스쿨 힙": "Old School Hip"
+            },
+            {
+                "오케스트라 하이브리드": "Orchestral Hybrid"
+            },
+            {
+                "페루": "Peruvian"
+            },
+            {
+                "대중 음악": "Pop music"
+            },
+            {
+                "포스트 락": "Post Rock"
+            },
+            {
+                "사이키델릭 락": "Psychedelic Rock"
+            },
+            {
+                "펑크": "Punk"
+            },
+            {
+                "알앤비": "R&B"
+            },
+            {
+                "R&B와 소울": "R&B and Soul"
+            },
+            {
+                "경마": "Racing"
+            },
+            {
+                "라디오 이미징": "Radio Imaging"
+            },
+            {
+                "날뛰다": "Rave"
+            },
+            {
+                "레게": "Reggae"
+            },
+            {
+                "레게톤": "Reggaeton"
+            },
+            {
+                "리듬 앤 블루스": "Rhythm and blues"
+            },
+            {
+                "록트로니카": "Rocktronica"
+            },
+            {
+                "삼바": "Samba"
+            },
+            {
+                "견본": "Samples"
+            },
+            {
+                "스카": "Ska"
+            },
+            {
+                "부드러운 재즈": "Smooth Jazz"
+            },
+            {
+                "소프트 록": "Soft Rock"
+            },
+            {
+                "영혼": "Soul"
+            },
+            {
+                "영혼의 음악": "Soul music"
+            },
+            {
+                "스페인": "Spanish"
+            },
+            {
+                "그네": "Swing"
+            },
+            {
+                "신스 팝": "Synth Pop"
+            },
+            {
+                "테크노": "Techno"
+            },
+            {
+                "전통 음악": "Traditional music"
+            },
+            {
+                "트레일러": "Trailer"
+            },
+            {
+                "황홀": "Trance"
+            },
+            {
+                "트랩": "Trap"
+            },
+            {
+                "여행": "Trip"
+            },
+            {
+                "비디오 게임 음악": "Video game music"
+            }
+        ],
+        "popular": [
+            {
+                "어쿠스틱": "Acoustic"
+            },
+            {
+                "블루스": "Blues"
+            },
+            {
+                "춤": "Dance"
+            },
+            {
+                "디스코": "Disco"
+            },
+            {
+                "EDM": "EDM"
+            },
+            {
+                "포크": "Folk"
+            },
+            {
+                "힙합": "Hip hop"
+            },
+            {
+                "재즈": "Jazz"
+            },
+            {
+                "국악": "Korean traditional music"
+            },
+            {
+                "로파이": "Lofi"
+            },
+            {
+                "어린이 음악": "Music for children"
+            },
+            {
+                "뉴에이지": "New Age"
+            },
+            {
+                "오케스트라": "Orchestral"
+            },
+            {
+                "팝": "Pop"
+            },
+            {
+                "락": "Rock"
+            }
+        ]
+    },
+    "moods": {
+        "normal": [
+            {
+                "모험": "Adventure"
+            },
+            {
+                "에어로빅": "Aerobics"
+            },
+            {
+                "공격적인": "Aggressive"
+            },
+            {
+                "자극": "Arousing"
+            },
+            {
+                "대기": "Atmospheric"
+            },
+            {
+                "달콤씁쓸": "Bittersweet"
+            },
+            {
+                "기괴한": "Bizarre"
+            },
+            {
+                "차가운": "Bleak"
+            },
+            {
+                "탄력": "Bouncy"
+            },
+            {
+                "밝은": "Bright"
+            },
+            {
+                "평온한": "Carefree"
+            },
+            {
+                "축하": "Celebratory"
+            },
+            {
+                "냉기": "Chill"
+            },
+            {
+                "코메디": "Comedy"
+            },
+            {
+                "자신감": "Confident"
+            },
+            {
+                "혼란스러운": "Confused"
+            },
+            {
+                "범죄": "Crime"
+            },
+            {
+                "댄시": "Dancy"
+            },
+            {
+                "발견": "Discovery"
+            },
+            {
+                "극적인": "Dramatic"
+            },
+            {
+                "운전": "Driving"
+            },
+            {
+                "초초": "Edgy"
+            },
+            {
+                "감정적인": "Emotional"
+            },
+            {
+                "힘을 돋우는": "Empowering"
+            },
+            {
+                "신나는": "Exciting"
+            },
+            {
+                "패션": "Fashion"
+            },
+            {
+                "기분이 좋은": "Feel Good"
+            },
+            {
+                "파이": "Fi"
+            },
+            {
+                "불 같은": "Fiery"
+            },
+            {
+                "부서지기 쉬운": "Fragile"
+            },
+            {
+                "재미있는": "Fun"
+            },
+            {
+                "겁내는": "Funky"
+            },
+            {
+                "펑키한": "Funny"
+            },
+            {
+                "미래": "Futuristic"
+            },
+            {
+                "온화한": "Gentle"
+            },
+            {
+                "그루비": "Groovy"
+            },
+            {
+                "잊혀지지 않는": "Haunting"
+            },
+            {
+                "상심": "Heartbroken"
+            },
+            {
+                "영웅적인": "Heroic"
+            },
+            {
+                "희망적인": "Hopeful"
+            },
+            {
+                "최면": "Hypnotic"
+            },
+            {
+                "영감을주는": "Inspirational"
+            },
+            {
+                "영감을주는": "Inspiring"
+            },
+            {
+                "극심한": "Intense"
+            },
+            {
+                "친밀한": "Intimate"
+            },
+            {
+                "라이프스타일": "Lifestyle"
+            },
+            {
+                "빛": "Light"
+            },
+            {
+                "열망": "Longing"
+            },
+            {
+                "마법 같은": "Magical"
+            },
+            {
+                "명상": "Meditation"
+            },
+            {
+                "우울": "Melancholic"
+            },
+            {
+                "부드러운": "Mellow"
+            },
+            {
+                "즐거운": "Merry"
+            },
+            {
+                "군대": "Military"
+            },
+            {
+                "현대의": "Modern"
+            },
+            {
+                "무디": "Moody"
+            },
+            {
+                "신비로운": "Mystical"
+            },
+            {
+                "그리운": "Nostalgic"
+            },
+            {
+                "낙관적인": "Optimistic"
+            },
+            {
+                "장난": "Playful"
+            },
+            {
+                "강한": "Powerful"
+            },
+            {
+                "사색적인": "Reflective"
+            },
+            {
+                "휴식": "Relaxation"
+            },
+            {
+                "편안한": "Relaxing"
+            },
+            {
+                "종교의": "Religious"
+            },
+            {
+                "후회": "Remorseful"
+            },
+            {
+                "로맨틱": "Romantic"
+            },
+            {
+                "과학": "Sci"
+            },
+            {
+                "감각적인": "Sensual"
+            },
+            {
+                "고요한": "Serene"
+            },
+            {
+                "섹시한": "Sexy"
+            },
+            {
+                "바보 같은": "Silly"
+            },
+            {
+                "침침한": "Somber"
+            },
+            {
+                "달래는": "Soothing"
+            },
+            {
+                "세련된": "Sophisticated"
+            },
+            {
+                "충만한": "Soulful"
+            },
+            {
+                "영적인": "Spiritual"
+            },
+            {
+                "유령 같은": "Spooky"
+            },
+            {
+                "스포츠": "Sports"
+            },
+            {
+                "스파이": "Spy"
+            },
+            {
+                "이상한": "Strange"
+            },
+            {
+                "세련된": "Stylish"
+            },
+            {
+                "찌는 듯한": "Sultry"
+            },
+            {
+                "서스펜스": "Suspenseful"
+            },
+            {
+                "달콤한": "Sweet"
+            },
+            {
+                "부드러운": "Tender"
+            },
+            {
+                "스릴러": "Thriller"
+            },
+            {
+                "밑줄": "Underscores"
+            },
+            {
+                "상승 기조": "Upbeat"
+            },
+            {
+                "고양": "희망을 주는"
+            },
+            {
+                "결혼": "Wedding"
+            },
+            {
+                "아쉬운": "Wistful"
+            },
+            {
+                "운동": "Workout"
+            },
+            {
+                "걱정": "Worry"
+            }
+        ],
+        "popular": [
+            {
+                "화난": "Angry"
+            },
+            {
+                "차분한": "Calm"
+            },
+            {
+                "발랄한": "Cheerful"
+            },
+            {
+                "어두운": "Dark"
+            },
+            {
+                "꿈꾸는 듯한": "Dreamy"
+            },
+            {
+                "에너제틱": "Energetic"
+            },
+            {
+                "행복한": "Happy"
+            },
+            {
+                "외로운": "Lonely"
+            },
+            {
+                "사랑": "Love"
+            },
+            {
+                "신비한": "Mysterious"
+            },
+            {
+                "파티": "Party"
+            },
+            {
+                "평화로운": "Peaceful"
+            },
+            {
+                "슬픔": "Sad"
+            },
+            {
+                "무서운": "Scary"
+            },
+            {
+                "감상적": "Sentimental"
+            }
+        ]
+    },
+    "durations": "sec 단위의 자연수 인자 넘겨주기(max = 5분)",
+    "tempos": [
+        "Slow",
+        "Medium",
+        "Fast"
+    ],
+    "ETC": "작성 예시가 포함된 가이드를 제시하고 유저에게 text 형태로 입력받기 (e.g. Christmas music, Dance music, Wedding music, Birthday music)"
+}
