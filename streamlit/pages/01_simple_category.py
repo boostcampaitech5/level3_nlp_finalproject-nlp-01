@@ -83,13 +83,12 @@ def simple_category(title, category):
             mood, key=mood+st.session_state['key_num'])
     space(lines=1)
 
-    # 사용자 keywords 생성
-    etc = st_tags(
-        label=TAG.ETC_HEADER,
-        text=TAG.ETC_DESCRIPTION,
-        suggestions=category[TAG.ETC],
-        value=default[TAG.ETC],
-        key="etc"+st.session_state['key_num'])
+    # 악기
+    st.subheader(TAG.INSTRUMENTS_HEADER)
+    cols_list = st.columns([1]*COLS)
+    for i, instrument in enumerate(category[TAG.INSTRUMENTS]):
+        cols_list[i % COLS].checkbox(
+            instrument, key=instrument+st.session_state['key_num'])
     space(lines=1)
 
     col_1, col_2 = st.columns([1, 1], gap="large")
@@ -173,7 +172,6 @@ def submit_simple_category(title, category):
             TAG.GENRES: st.session_state[TAG.SIMPLE_INPUTS][TAG.GENRES],
             TAG.INSTRUMENTS: st.session_state[TAG.SIMPLE_INPUTS][TAG.INSTRUMENTS],
             TAG.MOODS: st.session_state[TAG.SIMPLE_INPUTS][TAG.MOODS],
-            TAG.ETC: st.session_state[TAG.SIMPLE_INPUTS][TAG.ETC],
             TAG.DURATION: duration,  # index이므로
             TAG.TEMPO: tempo,  # index이므로
         }
@@ -193,14 +191,6 @@ def submit_simple_category(title, category):
             genre, disabled=True)
     space(lines=1)
 
-    # 악기
-    st.subheader(TAG.INSTRUMENTS_HEADER)
-    cols_list = st.columns([1]*COLS)
-    for i, instrument in enumerate(category[TAG.INSTRUMENTS]):
-        cols_list[i % COLS].checkbox(
-            instrument, disabled=True)
-    space(lines=1)
-
     # 분위기
     st.subheader(TAG.MOODS_HEADER)
     cols_list = st.columns([1]*COLS)
@@ -209,13 +199,12 @@ def submit_simple_category(title, category):
             mood, disabled=True)
     space(lines=1)
 
-    # 사용자 keywords 생성
-    st.subheader(TAG.ETC_HEADER[3:])
-    etc = st.multiselect(
-        label=TAG.ETC_DESCRIPTION,
-        options=default[TAG.ETC],
-        default=default[TAG.ETC],
-        disabled=True)
+    # 악기
+    st.subheader(TAG.INSTRUMENTS_HEADER)
+    cols_list = st.columns([1]*COLS)
+    for i, instrument in enumerate(category[TAG.INSTRUMENTS]):
+        cols_list[i % COLS].checkbox(
+            instrument, disabled=True)
     space(lines=1)
 
     col_1, col_2 = st.columns([1, 1], gap="large")

@@ -73,20 +73,20 @@ def choice_category(title, category):
         key="genres"+st.session_state['key_num'])
     space(lines=1)
 
-    st.subheader(TAG.INSTRUMENTS_HEADER)
-    instruments = st.multiselect(
-        label=TAG.INSTRUMENTS_DESCRIPTION,
-        options=category[TAG.INSTRUMENTS],
-        default=default[TAG.INSTRUMENTS],
-        key="instruments"+st.session_state['key_num'])
-    space(lines=1)
-
     st.subheader(TAG.MOODS_HEADER)
     moods = st.multiselect(
         label=TAG.MOODS_DESCRIPTION,
         options=category[TAG.MOODS],
         default=default[TAG.MOODS],
         key="moods"+st.session_state['key_num'])
+    space(lines=1)
+
+    st.subheader(TAG.INSTRUMENTS_HEADER)
+    instruments = st.multiselect(
+        label=TAG.INSTRUMENTS_DESCRIPTION,
+        options=category[TAG.INSTRUMENTS],
+        default=default[TAG.INSTRUMENTS],
+        key="instruments"+st.session_state['key_num'])
     space(lines=1)
 
     # 사용자 keywords 생성
@@ -215,20 +215,20 @@ def submit_choice_category(title, category):
         disabled=True)
     space(lines=1)
 
-    st.subheader(TAG.INSTRUMENTS_HEADER)
-    instruments = st.multiselect(
-        label=TAG.INSTRUMENTS_DESCRIPTION,
-        options=category[TAG.INSTRUMENTS],
-        default=default[TAG.INSTRUMENTS],
-        disabled=True)
-    space(lines=1)
-
     st.subheader(TAG.MOODS_HEADER)
     moods = st.multiselect(
         label=TAG.MOODS_DESCRIPTION,
         options=category[TAG.MOODS],
         default=default[TAG.MOODS],
         disabled=True)
+    space(lines=1)
+
+    st.subheader(TAG.INSTRUMENTS_HEADER)
+    instruments = st.multiselect(
+        label=TAG.INSTRUMENTS_DESCRIPTION,
+        options=category[TAG.INSTRUMENTS],
+        default=default[TAG.INSTRUMENTS],
+        key="instruments"+st.session_state['key_num'])
     space(lines=1)
 
     # 사용자 keywords 생성
