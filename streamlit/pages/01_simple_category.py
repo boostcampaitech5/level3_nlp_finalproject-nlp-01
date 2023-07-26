@@ -40,7 +40,7 @@ def simple_category(title, category):
         
         # [] 인 경우, Auto
         if st.session_state[TAG.SIMPLE_INPUTS][TAG.TEMPO] == []:
-                st.session_state[TAG.SIMPLE_INPUTS][TAG.TEMPO] = 'Auto'
+            st.session_state[TAG.SIMPLE_INPUTS][TAG.TEMPO] = 'Auto'
 
         for i, s in enumerate(category[TAG.TEMPO]):
             if s == st.session_state[TAG.SIMPLE_INPUTS][TAG.TEMPO]:
