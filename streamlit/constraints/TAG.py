@@ -15,7 +15,7 @@ GUIDE_HEADER = "💡 사용법 가이드"
 GENRES_HEADER = '🎼 장르 (Genre)'
 INSTRUMENTS_HEADER = '🥁 악기 (Musical Instruments)'
 MOODS_HEADER = '📣 분위기 (Mood)'
-ETC_HEADER = '### ⚙ 기타 (ETC)'
+ETC_HEADER = '### ⚙ 사용자 설정 (ETC)'
 DURATION_HEADER = '⌛ 길이(Duration)'
 TEMPO_HEADER = '🏇 속도 (Tempo)'
 
