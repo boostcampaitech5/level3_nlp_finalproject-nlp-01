@@ -248,6 +248,16 @@ def submit_text_analysis(title, category):
         keywords = create_gpt_caption(res.json())
         my_json = make_analysis_request_json(
             st.session_state[TAG.TEXT_INPUTS], keywords)
+
+        # etc (custom keyword) 번역
+        #TODO origin 다시 사용해야함
+        # 실행 : 안녕하세요 -> 결과 : hello (목표 -> 결과 : '안녕하세요' 유지)
+        trans_tmp = my_json[TAG.ETC]
+        trans_tmp = '@^'.join(trans_tmp)
+        trans_tmp = google_trans(trans_tmp)
+        trans_tmp = trans_tmp.split('@^')
+        my_json[TAG.ETC] = [i.strip() for i in trans_tmp]
+
         res = requests.post(SECRET.MUSICGEN_ANALYSIS_URL, json=my_json)
 
         st.session_state[TAG.TEXT_RES_STATE] = res.status_code

@@ -282,6 +282,9 @@ def submit_choice_category(title, category):
         my_json = make_category_request_json(
             st.session_state[TAG.EXTRA_INPUTS])
 
+        # etc (custom keyword) 번역
+        #TODO origin 다시 사용해야함 
+        # 실행 : 안녕하세요 -> 결과 : hello (목표 -> 결과 : '안녕하세요' 유지)
         trans_tmp = my_json[TAG.ETC]
         trans_tmp = '@^'.join(trans_tmp)
         trans_tmp = google_trans(trans_tmp)
