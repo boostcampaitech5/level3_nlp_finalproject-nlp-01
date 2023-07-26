@@ -187,8 +187,15 @@ def submit_simple_category(title, category):
     st.divider()
 
     # 사용법 가이드
+    st.markdown("""
+        <style>
+        div[data-testid="stExpander"] div[role="button"] p {
+            font-size: 24px;
+            font-weight:bold;
+        }</style>""", unsafe_allow_html=True)
     with st.expander(TAG.GUIDE_HEADER):
         st.markdown(INFO.SIMPLE_CATEGORY_GUIDE)
+    space(lines=2)
 
     # 장르
     st.subheader(TAG.GENRES_HEADER)
@@ -257,8 +264,8 @@ def result_simple_category(title, inputs):
     st.title(title)
     st.divider()
 
-    st.header(" 주의! AI가 생성한 음악의 소리가 '매우' 클 수 있습니다!")
-    space(lines=1)
+    st.header("주의! AI가 생성한 음악의 소리가 '매우' 클 수 있습니다!")
+    space(lines=2)
 
     st.write("### 📃 \t캡션 정보 (Caption)")
     captions = st.multiselect(

@@ -89,6 +89,7 @@ def text_analysis(title, category):
         suggestions=category[TAG.ETC],
         value=default[TAG.ETC],
         key="etc_choice"+st.session_state['key_num'])
+    st.write('※　ex) calm music, smooth jazz, Dark, Funny music, Children music, christmas music')
     space(lines=2)
 
     col_1, col_2 = st.columns([1, 1], gap="large")
@@ -187,8 +188,15 @@ def submit_text_analysis(title, category):
     st.divider()
 
     # 설명
+    st.markdown("""
+        <style>
+        div[data-testid="stExpander"] div[role="button"] p {
+            font-size: 24px;
+            font-weight:bold;
+        }</style>""", unsafe_allow_html=True)
     with st.expander(TAG.GUIDE_HEADER):
         st.markdown(INFO.TEXT_ANALYSIS_GUIDE)
+    space(lines=2)
 
     # text area
     st.subheader(TAG.TEXT_HEADER)
@@ -207,6 +215,7 @@ def submit_text_analysis(title, category):
         options=default[TAG.ETC],
         default=default[TAG.ETC],
         disabled=True)
+    st.write('※　ex) calm music, smooth jazz, Dark, Funny music, Children music, christmas music')
     space(lines=2)
 
     col_1, col_2 = st.columns([1, 1], gap="large")
@@ -273,8 +282,8 @@ def result_text_analysis(title, inputs):
     st.title(title)
     st.divider()
 
-    st.header(" 주의! AI가 생성한 음악의 소리가 '매우' 클 수 있습니다!")
-    space(lines=1)
+    st.header("주의! AI가 생성한 음악의 소리가 '매우' 클 수 있습니다!")
+    space(lines=2)
 
     st.write("### 📃 \t문서 요약 결과 (Summarization)")
     captions = st.multiselect(

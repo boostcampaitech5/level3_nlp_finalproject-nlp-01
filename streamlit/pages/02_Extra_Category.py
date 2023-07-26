@@ -105,6 +105,7 @@ def choice_category(title, category):
         suggestions=category[TAG.ETC],
         value=default[TAG.ETC],
         key="etc"+st.session_state['key_num'])
+    st.write('※　ex) calm music, smooth jazz, Dark, Funny music, Children music, christmas music')
     space(lines=1)
 
     col_1, col_2 = st.columns([1, 1], gap="large")
@@ -151,6 +152,9 @@ def choice_category(title, category):
             TAG.DURATION: duration,
             TAG.TEMPO: tempo,
         }
+
+        print(inputs)
+        print(inputs[TAG.GENRES])
 
         # 입력이 없다면
         if inputs[TAG.GENRES] == [] and inputs[TAG.INSTRUMENTS] == [] and inputs[TAG.MOODS] == [] and inputs[TAG.ETC] == []:
@@ -212,8 +216,15 @@ def submit_choice_category(title, category):
     st.title(title)
     st.write("---")
 
+    st.markdown("""
+        <style>
+        div[data-testid="stExpander"] div[role="button"] p {
+            font-size: 24px;
+            font-weight:bold;
+        }</style>""", unsafe_allow_html=True)
     with st.expander(TAG.GUIDE_HEADER):
         st.markdown(INFO.EXTRA_CATEGORY_GUIDE)
+    space(lines=2)
 
     # multiselect
     st.subheader(TAG.GENRES_HEADER)
@@ -237,7 +248,7 @@ def submit_choice_category(title, category):
         label=TAG.INSTRUMENTS_DESCRIPTION,
         options=category[TAG.INSTRUMENTS],
         default=default[TAG.INSTRUMENTS],
-        key="instruments"+st.session_state['key_num'])
+        disabled=True)
     space(lines=1)
 
     # 사용자 keywords 생성
@@ -247,6 +258,7 @@ def submit_choice_category(title, category):
         options=default[TAG.ETC],
         default=default[TAG.ETC],
         disabled=True)
+    st.write('※　ex) calm music, smooth jazz, Dark, Funny music, Children music, christmas music')
     space(lines=1)
 
     col_1, col_2 = st.columns([1, 1], gap="large")
@@ -293,8 +305,8 @@ def result_choice_category(title, inputs):
     st.title(title)
     st.divider()
 
-    st.header(" 주의! AI가 생성한 음악의 소리가 '매우' 클 수 있습니다!")
-    space(lines=1)
+    st.header("주의! AI가 생성한 음악의 소리가 '매우' 클 수 있습니다!")
+    space(lines=2)
 
     st.write("### 📃 \t캡션 정보 (Caption)")
     captions = st.multiselect(
