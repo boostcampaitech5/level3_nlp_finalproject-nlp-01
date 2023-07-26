@@ -46,7 +46,6 @@ def text_analysis(title, category):
                 break
 
         default = {
-            TAG.ORIGIN: st.session_state[TAG.TEXT_INPUTS][TAG.ORIGIN],
             TAG.TEXT: st.session_state[TAG.TEXT_INPUTS][TAG.TEXT],
             TAG.ETC: st.session_state[TAG.TEXT_INPUTS][TAG.ETC],
             TAG.DURATION: duration,  # index이므로
@@ -70,7 +69,7 @@ def text_analysis(title, category):
     text = st.text_area(
         TAG.TEXT_DESCRIPTION,
         height=300,
-        value=default[TAG.ORIGIN],
+        value=default[TAG.TEXT],
         key="text"+st.session_state['key_num'])
     space(lines=1)
 
@@ -125,14 +124,13 @@ def text_analysis(title, category):
             min, sec = map(int, duration.split(':'))
             duration = min*60 + sec
             inputs = {
-                TAG.ORIGIN: text,
-                TAG.TEXT: google_trans(text),
+                TAG.TEXT: text,
                 TAG.ETC: etc_data,
                 TAG.DURATION: duration,
                 TAG.TEMPO: tempo,
             }
 
-            if inputs[TAG.ORIGIN] == [] and inputs[TAG.ETC] == []:
+            if inputs[TAG.TEXT] == [] and inputs[TAG.ETC] == []:
                 st.toast('입력을 확인해 주세요')
 
             else:
@@ -169,7 +167,6 @@ def submit_text_analysis(title, category):
                 break
 
         default = {
-            TAG.ORIGIN: st.session_state[TAG.TEXT_INPUTS][TAG.ORIGIN],
             TAG.TEXT: st.session_state[TAG.TEXT_INPUTS][TAG.TEXT],
             TAG.ETC: st.session_state[TAG.TEXT_INPUTS][TAG.ETC],
             TAG.DURATION: duration,  # index이므로
@@ -189,7 +186,7 @@ def submit_text_analysis(title, category):
     text = st.text_area(
         TAG.TEXT_DESCRIPTION,
         height=300,
-        value=default[TAG.ORIGIN],
+        value=default[TAG.TEXT],
         key="text"+st.session_state['key_num'],
         disabled=True)
     space(lines=1)
@@ -263,7 +260,7 @@ def result_text_analysis(title, inputs):
             }
         </style>
         """, unsafe_allow_html=True)
-    caption = inputs[TAG.CAPTIONS][0].split(', ')  # 캡션의 정보를 받음
+    caption = inputs[TAG.CAPTIONS][0].replace('.', ',').split(', ')  # 캡션의 정보를 받음
     st.title(title)
     st.divider()
 
