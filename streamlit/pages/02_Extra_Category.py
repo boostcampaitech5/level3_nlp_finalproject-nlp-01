@@ -8,6 +8,7 @@ from fastapi import status
 from utils.attribute import get_music_category
 from utils.config import add_logo, delete_another_session_state, set_page
 from utils.log import print_error
+from utils.api import google_trans
 from utils.generator import make_category_request_json, make_audio_data
 from streamlit_space import space
 from models.Content import MusicContent
@@ -280,6 +281,13 @@ def submit_choice_category(title, category):
     with st.spinner(TAG.REQUEST_MESSAGE):
         my_json = make_category_request_json(
             st.session_state[TAG.EXTRA_INPUTS])
+
+        trans_tmp = my_json[TAG.ETC]
+        trans_tmp = '@^'.join(trans_tmp)
+        trans_tmp = google_trans(trans_tmp)
+        trans_tmp = trans_tmp.split('@^')
+        my_json[TAG.ETC] = [i.strip() for i in trans_tmp]
+
         res = requests.post(SECRET.MUSICGEN_CATEGORY_URL, json=my_json)
         print(res)      # log로 요청이 제대로 왔는지 확인
 
