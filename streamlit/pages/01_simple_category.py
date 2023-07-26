@@ -264,8 +264,8 @@ def result_simple_category(title, inputs):
     st.title(title)
     st.divider()
 
-    st.header("주의! AI가 생성한 음악의 소리가 '매우' 클 수 있습니다!")
-    space(lines=2)
+    st.markdown(TAG.RESULT_WRANING)
+    space(lines=3)
 
     st.write("### 📃 \t캡션 정보 (Caption)")
     captions = st.multiselect(
