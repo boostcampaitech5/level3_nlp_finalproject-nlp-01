@@ -11,6 +11,9 @@ ICON_PATH = os.path.join(BASE_PATH, "assets", 'page_icon.png')
 MAIN_IMAGE = os.path.join(BASE_PATH, "assets", 'main_image.png')
 SECRET_FILE = os.path.join(BASE_PATH, "assets", "secret.json")
 
+MAIN_SIMPLE = os.path.join(BASE_PATH, "assets", 'simple_exam.png')
+MAIN_EXTRA = os.path.join(BASE_PATH, "assets", 'extra_exam.png')
+MAIN_TEXT = os.path.join(BASE_PATH, "assets", 'text_exam.png')
 
 # 테스트용
 TEST_MUSIC_PATH = os.path.join(BASE_PATH, "assets", "test_music.wav")
