@@ -226,7 +226,6 @@ def submit_simple_category(title, category):
     with st.spinner(TAG.REQUEST_MESSAGE):
         my_json = st.session_state[TAG.SIMPLE_INPUTS]
         res = requests.post(SECRET.MUSICGEN_CATEGORY_URL, json=my_json)
-        # res = requests.post("http://127.0.0.1:8000", json=my_json)
         print(">>", TAG.SIMPLE_CATEGORY_TITLE, res)      # log로 요청이 제대로 왔는지 확인
 
         st.session_state[TAG.SIMPLE_RES_STATE] = res.status_code
