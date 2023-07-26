@@ -58,6 +58,7 @@ def simple_category(title, category):
     # 오류 발생
     if st.session_state[TAG.SIMPLE_RES_STATE] != status.HTTP_200_OK:
         st.toast(print_error(st.session_state[TAG.SIMPLE_RES_STATE]))
+        st.session_state[TAG.SIMPLE_RES_STATE] = 200
         
 
     st.title(title)
