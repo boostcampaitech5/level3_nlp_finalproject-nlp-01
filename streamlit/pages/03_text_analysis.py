@@ -86,7 +86,7 @@ def text_analysis(title, category):
     col_1, col_2 = st.columns([1, 1], gap="large")
 
     # 음악 길이
-    col_1.subheader(TAG.DURATION)
+    col_1.subheader(TAG.DURATION_HEADER)
     duration = col_1.selectbox(
         label=TAG.DURATION_DESCRIPTION,
         options=category[TAG.DURATION],
@@ -95,7 +95,7 @@ def text_analysis(title, category):
     )
 
     # 음악 속도
-    col_2.subheader(TAG.TEMPO)
+    col_2.subheader(TAG.TEMPO_HEADER)
     tempo = col_2.radio(
         label=TAG.TEMPO_DESCRIPTION,
         options=category[TAG.TEMPO],
@@ -206,7 +206,7 @@ def submit_text_analysis(title, category):
     col_1, col_2 = st.columns([1, 1], gap="large")
 
     # 음악 길이
-    col_1.subheader(TAG.DURATION)
+    col_1.subheader(TAG.DURATION_HEADER)
     duration = col_1.selectbox(
         label=TAG.DURATION_DESCRIPTION,
         options=category[TAG.DURATION],
@@ -216,7 +216,7 @@ def submit_text_analysis(title, category):
     )
 
     # 음악 속도
-    col_2.subheader(TAG.TEMPO)
+    col_2.subheader(TAG.TEMPO_HEADER)
     tempo = col_2.radio(
         label=TAG.TEMPO_DESCRIPTION,
         options=category[TAG.TEMPO],
