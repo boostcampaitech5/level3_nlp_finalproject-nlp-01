@@ -273,6 +273,9 @@ def result_text_analysis(title, inputs):
     st.title(title)
     st.divider()
 
+    st.header(" 주의! AI가 생성한 음악의 소리가 '매우' 클 수 있습니다!")
+    space(lines=1)
+
     st.write("### 📃 \t문서 요약 결과 (Summarization)")
     captions = st.multiselect(
         label='',
