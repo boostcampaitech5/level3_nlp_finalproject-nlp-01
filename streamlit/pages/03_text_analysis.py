@@ -35,10 +35,10 @@ def text_analysis(title, category):
             if s == duration:
                 duration = i
                 break
-        
+
         # [] 인 경우, Auto
         if st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO] == []:
-                st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO] = 'Auto'
+            st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO] = 'Auto'
 
         for i, s in enumerate(category[TAG.TEMPO]):
             if s == st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO]:
@@ -46,6 +46,7 @@ def text_analysis(title, category):
                 break
 
         default = {
+            TAG.ETC_ORIGIN: st.session_state[TAG.TEXT_INPUTS][TAG.ETC_ORIGIN],
             TAG.TEXT: st.session_state[TAG.TEXT_INPUTS][TAG.TEXT],
             TAG.ETC: st.session_state[TAG.TEXT_INPUTS][TAG.ETC],
             TAG.DURATION: duration,  # index이므로
@@ -56,7 +57,6 @@ def text_analysis(title, category):
     if st.session_state[TAG.TEXT_RES_STATE] != status.HTTP_200_OK:
         st.toast(print_error(st.session_state[TAG.TEXT_RES_STATE]))
         st.session_state[TAG.SIMPLE_RES_STATE] = 200
-
 
     # Title
     st.title(title)
@@ -87,7 +87,7 @@ def text_analysis(title, category):
         label=TAG.ETC_HEADER,
         text=TAG.ETC_DESCRIPTION,
         suggestions=category[TAG.ETC],
-        value=default[TAG.ETC],
+        value=default[TAG.ETC_ORIGIN],
         key="etc_choice"+st.session_state['key_num'])
     st.write(INFO.ETC_EXAMPLE)
     space(lines=2)
@@ -134,8 +134,9 @@ def text_analysis(title, category):
             min, sec = map(int, duration.split(':'))
             duration = min*60 + sec
             inputs = {
+                TAG.ETC_ORIGIN: etc_data,
                 TAG.TEXT: text,
-                TAG.ETC: etc_data,
+                TAG.ETC: google_trans(etc_data),
                 TAG.DURATION: duration,
                 TAG.TEMPO: tempo,
             }
@@ -166,10 +167,10 @@ def submit_text_analysis(title, category):
             if s == duration:
                 duration = i
                 break
-        
+
         # [] 인 경우, Auto
         if st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO] == []:
-                st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO] = 'Auto'
+            st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO] = 'Auto'
 
         for i, s in enumerate(category[TAG.TEMPO]):
             if s == st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO]:
@@ -177,6 +178,7 @@ def submit_text_analysis(title, category):
                 break
 
         default = {
+            TAG.ETC_ORIGIN: st.session_state[TAG.TEXT_INPUTS][TAG.ETC_ORIGIN],
             TAG.TEXT: st.session_state[TAG.TEXT_INPUTS][TAG.TEXT],
             TAG.ETC: st.session_state[TAG.TEXT_INPUTS][TAG.ETC],
             TAG.DURATION: duration,  # index이므로
@@ -212,8 +214,8 @@ def submit_text_analysis(title, category):
     st.subheader(TAG.ETC_HEADER[3:])
     etc = st.multiselect(
         label=TAG.ETC_DESCRIPTION,
-        options=default[TAG.ETC],
-        default=default[TAG.ETC],
+        options=default[TAG.ETC_ORIGIN],
+        default=default[TAG.ETC_ORIGIN],
         disabled=True)
     st.write(INFO.ETC_EXAMPLE)
     space(lines=2)
@@ -241,6 +243,7 @@ def submit_text_analysis(title, category):
     space(lines=2)
 
     with st.spinner(TAG.REQUEST_MESSAGE):
+        print(st.session_state[TAG.TEXT_INPUTS])
         res = requests.post(url=SECRET.TEXT_ANALYSIS_URL,
                             data=json.dumps(st.session_state[TAG.TEXT_INPUTS]))
 
@@ -249,14 +252,7 @@ def submit_text_analysis(title, category):
         my_json = make_analysis_request_json(
             st.session_state[TAG.TEXT_INPUTS], keywords)
 
-        # etc (custom keyword) 번역
-        #TODO origin 다시 사용해야함
-        # 실행 : 안녕하세요 -> 결과 : hello (목표 -> 결과 : '안녕하세요' 유지)
-        trans_tmp = my_json[TAG.ETC]
-        trans_tmp = '@^'.join(trans_tmp)
-        trans_tmp = google_trans(trans_tmp)
-        trans_tmp = trans_tmp.split('@^')
-        my_json[TAG.ETC] = [i.strip() for i in trans_tmp]
+        print(my_json)
 
         res = requests.post(SECRET.MUSICGEN_ANALYSIS_URL, json=my_json)
 
@@ -288,7 +284,8 @@ def result_text_analysis(title, inputs):
             }
         </style>
         """, unsafe_allow_html=True)
-    caption = inputs[TAG.CAPTIONS][0].replace('.', ',').split(', ')  # 캡션의 정보를 받음
+    caption = inputs[TAG.CAPTIONS][0].replace(
+        '.', ',').split(', ')  # 캡션의 정보를 받음
     st.title(title)
     st.divider()
 

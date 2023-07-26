@@ -36,10 +36,10 @@ def choice_category(title, category):
             if s == duration:
                 duration = i
                 break
-            
+
         # [] 인 경우, Auto
         if st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO] == []:
-                st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO] = 'Auto'
+            st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO] = 'Auto'
 
         for i, s in enumerate(category[TAG.TEMPO]):
             if s == st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO]:
@@ -47,6 +47,7 @@ def choice_category(title, category):
                 break
 
         default = {
+            TAG.ETC_ORIGIN: st.session_state[TAG.EXTRA_INPUTS][TAG.ETC_ORIGIN],
             TAG.GENRES: st.session_state[TAG.EXTRA_INPUTS][TAG.GENRES],
             TAG.INSTRUMENTS: st.session_state[TAG.EXTRA_INPUTS][TAG.INSTRUMENTS],
             TAG.MOODS: st.session_state[TAG.EXTRA_INPUTS][TAG.MOODS],
@@ -60,7 +61,6 @@ def choice_category(title, category):
         st.toast(print_error(st.session_state[TAG.EXTRA_RES_STATE]))
         st.session_state[TAG.SIMPLE_RES_STATE] = 200
 
-    
     st.title(title)
     st.divider()
 
@@ -104,7 +104,7 @@ def choice_category(title, category):
         label=TAG.ETC_HEADER,
         text=TAG.ETC_DESCRIPTION,
         suggestions=category[TAG.ETC],
-        value=default[TAG.ETC],
+        value=default[TAG.ETC_ORIGIN],
         key="etc"+st.session_state['key_num'])
     st.write(INFO.ETC_EXAMPLE)
     space(lines=1)
@@ -146,16 +146,14 @@ def choice_category(title, category):
 
         # API로 전송하기 위해 input생성
         inputs = {
+            TAG.ETC_ORIGIN: etc,
             TAG.GENRES: genres,
             TAG.INSTRUMENTS: instruments,
             TAG.MOODS: moods,
-            TAG.ETC: etc,
+            TAG.ETC: google_trans(etc),
             TAG.DURATION: duration,
             TAG.TEMPO: tempo,
         }
-
-        print(inputs)
-        print(inputs[TAG.GENRES])
 
         # 입력이 없다면
         if inputs[TAG.GENRES] == [] and inputs[TAG.INSTRUMENTS] == [] and inputs[TAG.MOODS] == [] and inputs[TAG.ETC] == []:
@@ -191,10 +189,10 @@ def submit_choice_category(title, category):
             if s == duration:
                 duration = i
                 break
-        
+
         # [] 인 경우, Auto
         if st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO] == []:
-                st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO] = 'Auto'
+            st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO] = 'Auto'
 
         for i, s in enumerate(category[TAG.TEMPO]):
             if s == st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO]:
@@ -202,6 +200,7 @@ def submit_choice_category(title, category):
                 break
 
         default = {
+            TAG.ETC_ORIGIN: st.session_state[TAG.EXTRA_INPUTS][TAG.ETC_ORIGIN],
             TAG.GENRES: st.session_state[TAG.EXTRA_INPUTS][TAG.GENRES],
             TAG.INSTRUMENTS: st.session_state[TAG.EXTRA_INPUTS][TAG.INSTRUMENTS],
             TAG.MOODS: st.session_state[TAG.EXTRA_INPUTS][TAG.MOODS],
@@ -256,8 +255,8 @@ def submit_choice_category(title, category):
     st.subheader(TAG.ETC_HEADER[3:])
     etc = st.multiselect(
         label=TAG.ETC_DESCRIPTION,
-        options=default[TAG.ETC],
-        default=default[TAG.ETC],
+        options=default[TAG.ETC_ORIGIN],
+        default=default[TAG.ETC_ORIGIN],
         disabled=True)
     st.write(INFO.ETC_EXAMPLE)
     space(lines=1)
@@ -282,14 +281,7 @@ def submit_choice_category(title, category):
         my_json = make_category_request_json(
             st.session_state[TAG.EXTRA_INPUTS])
 
-        # etc (custom keyword) 번역
-        #TODO origin 다시 사용해야함 
-        # 실행 : 안녕하세요 -> 결과 : hello (목표 -> 결과 : '안녕하세요' 유지)
-        trans_tmp = my_json[TAG.ETC]
-        trans_tmp = '@^'.join(trans_tmp)
-        trans_tmp = google_trans(trans_tmp)
-        trans_tmp = trans_tmp.split('@^')
-        my_json[TAG.ETC] = [i.strip() for i in trans_tmp]
+        print(my_json)
 
         res = requests.post(SECRET.MUSICGEN_CATEGORY_URL, json=my_json)
         print(res)      # log로 요청이 제대로 왔는지 확인
@@ -355,7 +347,6 @@ if __name__ == "__main__":
     # key값을 변경 -> 값의 초기화하고 새로고침을 만들기 위해 key값을 다르게 설정
     if 'key_num' not in st.session_state:
         st.session_state['key_num'] = TAG.ONE
-    
 
     # 다른 state 제거
     delete_another_session_state(TAG.EXTRA_STATE)

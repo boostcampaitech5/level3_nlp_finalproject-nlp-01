@@ -51,7 +51,7 @@ EXTRA_RES_STATE = "res_extra_state"
 TEXT_RES_STATE = "res_text_state"
 
 # Request 태그
-ORIGIN = 'origin'
+ETC_ORIGIN = 'etc_origin'
 AUDIOS = 'audios'
 CAPTIONS = 'caption'
 AUDIOFILE = "audiofile"
