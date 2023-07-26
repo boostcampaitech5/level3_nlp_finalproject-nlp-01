@@ -30,6 +30,7 @@ DURATION_DESCRIPTION = '생성할 음악의 길이를 선택해 주세요'
 TEMPO_DESCRIPTION = '생성할 음악의 빠르기를 선택해 주세요'
 
 TEXT_DESCRIPTION = '👉 분석을 진행하고 싶은 텍스트를 입력하세요.'
+RESULT_WRANING = "### 　📢 주의!!　AI가 생성한 음악의 소리가 \"매우\" 클 수 있습니다!"
 
 # TITLE 태그
 SIMPLE_CATEGORY_TITLE = "Simple Category / 심플 카테고리 선택"

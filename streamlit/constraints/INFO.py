@@ -67,3 +67,5 @@ TEXT_ANALYSIS_GUIDE = """
 
 💢 주의 ) 초기화 버튼을 누르면 선택한 모든 카테고리가 사라집니다!!  
 """
+
+ETC_EXAMPLE = "※　예시 )　Calm music, smooth jazz, 별헤는 밤, Funny music, Children music, christmas music, 눈 내리는 아침"
