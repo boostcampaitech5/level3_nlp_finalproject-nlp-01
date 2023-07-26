@@ -51,7 +51,6 @@ def simple_category(title, category):
             TAG.GENRES: st.session_state[TAG.SIMPLE_INPUTS][TAG.GENRES],
             TAG.INSTRUMENTS: st.session_state[TAG.SIMPLE_INPUTS][TAG.INSTRUMENTS],
             TAG.MOODS: st.session_state[TAG.SIMPLE_INPUTS][TAG.MOODS],
-            TAG.ETC: st.session_state[TAG.SIMPLE_INPUTS][TAG.ETC],
             TAG.DURATION: duration,  # index이므로
             TAG.TEMPO: tempo,  # index이므로
         }
@@ -74,14 +73,6 @@ def simple_category(title, category):
     for i, genre in enumerate(category[TAG.GENRES]):
         cols_list[i % COLS].checkbox(
             genre, key=genre+st.session_state['key_num'])
-    space(lines=1)
-
-    # 악기
-    st.subheader(TAG.INSTRUMENTS_HEADER)
-    cols_list = st.columns([1]*COLS)
-    for i, instrument in enumerate(category[TAG.INSTRUMENTS]):
-        cols_list[i % COLS].checkbox(
-            instrument, key=instrument+st.session_state['key_num'])
     space(lines=1)
 
     # 분위기
@@ -135,7 +126,7 @@ def simple_category(title, category):
         inputs = make_simple_request_json(category, st.session_state)
 
         # 입력이 없다면 toast 발생
-        if inputs[TAG.GENRES] == [] and inputs[TAG.INSTRUMENTS] == [] and inputs[TAG.MOODS] == [] and inputs[TAG.ETC] == []:
+        if inputs[TAG.GENRES] == [] and inputs[TAG.INSTRUMENTS] == [] and inputs[TAG.MOODS] == []:
             st.toast('입력을 확인해 주세요!')
         
         else:
