@@ -61,8 +61,15 @@ def choice_category(title, category):
     st.title(title)
     st.divider()
 
+    st.markdown("""
+        <style>
+        div[data-testid="stExpander"] div[role="button"] p {
+            font-size: 24px;
+            font-weight:bold;
+        }</style>""", unsafe_allow_html=True)
     with st.expander(TAG.GUIDE_HEADER):
         st.markdown(INFO.EXTRA_CATEGORY_GUIDE)
+    space(lines=2)
 
     # multiselect
     st.subheader(TAG.GENRES_HEADER)

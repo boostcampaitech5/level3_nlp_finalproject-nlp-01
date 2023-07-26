@@ -64,8 +64,16 @@ def simple_category(title, category):
     st.divider()
 
     # 사용법 가이드
+    st.markdown("""
+        <style>
+        div[data-testid="stExpander"] div[role="button"] p {
+            font-size: 24px;
+            font-weight:bold;
+        }</style>""", unsafe_allow_html=True)
     with st.expander(TAG.GUIDE_HEADER):
         st.markdown(INFO.SIMPLE_CATEGORY_GUIDE)
+    space(lines=2)
+
 
     # 장르
     st.subheader(TAG.GENRES_HEADER)

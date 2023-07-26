@@ -61,8 +61,15 @@ def text_analysis(title, category):
     st.divider()
 
     # 설명
+    st.markdown("""
+        <style>
+        div[data-testid="stExpander"] div[role="button"] p {
+            font-size: 24px;
+            font-weight:bold;
+        }</style>""", unsafe_allow_html=True)
     with st.expander(TAG.GUIDE_HEADER):
         st.markdown(INFO.TEXT_ANALYSIS_GUIDE)
+    space(lines=2)
 
     # text area
     st.subheader(TAG.TEXT_HEADER)
