@@ -62,10 +62,14 @@ def get_simple_category():
     output[TAG.TEMPO] = ['Auto', 'Slow', 'Medium', 'Fast']
     output[TAG.DURATION] = ['0:15', '0:30', '1:00']
 
-    base_output = {
-        TAG.GENRES: datas[TAG.GENRES][TAG.POPULAR],
-        TAG.INSTRUMENTS: datas[TAG.INSTRUMENTS][TAG.POPULAR],
-        TAG.MOODS: datas[TAG.MOODS][TAG.POPULAR],
-    }
+    return output
 
-    return output, base_output
+def get_base_category():
+    with open(PATH.DATA_PATH, 'r', encoding='utf-8') as f:
+        datas = json.load(f)
+    
+    return {
+        TAG.GENRES: dict(datas[TAG.GENRES][TAG.POPULAR], **datas[TAG.GENRES][TAG.NORMAL]),
+        TAG.INSTRUMENTS: dict(datas[TAG.INSTRUMENTS][TAG.POPULAR], **datas[TAG.INSTRUMENTS][TAG.NORMAL]),
+        TAG.MOODS: dict(datas[TAG.MOODS][TAG.POPULAR], **datas[TAG.MOODS][TAG.NORMAL]),
+    }

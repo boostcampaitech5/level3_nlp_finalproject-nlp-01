@@ -3,14 +3,14 @@ from IPython.display import Audio
 import openai
 
 from constraints import TAG, SECRET
-from utils.attribute import get_simple_category
+from utils.attribute import get_simple_category, get_base_category
 
 
 openai.api_key = SECRET.OPENAI_API
 
 
 def make_simple_request_json(state):
-    category, base_gategory = get_simple_category()
+    category, base_gategory = get_simple_category(), get_base_category()
     key_num = state['key_num']
 
     # genres
@@ -35,7 +35,7 @@ def make_simple_request_json(state):
 
 
 def make_category_request_json(json_dict):
-    _, base_gategory = get_simple_category()
+    base_gategory = get_base_category()
 
     return {
         TAG.GENRES: [base_gategory[TAG.GENRES][t.replace("  *", "").split('(')[0].strip()] for t in json_dict[TAG.GENRES]],

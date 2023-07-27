@@ -292,7 +292,7 @@ def result_simple_category(title, inputs):
 
 # main
 if __name__ == "__main__":
-    category, _ = get_simple_category()
+    category = get_simple_category()
 
     # state가 없으면 생성
     if TAG.SIMPLE_STATE not in st.session_state:

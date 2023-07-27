@@ -154,6 +154,7 @@ def choice_category(title, category):
             TAG.DURATION: duration,
             TAG.TEMPO: tempo,
         }
+        print(inputs)
 
         # 입력이 없다면
         if inputs[TAG.GENRES] == [] and inputs[TAG.INSTRUMENTS] == [] and inputs[TAG.MOODS] == [] and inputs[TAG.ETC] == []:
