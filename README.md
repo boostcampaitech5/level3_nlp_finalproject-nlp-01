@@ -1,5 +1,15 @@
+![header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=1&height=250&section=header&text=TexTuneS%20:%20Make%20Your%20Creative%20Music&fontSize=40)
+
+<img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white"> <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"> 
+<img src="https://img.shields.io/badge/pytorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white">
+<img src="https://img.shields.io/badge/streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white">
+<img src="https://img.shields.io/badge/fastapi-009688?style=for-the-badge&logo=fastapi&logoColor=white">
+<img src="https://img.shields.io/badge/githubactions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white">
+<img src="https://img.shields.io/badge/transformers-FFFF33?style=for-the-badge">
+
 # TexTuneS
 누구나 쉽고 간단하게 적합한 나만의 배경 음악을 만들어 제공해주는 웹서비스 입니다.
+
 
 ## 프로젝트 소개
 ### 크리에이터를 위한 맞춤형 음악 생성 서비스
@@ -14,18 +24,6 @@
 
 ---
 ![image](https://github.com/boostcampaitech5/level3_nlp_finalproject-nlp-01/assets/39620398/53dcb7bf-9308-46ef-bb87-084f4311b2a8)
-
-## 테크 스택
-<img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white"> <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"> 
-<img src="https://img.shields.io/badge/pytorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white">
-<img src="https://img.shields.io/badge/streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white">
-<img src="https://img.shields.io/badge/fastapi-009688?style=for-the-badge&logo=fastapi&logoColor=white">
-<img src="https://img.shields.io/badge/githubactions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white">
-
-python, AWS, PyTorch, transformers, Streamlit, FastAPI, Guthub Action
-
-
-
 
 ## 팀 소개
 ### Boostcamp AI-Tech 5기 NLP-01조 자만추
@@ -45,4 +43,4 @@ python, AWS, PyTorch, transformers, Streamlit, FastAPI, Guthub Action
 
 텍스트 요약, 분류, 감정분석: <https://github.com/boostcampaitech5/level3_nlp_productserving-nlp-01-2>
 
-
+![Footer](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=1&height=200&section=footer)
