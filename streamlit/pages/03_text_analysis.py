@@ -35,10 +35,10 @@ def text_analysis(title, category):
             if s == duration:
                 duration = i
                 break
-        
+
         # [] 인 경우, Auto
         if st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO] == []:
-                st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO] = 'Auto'
+            st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO] = 'Auto'
 
         for i, s in enumerate(category[TAG.TEMPO]):
             if s == st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO]:
@@ -46,7 +46,7 @@ def text_analysis(title, category):
                 break
 
         default = {
-            TAG.ORIGIN: st.session_state[TAG.TEXT_INPUTS][TAG.ORIGIN],
+            TAG.ETC_ORIGIN: st.session_state[TAG.TEXT_INPUTS][TAG.ETC_ORIGIN],
             TAG.TEXT: st.session_state[TAG.TEXT_INPUTS][TAG.TEXT],
             TAG.ETC: st.session_state[TAG.TEXT_INPUTS][TAG.ETC],
             TAG.DURATION: duration,  # index이므로
@@ -56,21 +56,29 @@ def text_analysis(title, category):
     # 오류 발생
     if st.session_state[TAG.TEXT_RES_STATE] != status.HTTP_200_OK:
         st.toast(print_error(st.session_state[TAG.TEXT_RES_STATE]))
+        st.session_state[TAG.SIMPLE_RES_STATE] = 200
 
     # Title
     st.title(title)
     st.divider()
 
     # 설명
+    st.markdown("""
+        <style>
+        div[data-testid="stExpander"] div[role="button"] p {
+            font-size: 24px;
+            font-weight:bold;
+        }</style>""", unsafe_allow_html=True)
     with st.expander(TAG.GUIDE_HEADER):
         st.markdown(INFO.TEXT_ANALYSIS_GUIDE)
+    space(lines=2)
 
     # text area
     st.subheader(TAG.TEXT_HEADER)
     text = st.text_area(
         TAG.TEXT_DESCRIPTION,
         height=300,
-        value=default[TAG.ORIGIN],
+        value=default[TAG.TEXT],
         key="text"+st.session_state['key_num'])
     space(lines=1)
 
@@ -79,14 +87,15 @@ def text_analysis(title, category):
         label=TAG.ETC_HEADER,
         text=TAG.ETC_DESCRIPTION,
         suggestions=category[TAG.ETC],
-        value=default[TAG.ETC],
+        value=default[TAG.ETC_ORIGIN],
         key="etc_choice"+st.session_state['key_num'])
+    st.write(INFO.ETC_EXAMPLE)
     space(lines=2)
 
     col_1, col_2 = st.columns([1, 1], gap="large")
 
     # 음악 길이
-    col_1.subheader(TAG.DURATION)
+    col_1.subheader(TAG.DURATION_HEADER)
     duration = col_1.selectbox(
         label=TAG.DURATION_DESCRIPTION,
         options=category[TAG.DURATION],
@@ -95,7 +104,7 @@ def text_analysis(title, category):
     )
 
     # 음악 속도
-    col_2.subheader(TAG.TEMPO)
+    col_2.subheader(TAG.TEMPO_HEADER)
     tempo = col_2.radio(
         label=TAG.TEMPO_DESCRIPTION,
         options=category[TAG.TEMPO],
@@ -125,14 +134,14 @@ def text_analysis(title, category):
             min, sec = map(int, duration.split(':'))
             duration = min*60 + sec
             inputs = {
-                TAG.ORIGIN: text,
-                TAG.TEXT: google_trans(text),
-                TAG.ETC: etc_data,
+                TAG.ETC_ORIGIN: etc_data,
+                TAG.TEXT: text,
+                TAG.ETC: google_trans(etc_data),
                 TAG.DURATION: duration,
                 TAG.TEMPO: tempo,
             }
 
-            if inputs[TAG.ORIGIN] == [] and inputs[TAG.ETC] == []:
+            if inputs[TAG.TEXT] == [] and inputs[TAG.ETC] == []:
                 st.toast('입력을 확인해 주세요')
 
             else:
@@ -158,10 +167,10 @@ def submit_text_analysis(title, category):
             if s == duration:
                 duration = i
                 break
-        
+
         # [] 인 경우, Auto
         if st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO] == []:
-                st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO] = 'Auto'
+            st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO] = 'Auto'
 
         for i, s in enumerate(category[TAG.TEMPO]):
             if s == st.session_state[TAG.TEXT_INPUTS][TAG.TEMPO]:
@@ -169,7 +178,7 @@ def submit_text_analysis(title, category):
                 break
 
         default = {
-            TAG.ORIGIN: st.session_state[TAG.TEXT_INPUTS][TAG.ORIGIN],
+            TAG.ETC_ORIGIN: st.session_state[TAG.TEXT_INPUTS][TAG.ETC_ORIGIN],
             TAG.TEXT: st.session_state[TAG.TEXT_INPUTS][TAG.TEXT],
             TAG.ETC: st.session_state[TAG.TEXT_INPUTS][TAG.ETC],
             TAG.DURATION: duration,  # index이므로
@@ -181,15 +190,22 @@ def submit_text_analysis(title, category):
     st.divider()
 
     # 설명
+    st.markdown("""
+        <style>
+        div[data-testid="stExpander"] div[role="button"] p {
+            font-size: 24px;
+            font-weight:bold;
+        }</style>""", unsafe_allow_html=True)
     with st.expander(TAG.GUIDE_HEADER):
         st.markdown(INFO.TEXT_ANALYSIS_GUIDE)
+    space(lines=2)
 
     # text area
     st.subheader(TAG.TEXT_HEADER)
     text = st.text_area(
         TAG.TEXT_DESCRIPTION,
         height=300,
-        value=default[TAG.ORIGIN],
+        value=default[TAG.TEXT],
         key="text"+st.session_state['key_num'],
         disabled=True)
     space(lines=1)
@@ -198,15 +214,16 @@ def submit_text_analysis(title, category):
     st.subheader(TAG.ETC_HEADER[3:])
     etc = st.multiselect(
         label=TAG.ETC_DESCRIPTION,
-        options=default[TAG.ETC],
-        default=default[TAG.ETC],
+        options=default[TAG.ETC_ORIGIN],
+        default=default[TAG.ETC_ORIGIN],
         disabled=True)
+    st.write(INFO.ETC_EXAMPLE)
     space(lines=2)
 
     col_1, col_2 = st.columns([1, 1], gap="large")
 
     # 음악 길이
-    col_1.subheader(TAG.DURATION)
+    col_1.subheader(TAG.DURATION_HEADER)
     duration = col_1.selectbox(
         label=TAG.DURATION_DESCRIPTION,
         options=category[TAG.DURATION],
@@ -216,7 +233,7 @@ def submit_text_analysis(title, category):
     )
 
     # 음악 속도
-    col_2.subheader(TAG.TEMPO)
+    col_2.subheader(TAG.TEMPO_HEADER)
     tempo = col_2.radio(
         label=TAG.TEMPO_DESCRIPTION,
         options=category[TAG.TEMPO],
@@ -226,6 +243,7 @@ def submit_text_analysis(title, category):
     space(lines=2)
 
     with st.spinner(TAG.REQUEST_MESSAGE):
+        print(st.session_state[TAG.TEXT_INPUTS])
         res = requests.post(url=SECRET.TEXT_ANALYSIS_URL,
                             data=json.dumps(st.session_state[TAG.TEXT_INPUTS]))
 
@@ -233,6 +251,9 @@ def submit_text_analysis(title, category):
         keywords = create_gpt_caption(res.json())
         my_json = make_analysis_request_json(
             st.session_state[TAG.TEXT_INPUTS], keywords)
+
+        print(my_json)
+
         res = requests.post(SECRET.MUSICGEN_ANALYSIS_URL, json=my_json)
 
         st.session_state[TAG.TEXT_RES_STATE] = res.status_code
@@ -263,9 +284,13 @@ def result_text_analysis(title, inputs):
             }
         </style>
         """, unsafe_allow_html=True)
-    caption = inputs[TAG.CAPTIONS][0].split(', ')  # 캡션의 정보를 받음
+    caption = inputs[TAG.CAPTIONS][0].replace(
+        '.', ',').split(', ')  # 캡션의 정보를 받음
     st.title(title)
     st.divider()
+
+    st.markdown(TAG.RESULT_WRANING)
+    space(lines=3)
 
     st.write("### 📃 \t문서 요약 결과 (Summarization)")
     captions = st.multiselect(

@@ -1,6 +1,7 @@
 from constraints import TAG
 
 DEFAULT_CATEGORY = {
+    TAG.ETC_ORIGIN: [],
     TAG.GENRES: [],
     TAG.INSTRUMENTS: [],
     TAG.MOODS: [],
@@ -10,7 +11,7 @@ DEFAULT_CATEGORY = {
 }
 
 DEFAULT_TEXT = {
-    TAG.ORIGIN: " ",
+    TAG.ETC_ORIGIN: [],
     TAG.TEXT: " ",
     TAG.ETC: [],
     TAG.DURATION: 1,  # index이므로

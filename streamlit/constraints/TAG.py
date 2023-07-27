@@ -15,7 +15,7 @@ GUIDE_HEADER = "💡 사용법 가이드"
 GENRES_HEADER = '🎼 장르 (Genre)'
 INSTRUMENTS_HEADER = '🥁 악기 (Musical Instruments)'
 MOODS_HEADER = '📣 분위기 (Mood)'
-ETC_HEADER = '### ⚙ 기타 (ETC)'
+ETC_HEADER = '### ⚙ 사용자 키워드 (Custom Keyword)'
 DURATION_HEADER = '⌛ 길이(Duration)'
 TEMPO_HEADER = '🏇 속도 (Tempo)'
 
@@ -30,6 +30,7 @@ DURATION_DESCRIPTION = '생성할 음악의 길이를 선택해 주세요'
 TEMPO_DESCRIPTION = '생성할 음악의 빠르기를 선택해 주세요'
 
 TEXT_DESCRIPTION = '👉 분석을 진행하고 싶은 텍스트를 입력하세요.'
+RESULT_WRANING = "### 　📢 주의!!　AI가 생성한 음악의 소리가 \"매우\" 클 수 있습니다!"
 
 # TITLE 태그
 SIMPLE_CATEGORY_TITLE = "Simple Category / 심플 카테고리 선택"
@@ -51,7 +52,7 @@ EXTRA_RES_STATE = "res_extra_state"
 TEXT_RES_STATE = "res_text_state"
 
 # Request 태그
-ORIGIN = 'origin'
+ETC_ORIGIN = 'etc_origin'
 AUDIOS = 'audios'
 CAPTIONS = 'caption'
 AUDIOFILE = "audiofile"

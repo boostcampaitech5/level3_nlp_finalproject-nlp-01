@@ -6,9 +6,14 @@ import openai
 
 
 def google_trans(text):
-    translator = Translator()
-    result = translator.translate(text, src='ko', dest='en')
-    return result.text
+    result = []
+    if len(text) != 0:
+        translator = Translator()
+        trans_tmp = '@^'.join(text)
+        result = translator.translate(
+            trans_tmp, src='ko', dest='en').text.split('@^')
+
+    return result
 
 
 def create_gpt_caption(res):

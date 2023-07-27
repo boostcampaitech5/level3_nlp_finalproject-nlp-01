@@ -37,10 +37,10 @@ def simple_category(title, category):
             if s == duration:
                 duration = i
                 break
-        
+
         # [] 인 경우, Auto
         if st.session_state[TAG.SIMPLE_INPUTS][TAG.TEMPO] == []:
-                st.session_state[TAG.SIMPLE_INPUTS][TAG.TEMPO] = 'Auto'
+            st.session_state[TAG.SIMPLE_INPUTS][TAG.TEMPO] = 'Auto'
 
         for i, s in enumerate(category[TAG.TEMPO]):
             if s == st.session_state[TAG.SIMPLE_INPUTS][TAG.TEMPO]:
@@ -51,7 +51,6 @@ def simple_category(title, category):
             TAG.GENRES: st.session_state[TAG.SIMPLE_INPUTS][TAG.GENRES],
             TAG.INSTRUMENTS: st.session_state[TAG.SIMPLE_INPUTS][TAG.INSTRUMENTS],
             TAG.MOODS: st.session_state[TAG.SIMPLE_INPUTS][TAG.MOODS],
-            TAG.ETC: st.session_state[TAG.SIMPLE_INPUTS][TAG.ETC],
             TAG.DURATION: duration,  # index이므로
             TAG.TEMPO: tempo,  # index이므로
         }
@@ -59,14 +58,21 @@ def simple_category(title, category):
     # 오류 발생
     if st.session_state[TAG.SIMPLE_RES_STATE] != status.HTTP_200_OK:
         st.toast(print_error(st.session_state[TAG.SIMPLE_RES_STATE]))
-        
+        st.session_state[TAG.SIMPLE_RES_STATE] = 200
 
     st.title(title)
     st.divider()
 
     # 사용법 가이드
+    st.markdown("""
+        <style>
+        div[data-testid="stExpander"] div[role="button"] p {
+            font-size: 24px;
+            font-weight:bold;
+        }</style>""", unsafe_allow_html=True)
     with st.expander(TAG.GUIDE_HEADER):
         st.markdown(INFO.SIMPLE_CATEGORY_GUIDE)
+    space(lines=2)
 
     # 장르
     st.subheader(TAG.GENRES_HEADER)
@@ -74,14 +80,6 @@ def simple_category(title, category):
     for i, genre in enumerate(category[TAG.GENRES]):
         cols_list[i % COLS].checkbox(
             genre, key=genre+st.session_state['key_num'])
-    space(lines=1)
-
-    # 악기
-    st.subheader(TAG.INSTRUMENTS_HEADER)
-    cols_list = st.columns([1]*COLS)
-    for i, instrument in enumerate(category[TAG.INSTRUMENTS]):
-        cols_list[i % COLS].checkbox(
-            instrument, key=instrument+st.session_state['key_num'])
     space(lines=1)
 
     # 분위기
@@ -92,13 +90,12 @@ def simple_category(title, category):
             mood, key=mood+st.session_state['key_num'])
     space(lines=1)
 
-    # 사용자 keywords 생성
-    etc = st_tags(
-        label=TAG.ETC_HEADER,
-        text=TAG.ETC_DESCRIPTION,
-        suggestions=category[TAG.ETC],
-        value=default[TAG.ETC],
-        key="etc"+st.session_state['key_num'])
+    # 악기
+    st.subheader(TAG.INSTRUMENTS_HEADER)
+    cols_list = st.columns([1]*COLS)
+    for i, instrument in enumerate(category[TAG.INSTRUMENTS]):
+        cols_list[i % COLS].checkbox(
+            instrument, key=instrument+st.session_state['key_num'])
     space(lines=1)
 
     col_1, col_2 = st.columns([1, 1], gap="large")
@@ -132,12 +129,12 @@ def simple_category(title, category):
 
     if button_cols_2.button("Submit"):  # 제출버튼
         # API로 전송하기 위해 input생성
-        inputs = make_simple_request_json(category, st.session_state)
+        inputs = make_simple_request_json(st.session_state)
 
         # 입력이 없다면 toast 발생
-        if inputs[TAG.GENRES] == [] and inputs[TAG.INSTRUMENTS] == [] and inputs[TAG.MOODS] == [] and inputs[TAG.ETC] == []:
+        if inputs[TAG.GENRES] == [] and inputs[TAG.INSTRUMENTS] == [] and inputs[TAG.MOODS] == []:
             st.toast('입력을 확인해 주세요!')
-        
+
         else:
             # tempo가 Auto인 경우
             if inputs[TAG.TEMPO] == 'Auto':
@@ -145,7 +142,7 @@ def simple_category(title, category):
 
             # 선택한 카테고리를 세션으로 저장해둠 -> 다시 Return으로 돌아갈 경우 default로 사용
             st.session_state[TAG.SIMPLE_INPUTS] = inputs
-            
+
             # TO DO : 리스트를 모델 서버로 전달 -> 다시 생성된 음악 파일 받고 올림
             st.session_state[TAG.SIMPLE_STATE] = 'submit'
             st.experimental_rerun()
@@ -168,10 +165,10 @@ def submit_simple_category(title, category):
             if s == duration:
                 duration = i
                 break
-        
+
         # [] 인 경우, Auto
         if st.session_state[TAG.SIMPLE_INPUTS][TAG.TEMPO] == []:
-                st.session_state[TAG.SIMPLE_INPUTS][TAG.TEMPO] = 'Auto'
+            st.session_state[TAG.SIMPLE_INPUTS][TAG.TEMPO] = 'Auto'
 
         for i, s in enumerate(category[TAG.TEMPO]):
             if s == st.session_state[TAG.SIMPLE_INPUTS][TAG.TEMPO]:
@@ -182,7 +179,6 @@ def submit_simple_category(title, category):
             TAG.GENRES: st.session_state[TAG.SIMPLE_INPUTS][TAG.GENRES],
             TAG.INSTRUMENTS: st.session_state[TAG.SIMPLE_INPUTS][TAG.INSTRUMENTS],
             TAG.MOODS: st.session_state[TAG.SIMPLE_INPUTS][TAG.MOODS],
-            TAG.ETC: st.session_state[TAG.SIMPLE_INPUTS][TAG.ETC],
             TAG.DURATION: duration,  # index이므로
             TAG.TEMPO: tempo,  # index이므로
         }
@@ -191,8 +187,15 @@ def submit_simple_category(title, category):
     st.divider()
 
     # 사용법 가이드
+    st.markdown("""
+        <style>
+        div[data-testid="stExpander"] div[role="button"] p {
+            font-size: 24px;
+            font-weight:bold;
+        }</style>""", unsafe_allow_html=True)
     with st.expander(TAG.GUIDE_HEADER):
         st.markdown(INFO.SIMPLE_CATEGORY_GUIDE)
+    space(lines=2)
 
     # 장르
     st.subheader(TAG.GENRES_HEADER)
@@ -200,14 +203,6 @@ def submit_simple_category(title, category):
     for i, genre in enumerate(category[TAG.GENRES]):
         cols_list[i % COLS].checkbox(
             genre, disabled=True)
-    space(lines=1)
-
-    # 악기
-    st.subheader(TAG.INSTRUMENTS_HEADER)
-    cols_list = st.columns([1]*COLS)
-    for i, instrument in enumerate(category[TAG.INSTRUMENTS]):
-        cols_list[i % COLS].checkbox(
-            instrument, disabled=True)
     space(lines=1)
 
     # 분위기
@@ -218,13 +213,12 @@ def submit_simple_category(title, category):
             mood, disabled=True)
     space(lines=1)
 
-    # 사용자 keywords 생성
-    st.subheader(TAG.ETC_HEADER[3:])
-    etc = st.multiselect(
-        label=TAG.ETC_DESCRIPTION,
-        options=default[TAG.ETC],
-        default=default[TAG.ETC],
-        disabled=True)
+    # 악기
+    st.subheader(TAG.INSTRUMENTS_HEADER)
+    cols_list = st.columns([1]*COLS)
+    for i, instrument in enumerate(category[TAG.INSTRUMENTS]):
+        cols_list[i % COLS].checkbox(
+            instrument, disabled=True)
     space(lines=1)
 
     col_1, col_2 = st.columns([1, 1], gap="large")
@@ -245,12 +239,11 @@ def submit_simple_category(title, category):
 
     with st.spinner(TAG.REQUEST_MESSAGE):
         my_json = st.session_state[TAG.SIMPLE_INPUTS]
-        res = requests.post(SECRET.MUSICGEN_CATEGORY_URL, json=my_json)
-        # res = requests.post("http://127.0.0.1:8000", json=my_json)
+        res = requests.post(SECRET.MUSICGEN_SIMPLE_URL, json=my_json)
         print(">>", TAG.SIMPLE_CATEGORY_TITLE, res)      # log로 요청이 제대로 왔는지 확인
 
         st.session_state[TAG.SIMPLE_RES_STATE] = res.status_code
-        
+
         if res.status_code != status.HTTP_200_OK:
             st.session_state[TAG.SIMPLE_STATE] = 'execute'
             st.experimental_rerun()
@@ -270,6 +263,9 @@ def result_simple_category(title, inputs):
                [0].split(', ') if cpt]  # 캡션의 정보를 받음
     st.title(title)
     st.divider()
+
+    st.markdown(TAG.RESULT_WRANING)
+    space(lines=3)
 
     st.write("### 📃 \t캡션 정보 (Caption)")
     captions = st.multiselect(
@@ -304,7 +300,6 @@ if __name__ == "__main__":
     if TAG.SIMPLE_RES_STATE not in st.session_state:
         st.session_state[TAG.SIMPLE_RES_STATE] = status.HTTP_200_OK
 
-    
     # key값을 변경 -> 값의 초기화하고 새로고침을 만들기 위해 key값을 다르게 설정
     if 'key_num' not in st.session_state:
         st.session_state['key_num'] = TAG.ONE

@@ -8,6 +8,7 @@ from fastapi import status
 from utils.attribute import get_music_category
 from utils.config import add_logo, delete_another_session_state, set_page
 from utils.log import print_error
+from utils.api import google_trans
 from utils.generator import make_category_request_json, make_audio_data
 from streamlit_space import space
 from models.Content import MusicContent
@@ -35,10 +36,10 @@ def choice_category(title, category):
             if s == duration:
                 duration = i
                 break
-            
+
         # [] 인 경우, Auto
         if st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO] == []:
-                st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO] = 'Auto'
+            st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO] = 'Auto'
 
         for i, s in enumerate(category[TAG.TEMPO]):
             if s == st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO]:
@@ -46,6 +47,7 @@ def choice_category(title, category):
                 break
 
         default = {
+            TAG.ETC_ORIGIN: st.session_state[TAG.EXTRA_INPUTS][TAG.ETC_ORIGIN],
             TAG.GENRES: st.session_state[TAG.EXTRA_INPUTS][TAG.GENRES],
             TAG.INSTRUMENTS: st.session_state[TAG.EXTRA_INPUTS][TAG.INSTRUMENTS],
             TAG.MOODS: st.session_state[TAG.EXTRA_INPUTS][TAG.MOODS],
@@ -57,12 +59,20 @@ def choice_category(title, category):
     # 오류 발생
     if st.session_state[TAG.EXTRA_RES_STATE] != status.HTTP_200_OK:
         st.toast(print_error(st.session_state[TAG.EXTRA_RES_STATE]))
-    
+        st.session_state[TAG.SIMPLE_RES_STATE] = 200
+
     st.title(title)
     st.divider()
 
+    st.markdown("""
+        <style>
+        div[data-testid="stExpander"] div[role="button"] p {
+            font-size: 24px;
+            font-weight:bold;
+        }</style>""", unsafe_allow_html=True)
     with st.expander(TAG.GUIDE_HEADER):
         st.markdown(INFO.EXTRA_CATEGORY_GUIDE)
+    space(lines=2)
 
     # multiselect
     st.subheader(TAG.GENRES_HEADER)
@@ -73,14 +83,6 @@ def choice_category(title, category):
         key="genres"+st.session_state['key_num'])
     space(lines=1)
 
-    st.subheader(TAG.INSTRUMENTS_HEADER)
-    instruments = st.multiselect(
-        label=TAG.INSTRUMENTS_DESCRIPTION,
-        options=category[TAG.INSTRUMENTS],
-        default=default[TAG.INSTRUMENTS],
-        key="instruments"+st.session_state['key_num'])
-    space(lines=1)
-
     st.subheader(TAG.MOODS_HEADER)
     moods = st.multiselect(
         label=TAG.MOODS_DESCRIPTION,
@@ -89,13 +91,22 @@ def choice_category(title, category):
         key="moods"+st.session_state['key_num'])
     space(lines=1)
 
+    st.subheader(TAG.INSTRUMENTS_HEADER)
+    instruments = st.multiselect(
+        label=TAG.INSTRUMENTS_DESCRIPTION,
+        options=category[TAG.INSTRUMENTS],
+        default=default[TAG.INSTRUMENTS],
+        key="instruments"+st.session_state['key_num'])
+    space(lines=1)
+
     # 사용자 keywords 생성
     etc = st_tags(
         label=TAG.ETC_HEADER,
         text=TAG.ETC_DESCRIPTION,
         suggestions=category[TAG.ETC],
-        value=default[TAG.ETC],
+        value=default[TAG.ETC_ORIGIN],
         key="etc"+st.session_state['key_num'])
+    st.write(INFO.ETC_EXAMPLE)
     space(lines=1)
 
     col_1, col_2 = st.columns([1, 1], gap="large")
@@ -135,13 +146,15 @@ def choice_category(title, category):
 
         # API로 전송하기 위해 input생성
         inputs = {
+            TAG.ETC_ORIGIN: etc,
             TAG.GENRES: genres,
             TAG.INSTRUMENTS: instruments,
             TAG.MOODS: moods,
-            TAG.ETC: etc,
+            TAG.ETC: google_trans(etc),
             TAG.DURATION: duration,
             TAG.TEMPO: tempo,
         }
+        print(inputs)
 
         # 입력이 없다면
         if inputs[TAG.GENRES] == [] and inputs[TAG.INSTRUMENTS] == [] and inputs[TAG.MOODS] == [] and inputs[TAG.ETC] == []:
@@ -177,10 +190,10 @@ def submit_choice_category(title, category):
             if s == duration:
                 duration = i
                 break
-        
+
         # [] 인 경우, Auto
         if st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO] == []:
-                st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO] = 'Auto'
+            st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO] = 'Auto'
 
         for i, s in enumerate(category[TAG.TEMPO]):
             if s == st.session_state[TAG.EXTRA_INPUTS][TAG.TEMPO]:
@@ -188,6 +201,7 @@ def submit_choice_category(title, category):
                 break
 
         default = {
+            TAG.ETC_ORIGIN: st.session_state[TAG.EXTRA_INPUTS][TAG.ETC_ORIGIN],
             TAG.GENRES: st.session_state[TAG.EXTRA_INPUTS][TAG.GENRES],
             TAG.INSTRUMENTS: st.session_state[TAG.EXTRA_INPUTS][TAG.INSTRUMENTS],
             TAG.MOODS: st.session_state[TAG.EXTRA_INPUTS][TAG.MOODS],
@@ -203,8 +217,15 @@ def submit_choice_category(title, category):
     st.title(title)
     st.write("---")
 
+    st.markdown("""
+        <style>
+        div[data-testid="stExpander"] div[role="button"] p {
+            font-size: 24px;
+            font-weight:bold;
+        }</style>""", unsafe_allow_html=True)
     with st.expander(TAG.GUIDE_HEADER):
         st.markdown(INFO.EXTRA_CATEGORY_GUIDE)
+    space(lines=2)
 
     # multiselect
     st.subheader(TAG.GENRES_HEADER)
@@ -212,14 +233,6 @@ def submit_choice_category(title, category):
         label=TAG.GENRES_DESCRIPTION,
         options=category[TAG.GENRES],
         default=default[TAG.GENRES],
-        disabled=True)
-    space(lines=1)
-
-    st.subheader(TAG.INSTRUMENTS_HEADER)
-    instruments = st.multiselect(
-        label=TAG.INSTRUMENTS_DESCRIPTION,
-        options=category[TAG.INSTRUMENTS],
-        default=default[TAG.INSTRUMENTS],
         disabled=True)
     space(lines=1)
 
@@ -231,13 +244,22 @@ def submit_choice_category(title, category):
         disabled=True)
     space(lines=1)
 
+    st.subheader(TAG.INSTRUMENTS_HEADER)
+    instruments = st.multiselect(
+        label=TAG.INSTRUMENTS_DESCRIPTION,
+        options=category[TAG.INSTRUMENTS],
+        default=default[TAG.INSTRUMENTS],
+        disabled=True)
+    space(lines=1)
+
     # 사용자 keywords 생성
     st.subheader(TAG.ETC_HEADER[3:])
     etc = st.multiselect(
         label=TAG.ETC_DESCRIPTION,
-        options=default[TAG.ETC],
-        default=default[TAG.ETC],
+        options=default[TAG.ETC_ORIGIN],
+        default=default[TAG.ETC_ORIGIN],
         disabled=True)
+    st.write(INFO.ETC_EXAMPLE)
     space(lines=1)
 
     col_1, col_2 = st.columns([1, 1], gap="large")
@@ -259,6 +281,9 @@ def submit_choice_category(title, category):
     with st.spinner(TAG.REQUEST_MESSAGE):
         my_json = make_category_request_json(
             st.session_state[TAG.EXTRA_INPUTS])
+
+        print(my_json)
+
         res = requests.post(SECRET.MUSICGEN_CATEGORY_URL, json=my_json)
         print(res)      # log로 요청이 제대로 왔는지 확인
 
@@ -283,6 +308,9 @@ def result_choice_category(title, inputs):
                [0].split(', ') if cpt]  # 캡션의 정보를 받음
     st.title(title)
     st.divider()
+
+    st.markdown(TAG.RESULT_WRANING)
+    space(lines=3)
 
     st.write("### 📃 \t캡션 정보 (Caption)")
     captions = st.multiselect(
@@ -320,7 +348,6 @@ if __name__ == "__main__":
     # key값을 변경 -> 값의 초기화하고 새로고침을 만들기 위해 key값을 다르게 설정
     if 'key_num' not in st.session_state:
         st.session_state['key_num'] = TAG.ONE
-    
 
     # 다른 state 제거
     delete_another_session_state(TAG.EXTRA_STATE)
