@@ -1,0 +1,9 @@
+streamlit
+streamlit-tags
+streamlit_space
+streamlit-extras
+fastapi
+uvicorn
+openai
+IPython
+googletrans==3.1.0a0

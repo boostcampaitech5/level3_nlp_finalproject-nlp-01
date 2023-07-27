@@ -1,0 +1,7 @@
+/.vscode
+/env
+__pycache__
+test.py
+.ipynb_checkpoints
+
+secret.json

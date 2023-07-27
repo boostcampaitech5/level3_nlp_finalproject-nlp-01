@@ -1,0 +1,41 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Development Deploy CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "develop" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-20.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Make Tar File
+        run: tar -cpvzf ./$GITHUB_SHA.tgz *
+        shell : bash
+
+      - name: Configure AWS credentials # AWS 자격 증명
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.SECRET_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Upload to S3 # S3 업로드
+        run: aws s3 cp --region ${{ secrets.AWS_REGION }} ./$GITHUB_SHA.tgz s3://${{ secrets.S3_BUCKET }}/build/$GITHUB_SHA.tgz
+
+      - name: Code Deploy # CodeDeploy에 배포
+        run: aws deploy create-deployment --application-name ${{ secrets.CODEDEPLOY_NAME }} --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name ${{ secrets.CODEDEPLOY_GROUP }} --s3-location bucket=${{ secrets.S3_BUCKET }},bundleType=tgz,key=build/$GITHUB_SHA.tgz
