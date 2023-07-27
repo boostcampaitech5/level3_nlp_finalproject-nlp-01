@@ -36,6 +36,50 @@
 | 최규빈_T5215 | 토픽 모델링, 장르 classification 모델 구현 |
 | 황지원_T5231 | PM, Streamlit 프론트엔드, 음악 도메인 감정모델 연구 및 서빙 |
 
+## directory tree
+```
+├── README.md
+├── appspec.yml
+├── fastapi # 필요 없을듯 -> text 서버
+│   └── main.py
+├── requirements.txt
+└── streamlit
+    ├── assets
+    │   ├── category_ver1.0.3.json
+    │   ├── extra_exam.png
+    │   ├── main_image.png
+    │   ├── music_icon.png
+    │   ├── page_icon.png
+    │   ├── secret.json
+    │   ├── sidebar_img.png
+    │   ├── simple_exam.png
+    │   ├── test_music.wav
+    │   └── text_exam.png
+    ├── constraints
+    │   ├── COMPONENT.py
+    │   ├── INFO.py
+    │   ├── PATH.py
+    │   ├── SECRET.py
+    │   └── TAG.py
+    ├── demo # 필요한가?
+    │   ├── Acoustic, Folk Song, Guitar, Flute, Choirs, Play During Roadtrips
+    │   ├── Happy, Romantic, Dreamy, Peaceful, Marimba, Harp
+    │   ├── Peaceful, Hawaiian, Ukulele
+    │   └── Sad, Chambers music, Drama, Sentimental, Piano, Cello
+    ├── main.py
+    ├── models
+    │   └── Content.py
+    ├── pages
+    │   ├── 01_Simple_Category.py
+    │   ├── 02_Extra_Category.py
+    │   └── 03_Text_Analysis.py
+    └── utils
+        ├── api.py
+        ├── attribute.py
+        ├── config.py
+        ├── generator.py
+        └── log.py
+```
 ## 참고 사이트
 
 음악 생성 API: <https://github.com/boostcampaitech5/level3_nlp_productserving-nlp-01-1>
