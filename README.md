@@ -15,16 +15,28 @@
 ---
 ![image](https://github.com/boostcampaitech5/level3_nlp_finalproject-nlp-01/assets/39620398/53dcb7bf-9308-46ef-bb87-084f4311b2a8)
 
-## 팀 소개
+## 테크 스택
+<img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white"> <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"> 
+<img src="https://img.shields.io/badge/pytorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white">
+<img src="https://img.shields.io/badge/streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white">
+<img src="https://img.shields.io/badge/fastapi-009688?style=for-the-badge&logo=fastapi&logoColor=white">
+<img src="https://img.shields.io/badge/githubactions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white">
 
+python, AWS, PyTorch, transformers, Streamlit, FastAPI, Guthub Action
+
+
+
+
+## 팀 소개
+### Boostcamp AI-Tech 5기 NLP-01조 자만추
 | 팀원| 작업|
 | --- | --- |
-| 김효연 | Streamlit 프론트엔드, llama2 모델 구현 및 프롬프트 엔지니어링 |
-| 서유현 | 데이터 수집, 음악 생성 모델 구현 및 fine tuning 등 성능 개선 |
-| 손무현 | 데이터 수집, 음악 생성 모델 조사 및 음악 생성 서버 구축, 카테고리 정의 및 데이터 구축  |
-| 이승진 | 생성 요약 모델 연구 및 논문 구현 |
-| 최규빈 | 토픽 모델링, 장르 classification 모델 구현 |
-| 황지원 | PM, Streamlit 프론트엔드, 음악 도메인 감정모델 연구 및 서빙 |
+| 김효연_T5072 | Streamlit 프론트엔드, llama2 모델 구현 및 프롬프트 엔지니어링 |
+| 서유현_T5107 | 데이터 수집, 음악 생성 모델 구현 및 fine tuning 등 성능 개선 |
+| 손무현_T5114 | 데이터 수집, 음악 생성 모델 조사 및 음악 생성 서버 구축, 카테고리 정의 및 데이터 구축  |
+| 이승진_T5144 | 생성 요약 모델 연구 및 논문 구현 |
+| 최규빈_T5215 | 토픽 모델링, 장르 classification 모델 구현 |
+| 황지원_T5231 | PM, Streamlit 프론트엔드, 음악 도메인 감정모델 연구 및 서빙 |
 
 ## 참고 사이트
 
