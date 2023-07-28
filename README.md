@@ -9,6 +9,7 @@
 
 # TexTuneS
 누구나 쉽고 간단하게 적합한 나만의 배경 음악을 만들어 제공해주는 웹서비스 입니다.  
+[발표 자료](https://github.com/boostcampaitech5/level3_nlp_finalproject-nlp-01/blob/main/assets/final_project_Presentation.pdf)|
 [발표 영상](https://youtu.be/LWodtP5Kh6Q) | 
 [데모 사이트](http://101.101.209.53:30007/)  
 
