@@ -87,9 +87,7 @@
 ```
 ## 참고 사이트
 
-음악 생성 API: <https://github.com/boostcampaitech5/level3_nlp_productserving-nlp-01-1>
-
-
-텍스트 요약, 분류, 감정분석: <https://github.com/boostcampaitech5/level3_nlp_productserving-nlp-01-2>
+음악 생성 API: <https://github.com/boostcampaitech5/level3_nlp_productserving-nlp-01-1>  
+문서 분석(문서 요약, 토픽 분류, 감정분석) API: <https://github.com/boostcampaitech5/level3_nlp_productserving-nlp-01-2>  
 
 ![Footer](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=1&height=200&section=footer)
