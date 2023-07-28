@@ -25,6 +25,11 @@
 ---
 ![image](https://github.com/boostcampaitech5/level3_nlp_finalproject-nlp-01/assets/39620398/53dcb7bf-9308-46ef-bb87-084f4311b2a8)
 
+---
+
+![image](https://github.com/boostcampaitech5/level3_nlp_finalproject-nlp-01/assets/39620398/1dc68299-3c37-4bc4-87ff-757204d54776)
+
+
 ## 팀 소개
 ### Boostcamp AI-Tech 5기 NLP-01조 자만추
 | 팀원| 작업|
@@ -36,11 +41,11 @@
 | 최규빈_T5215 | 토픽 모델링, 장르 classification 모델 구현 |
 | 황지원_T5231 | PM, Streamlit 프론트엔드, 음악 도메인 감정모델 연구 및 서빙 |
 
-## directory tree
+## Directory Tree
 ```
 ├── README.md
 ├── appspec.yml
-├── fastapi # 필요 없을듯 -> text 서버
+├── fastapi # test server
 │   └── main.py
 ├── requirements.txt
 └── streamlit
@@ -50,7 +55,7 @@
     │   ├── main_image.png
     │   ├── music_icon.png
     │   ├── page_icon.png
-    │   ├── secret.json
+    │   ├── secret.json # secret
     │   ├── sidebar_img.png
     │   ├── simple_exam.png
     │   ├── test_music.wav
@@ -61,11 +66,8 @@
     │   ├── PATH.py
     │   ├── SECRET.py
     │   └── TAG.py
-    ├── demo # 필요한가?
-    │   ├── Acoustic, Folk Song, Guitar, Flute, Choirs, Play During Roadtrips
-    │   ├── Happy, Romantic, Dreamy, Peaceful, Marimba, Harp
-    │   ├── Peaceful, Hawaiian, Ukulele
-    │   └── Sad, Chambers music, Drama, Sentimental, Piano, Cello
+    ├── demo
+    │   ├── # 데모 노래
     ├── main.py
     ├── models
     │   └── Content.py
