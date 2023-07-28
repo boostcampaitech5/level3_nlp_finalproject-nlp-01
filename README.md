@@ -8,7 +8,9 @@
 <img src="https://img.shields.io/badge/transformers-FFFF33?style=for-the-badge">
 
 # TexTuneS
-누구나 쉽고 간단하게 적합한 나만의 배경 음악을 만들어 제공해주는 웹서비스 입니다.
+누구나 쉽고 간단하게 적합한 나만의 배경 음악을 만들어 제공해주는 웹서비스 입니다.  
+[발표 영상](https://youtu.be/LWodtP5Kh6Q) | 
+[데모 사이트](http://101.101.209.53:30007/)  
 
 
 ## 프로젝트 소개
@@ -34,12 +36,12 @@
 ### Boostcamp AI-Tech 5기 NLP-01조 자만추
 | 팀원| 작업|
 | --- | --- |
-| 김효연_T5072 | Streamlit 프론트엔드, llama2 모델 구현 및 프롬프트 엔지니어링 |
-| 서유현_T5107 | 데이터 수집, 음악 생성 모델 구현 및 fine tuning 등 성능 개선 |
-| 손무현_T5114 | 데이터 수집, 음악 생성 모델 조사 및 음악 생성 서버 구축, 카테고리 정의 및 데이터 구축  |
-| 이승진_T5144 | 생성 요약 모델 연구 및 논문 구현 |
-| 최규빈_T5215 | 토픽 모델링, 장르 classification 모델 구현 |
-| 황지원_T5231 | PM, Streamlit 프론트엔드, 음악 도메인 감정모델 연구 및 서빙 |
+| [김효연_T5072](https://github.com/Broco98) | Streamlit 프론트엔드, llama2 모델 구현 및 프롬프트 엔지니어링 |
+| [서유현_T5107](https://github.com/a-Tachyon) | 데이터 수집, 음악 생성 모델 구현 및 fine tuning 등 성능 개선 |
+| [손무현_T5114](https://github.com/MuHyeonSon) | 데이터 수집, 음악 생성 모델 조사 및 음악 생성 서버 구축, 카테고리 정의 및 데이터 구축  |
+| [이승진_T5144](https://github.com/MonteCarlolee) | 생성 요약 모델 연구 및 논문 구현 |
+| [최규빈_T5215](https://github.com/gyubinc) | 토픽 모델링, 장르 classification 모델 구현 |
+| [황지원_T5231](https://github.com/Jiwonii97) | PM, Streamlit 프론트엔드, 음악 도메인 감정모델 연구 및 서빙 |
 
 ## Directory Tree
 ```
